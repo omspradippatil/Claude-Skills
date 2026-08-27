@@ -12,8 +12,10 @@ Open your terminal or command prompt inside your project and run:
 
 ### 🍏 macOS & 🐧 Linux (Terminal)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"
 ```
+*(Or `curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh | bash`)*
+
 
 ### 🪟 Windows (PowerShell)
 ```powershell
