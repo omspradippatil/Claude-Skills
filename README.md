@@ -36,11 +36,29 @@ When executed, the installer will automatically detect your environment, check p
 ```text
 Are you installing skills for an application or a web app?
 
-  1) 📱 Mobile Application   (Flutter / Dart / Native + UI/UX + Backend + DevOps + Quality)
-  2) 🌐 Web Application      (Frontend + DOM + SEO + Playwright + Backend + DevOps + Quality)
-  3) 🚀 All-in-One Full Suite (Install ALL Mobile, Web, UI/UX, Cloud, DevOps & Quality skills)
-  4) 🎯 Custom Selection      (Choose specific skill categories to install)
+  1) 📱 Install: Mobile Application   (Flutter / Dart / Native + UI/UX + Backend + DevOps + Quality)
+  2) 🌐 Install: Web Application      (Frontend + DOM + SEO + Playwright + Backend + DevOps + Quality)
+  3) 🚀 Install: All-in-One Full Suite (Install ALL Mobile, Web, UI/UX, Cloud, DevOps & Quality skills)
+  4) 🎯 Install: Custom Selection      (Choose specific skill categories to install)
+  5) 🗑️  Delete / Uninstall Skills      (Remove installed skills, CLIs, and configs)
 ```
+
+---
+
+## 🗑️ Quick Uninstall One-Liner
+
+To completely remove all installed skills and global packages in one shot:
+
+### 🍏 macOS & 🐧 Linux
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.sh)"
+```
+
+### 🪟 Windows (PowerShell)
+```powershell
+irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.ps1 | iex
+```
+
 
 ---
 

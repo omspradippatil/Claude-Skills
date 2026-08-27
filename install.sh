@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ==============================================================================
-# 🚀 AI Agent Skills Installer (macOS & Linux)
+# 🚀 AI Agent Skills Installer & Manager (macOS & Linux)
 # Repository: https://github.com/omspradippatil/Claude-Skills
 # ==============================================================================
 
@@ -20,7 +20,7 @@ RESET="\033[0m"
 print_banner() {
   echo -e "${CYAN}${BOLD}"
   echo "╔═════════════════════════════════════════════════════════════════════════╗"
-  echo "║                   ⚡ AI CODING SKILLS INSTALLER ⚡                     ║"
+  echo "║                ⚡ AI CODING SKILLS & AGENT SUITE ⚡                    ║"
   echo "║         High-Performance Skills & Tooling for AI Coding Agents          ║"
   echo "╚═════════════════════════════════════════════════════════════════════════╝"
   echo -e "${RESET}"
@@ -47,7 +47,7 @@ run_step() {
   local exit_code=$?
 
   if [ $exit_code -eq 0 ]; then
-    echo -e "  ${GREEN}✔ Installed successfully!${RESET}"
+    echo -e "  ${GREEN}✔ Completed successfully!${RESET}"
   else
     echo -e "  ${RED}✖ Warning: Command exited with status ${exit_code}. Continuing...${RESET}"
   fi
@@ -76,7 +76,9 @@ check_prerequisites() {
   echo ""
 }
 
-# Skill category installation functions
+# ==============================================================================
+# INSTALLATION FUNCTIONS
+# ==============================================================================
 
 install_core_ui_ux() {
   print_header "🎨 1. CORE UI/UX, DESIGN SYSTEMS & TASTE"
@@ -206,19 +208,97 @@ install_code_quality_skills() {
     "npm install -g ctx7"
 }
 
+# ==============================================================================
+# UNINSTALLATION / REMOVAL FUNCTIONS
+# ==============================================================================
+
+uninstall_core_ui_ux() {
+  print_header "🗑️  REMOVING CORE UI/UX & TASTE SKILLS"
+  run_step "Uninstall UI/UX Pro Max CLI" "Removes global uipro-cli" "npm uninstall -g uipro-cli"
+  run_step "Remove Taste Skill" "Removes taste skill from global skills" "npx --yes skills@latest remove -g -y taste-skill || true"
+  run_step "Remove Motion Skills" "Removes motion skills from global skills" "npx --yes skills@latest remove -g -y agent-skills || true"
+}
+
+uninstall_mobile_skills() {
+  print_header "🗑️  REMOVING MOBILE APP SKILLS"
+  if command -v dart >/dev/null 2>&1; then
+    run_step "Deactivate Dart Skills CLI" "Removes global dart skills" "dart pub global deactivate skills || true"
+  fi
+  run_step "Remove Flutter Claude Skills Repo" "Deletes cloned flutter-skills folder" "rm -rf ~/.claude/skills/flutter-skills"
+  run_step "Remove Fastlane Skills" "Removes fastlane agent skills" "npx --yes skills@latest remove -g -y fastlane || true"
+  run_step "Remove OWASP Security Playbook" "Removes mobile security playbook" "npx --yes skills@latest remove -g -y secure-agent-playbook || true"
+}
+
+uninstall_web_skills() {
+  print_header "🗑️  REMOVING WEB & BROWSER SKILLS"
+  run_step "Uninstall Playwright CLI & Firecrawl" "Removes global web CLIs" "npm uninstall -g @playwright/cli firecrawl-cli"
+  run_step "Remove Frontend Agent Skills" "Removes frontend skills" "npx --yes skills@latest remove -g -y frontend-agent-skills || true"
+  run_step "Remove Web Design Collection" "Removes web animation skills" "npx --yes skills@latest remove -g -y Skills || true"
+  run_step "Remove SEO Agent" "Removes SEO agent skills" "npx --yes skills@latest remove -g -y seo-agent-skill || true"
+}
+
+uninstall_backend_skills() {
+  print_header "🗑️  REMOVING BACKEND & CLOUD SKILLS"
+  run_step "Remove Supabase Skills" "Removes Supabase skills" "npx --yes skills@latest remove -g -y supabase || true"
+  run_step "Remove Firebase Skills" "Removes Firebase skills" "npx --yes skills@latest remove -g -y firebase || true"
+  run_step "Remove Neon Skills" "Removes Neon database skills" "npx --yes skills@latest remove -g -y neondatabase || true"
+  run_step "Remove Cloudflare Skills" "Removes Cloudflare skills" "npx --yes skills@latest remove -g -y cloudflare || true"
+}
+
+uninstall_devops_skills() {
+  print_header "🗑️  REMOVING DEVOPS & INTEGRATION SKILLS"
+  run_step "Remove Docker Skills" "Removes Docker skills" "npx --yes skills@latest remove -g -y docker || true"
+  run_step "Remove Composio Skills" "Removes Composio skills" "npx --yes skills@latest remove -g -y composio || true"
+  run_step "Remove Postman Skills" "Removes Postman OpenAPI skills" "npx --yes skills@latest remove -g -y postman || true"
+}
+
+uninstall_code_quality_skills() {
+  print_header "🗑️  REMOVING CODE QUALITY & MEMORY SKILLS"
+  run_step "Uninstall CTX7 Indexer" "Removes global ctx7 CLI" "npm uninstall -g ctx7"
+  run_step "Remove Andrej Karpathy Skills" "Removes Karpathy engineering rules" "npx --yes skills@latest remove -g -y andrej-karpathy-skills || true"
+  run_step "Remove Caveman Skills" "Removes anti-bloat rules" "npx --yes skills@latest remove -g -y caveman || true"
+  run_step "Remove Ponytail Skills" "Removes ponytail rules" "npx --yes skills@latest remove -g -y ponytail || true"
+  run_step "Remove MemoryPlugin" "Removes cross-session memory skills" "npx --yes skills@latest remove -g -y memoryplugin || true"
+  run_step "Remove Sentry for AI" "Removes Sentry AI skills" "npx --yes skills@latest remove -g -y sentry-for-ai || true"
+}
+
+uninstall_all_skills() {
+  print_header "🗑️  REMOVING ALL INSTALLED SKILLS & GLOBAL PACKAGES"
+  
+  echo -e "${YELLOW}Uninstalling all global skills CLI registry entries...${RESET}"
+  npx --yes skills@latest remove --all -g -y 2>/dev/null || true
+
+  echo -e "${YELLOW}Uninstalling global npm packages...${RESET}"
+  npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 2>/dev/null || true
+
+  if command -v dart >/dev/null 2>&1; then
+    echo -e "${YELLOW}Deactivating global Dart skills...${RESET}"
+    dart pub global deactivate skills 2>/dev/null || true
+  fi
+
+  echo -e "${YELLOW}Removing cloned Claude skills directory...${RESET}"
+  rm -rf ~/.claude/skills/flutter-skills
+
+  echo ""
+  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
+  echo -e "${GREEN}${BOLD} 🗑️  ALL SKILLS & TOOLS HAVE BEEN UNINSTALLED SUCCESSFULLY!              ${RESET}"
+  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
+}
+
 # Main Execution Flow
 main() {
   print_banner
   check_prerequisites
 
-  echo -e "${BOLD}Are you installing skills for an application or a web app?${RESET}"
+  echo -e "${BOLD}Select an action or project configuration:${RESET}"
   echo ""
-  echo -e "  ${CYAN}1)${RESET} 📱 ${BOLD}Mobile Application${RESET} (Flutter / Dart / Native + UI/UX + Backend + DevOps + Quality)"
-  echo -e "  ${CYAN}2)${RESET} 🌐 ${BOLD}Web Application${RESET}    (Frontend + DOM + SEO + Playwright + Backend + DevOps + Quality)"
-  echo -e "  ${CYAN}3)${RESET} 🚀 ${BOLD}All-in-One Full Suite${RESET} (Install ALL Mobile, Web, UI/UX, Cloud, DevOps & Quality skills)"
-  echo -e "  ${CYAN}4)${RESET} 🎯 ${BOLD}Custom Selection${RESET}      (Choose specific skill categories to install)"
+  echo -e "  ${CYAN}1)${RESET} 📱 ${BOLD}Install: Mobile Application${RESET}   (Flutter / Dart / Native + UI/UX + Backend + DevOps + Quality)"
+  echo -e "  ${CYAN}2)${RESET} 🌐 ${BOLD}Install: Web Application${RESET}      (Frontend + DOM + SEO + Playwright + Backend + DevOps + Quality)"
+  echo -e "  ${CYAN}3)${RESET} 🚀 ${BOLD}Install: All-in-One Full Suite${RESET} (Install ALL Mobile, Web, UI/UX, Cloud, DevOps & Quality skills)"
+  echo -e "  ${CYAN}4)${RESET} 🎯 ${BOLD}Install: Custom Selection${RESET}      (Choose specific skill categories to install)"
+  echo -e "  ${RED}5)${RESET} 🗑️  ${BOLD}Delete / Uninstall Skills${RESET}      (Remove installed skills, CLIs, and configs)"
   echo ""
-  echo -n -e "${YELLOW}Select an option [1-4] (default: 3): ${RESET}"
+  echo -n -e "${YELLOW}Select an option [1-5] (default: 3): ${RESET}"
   
   choice=""
   if [ -e /dev/tty ]; then
@@ -280,6 +360,50 @@ main() {
       echo -n -e "Install 🧠 Code Quality & Memory skills? [Y/n]: "
       read -r c6 < /dev/tty 2>/dev/null || c6="y"
       [[ "$c6" =~ ^[Nn] ]] || install_code_quality_skills
+      ;;
+    5)
+      echo -e "\n${RED}${BOLD}🗑️  Uninstall Options:${RESET}"
+      echo -e "  ${RED}1)${RESET} Delete ALL installed skills and global packages"
+      echo -e "  ${YELLOW}2)${RESET} Delete specific skill categories"
+      echo ""
+      echo -n -e "${YELLOW}Select uninstall option [1-2] (default: 1): ${RESET}"
+      
+      un_choice=""
+      if [ -e /dev/tty ]; then
+        read -r un_choice < /dev/tty 2>/dev/null || un_choice="1"
+      else
+        read -r un_choice || un_choice="1"
+      fi
+      [ -z "$un_choice" ] && un_choice="1"
+
+      if [ "$un_choice" == "2" ]; then
+        echo -n -e "Remove 🎨 Core UI/UX skills? [y/N]: "
+        read -r u1 < /dev/tty 2>/dev/null || u1="n"
+        [[ "$u1" =~ ^[Yy] ]] && uninstall_core_ui_ux
+
+        echo -n -e "Remove 📱 Mobile App skills? [y/N]: "
+        read -r u2 < /dev/tty 2>/dev/null || u2="n"
+        [[ "$u2" =~ ^[Yy] ]] && uninstall_mobile_skills
+
+        echo -n -e "Remove 🌐 Web Frontend & Browser skills? [y/N]: "
+        read -r u3 < /dev/tty 2>/dev/null || u3="n"
+        [[ "$u3" =~ ^[Yy] ]] && uninstall_web_skills
+
+        echo -n -e "Remove 🔥 Backend & Cloud Edge skills? [y/N]: "
+        read -r u4 < /dev/tty 2>/dev/null || u4="n"
+        [[ "$u4" =~ ^[Yy] ]] && uninstall_backend_skills
+
+        echo -n -e "Remove 🐳 DevOps & Integrations skills? [y/N]: "
+        read -r u5 < /dev/tty 2>/dev/null || u5="n"
+        [[ "$u5" =~ ^[Yy] ]] && uninstall_devops_skills
+
+        echo -n -e "Remove 🧠 Code Quality & Memory skills? [y/N]: "
+        read -r u6 < /dev/tty 2>/dev/null || u6="n"
+        [[ "$u6" =~ ^[Yy] ]] && uninstall_code_quality_skills
+      else
+        uninstall_all_skills
+      fi
+      return 0
       ;;
     *)
       echo -e "\n${RED}Invalid option. Defaulting to Complete All-in-One installation.${RESET}"
