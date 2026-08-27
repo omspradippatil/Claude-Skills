@@ -5,11 +5,6 @@
 # Repository: https://github.com/omspradippatil/Claude-Skills
 # ==============================================================================
 
-# Enable interactive input even when piped via curl | bash
-if [ ! -t 0 ]; then
-  exec < /dev/tty 2>/dev/null || true
-fi
-
 # Color Palette & Formatting
 BOLD="\033[1m"
 DIM="\033[2m"
@@ -92,11 +87,11 @@ install_core_ui_ux() {
 
   run_step "Taste Skill" \
     "Enforces human-like visual balance, clean typography, whitespace discipline, and eliminates generic AI aesthetics." \
-    "npx skills@latest add Leonxlnx/taste-skill -g -y"
+    "npx --yes skills@latest add Leonxlnx/taste-skill -g"
 
   run_step "Accessible & Performant Motion" \
     "Provides context for physics-based springs, easing curves, micro-interactions, gesture response, and 60fps animations." \
-    "npx skills@latest add mthines/agent-skills -g -y"
+    "npx --yes skills@latest add mthines/agent-skills -g"
 }
 
 install_mobile_skills() {
@@ -116,11 +111,11 @@ install_mobile_skills() {
 
   run_step "Fastlane Skills" \
     "Automates screenshot generation, keystore signing, metadata packaging, build numbering, and Play Store / TestFlight releases." \
-    "npx skills@latest add fastlane/agent-skills -g -y"
+    "npx --yes skills@latest add fastlane/agent-skills -g"
 
   run_step "OWASP Mobile & API Security Playbook" \
     "Audits mobile source code for hardcoded secrets, insecure IPC, weak local encryption, and broken mobile API endpoints." \
-    "npx skills@latest add OWASP/secure-agent-playbook -g -y"
+    "npx --yes skills@latest add OWASP/secure-agent-playbook -g"
 }
 
 install_web_skills() {
@@ -128,15 +123,15 @@ install_web_skills() {
 
   run_step "Frontend Agent Skills" \
     "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." \
-    "npx skills@latest add hueyexe/frontend-agent-skills -g -y"
+    "npx --yes skills@latest add hueyexe/frontend-agent-skills -g"
 
   run_step "Web Design & Interaction Collection" \
     "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." \
-    "npx skills@latest add MengTo/Skills -g -y"
+    "npx --yes skills@latest add MengTo/Skills -g"
 
   run_step "SEO & Indexing Agent" \
     "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." \
-    "npx skills@latest add ashleytheash/seo-agent-skill -g -y"
+    "npx --yes skills@latest add ashleytheash/seo-agent-skill -g"
 
   run_step "Playwright Browser Automation" \
     "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." \
@@ -152,19 +147,19 @@ install_backend_skills() {
 
   run_step "Supabase Agent Skills" \
     "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." \
-    "npx skills@latest add supabase/agent-skills -g -y"
+    "npx --yes skills@latest add supabase/agent-skills -g"
 
   run_step "Firebase Agent Skills" \
     "Firestore document design, Firebase Cloud Messaging (FCM) push notifications, security rules, and serverless Cloud Functions." \
-    "npx skills@latest add firebase/agent-skills -g -y"
+    "npx --yes skills@latest add firebase/agent-skills -g"
 
   run_step "Neon Database Skills" \
     "Serverless Postgres, database branching for PRs, index tuning, connection pooling, and low-latency SQL optimization." \
-    "npx skills@latest add neondatabase/agent-skills -g -y"
+    "npx --yes skills@latest add neondatabase/agent-skills -g"
 
   run_step "Cloudflare Ecosystem" \
     "Workers, D1 SQL, R2 object storage, KV key-value stores, rate limiting, and edge API caching configurations." \
-    "npx skills@latest add https://github.com/cloudflare/skills -g -y"
+    "npx --yes skills@latest add https://github.com/cloudflare/skills -g"
 }
 
 install_devops_skills() {
@@ -172,15 +167,15 @@ install_devops_skills() {
 
   run_step "Docker Skills" \
     "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." \
-    "npx skills@latest add docker/agent-skills -g -y"
+    "npx --yes skills@latest add docker/agent-skills -g"
 
   run_step "Composio Integration" \
     "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and external workflow automations." \
-    "npx skills@latest add composiohq/skills -g -y"
+    "npx --yes skills@latest add composiohq/skills -g"
 
   run_step "Postman / OpenAPI Skills" \
     "Ingests Swagger/OpenAPI specifications, generates strongly typed data models (Dart/TS), and automates endpoint contract testing." \
-    "npx skills@latest add postman/agent-skills -g -y"
+    "npx --yes skills@latest add postman/agent-skills -g"
 }
 
 install_code_quality_skills() {
@@ -188,23 +183,23 @@ install_code_quality_skills() {
 
   run_step "Andrej Karpathy Engineering Philosophy" \
     "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." \
-    "npx skills@latest add multica-ai/andrej-karpathy-skills -g -y"
+    "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g"
 
   run_step "Caveman (Anti-Overengineering)" \
     "Eliminates framework bloat, prevents over-engineering, enforces simple directory architectures, and refuses micro-abstractions." \
-    "npx skills@latest add JuliusBrussee/caveman -g -y"
+    "npx --yes skills@latest add JuliusBrussee/caveman -g"
 
   run_step "Ponytail Skills" \
     "Enforces clean software design patterns, eliminating bloated libraries and preserving codebase simplicity." \
-    "npx skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g -y"
+    "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g"
 
   run_step "MemoryPlugin (Cross-Session Persistence)" \
     "Provides cross-session long-term memory so the agent retains project context, design preferences, and architectural decisions." \
-    "npx skills@latest add memoryplugin/agent-skills -g -y"
+    "npx --yes skills@latest add memoryplugin/agent-skills -g"
 
   run_step "Sentry for AI" \
     "Automated root-cause analysis for production exceptions, stack trace parsing, and regression pinpointing." \
-    "npx skills@latest add getsentry/sentry-for-ai -g -y"
+    "npx --yes skills@latest add getsentry/sentry-for-ai -g"
 
   run_step "CTX7 Documentation Indexer" \
     "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." \
@@ -213,7 +208,6 @@ install_code_quality_skills() {
 
 # Main Execution Flow
 main() {
-  clear 2>/dev/null || true
   print_banner
   check_prerequisites
 
@@ -226,7 +220,13 @@ main() {
   echo ""
   echo -n -e "${YELLOW}Select an option [1-4] (default: 3): ${RESET}"
   
-  read -r choice < /dev/tty 2>/dev/null || read -r choice || choice="3"
+  choice=""
+  if [ -e /dev/tty ]; then
+    read -r choice < /dev/tty 2>/dev/null || choice="3"
+  else
+    read -r choice || choice="3"
+  fi
+  [ -z "$choice" ] && choice="3"
 
   case "$choice" in
     1)
@@ -258,27 +258,27 @@ main() {
       echo -e "\n${BOLD}Select categories to install:${RESET}"
       
       echo -n -e "Install 🎨 Core UI/UX & Taste skills? [Y/n]: "
-      read -r c1 < /dev/tty 2>/dev/null || read -r c1
+      read -r c1 < /dev/tty 2>/dev/null || c1="y"
       [[ "$c1" =~ ^[Nn] ]] || install_core_ui_ux
 
       echo -n -e "Install 📱 Mobile App (Flutter/Dart) skills? [Y/n]: "
-      read -r c2 < /dev/tty 2>/dev/null || read -r c2
+      read -r c2 < /dev/tty 2>/dev/null || c2="y"
       [[ "$c2" =~ ^[Nn] ]] || install_mobile_skills
 
       echo -n -e "Install 🌐 Web Frontend & Browser skills? [Y/n]: "
-      read -r c3 < /dev/tty 2>/dev/null || read -r c3
+      read -r c3 < /dev/tty 2>/dev/null || c3="y"
       [[ "$c3" =~ ^[Nn] ]] || install_web_skills
 
       echo -n -e "Install 🔥 Backend & Cloud Edge skills? [Y/n]: "
-      read -r c4 < /dev/tty 2>/dev/null || read -r c4
+      read -r c4 < /dev/tty 2>/dev/null || c4="y"
       [[ "$c4" =~ ^[Nn] ]] || install_backend_skills
 
       echo -n -e "Install 🐳 DevOps & Integrations skills? [Y/n]: "
-      read -r c5 < /dev/tty 2>/dev/null || read -r c5
+      read -r c5 < /dev/tty 2>/dev/null || c5="y"
       [[ "$c5" =~ ^[Nn] ]] || install_devops_skills
 
       echo -n -e "Install 🧠 Code Quality & Memory skills? [Y/n]: "
-      read -r c6 < /dev/tty 2>/dev/null || read -r c6
+      read -r c6 < /dev/tty 2>/dev/null || c6="y"
       [[ "$c6" =~ ^[Nn] ]] || install_code_quality_skills
       ;;
     *)
