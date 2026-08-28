@@ -1,0 +1,8 @@
+interface:
+  display_name: "Blog Factory"
+  short_description: "Bilingual nexu blogs: agents, automation, SEO."
+  brand_color: "#3DB9CE"
+  default_prompt: "Use $blog-factory to produce bilingual EN + ZH blog drafts with Astro frontmatter from my topic or release notes."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blog Indexing Automation"
+  short_description: "Automate sitemap and indexing checks"
+  default_prompt: "Use $blog-indexing-automation to design or implement a deployment-time indexing workflow for blog URLs."

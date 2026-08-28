@@ -261,13 +261,13 @@ install_workflows_and_plugins() {
     "mkdir -p $SKILLS_DIR/claude-skills && if [ -d $SKILLS_DIR/claude-skills/.git ]; then git -C $SKILLS_DIR/claude-skills pull; else git clone https://github.com/alirezarezvani/claude-skills.git $SKILLS_DIR/claude-skills; fi"
 }
 
-# 🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY
+  # 🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY
 install_code_quality_skills() {
   print_header "🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY"
 
-  run_step "Claude-Mem Persistent Session Context" \
-    "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." \
-    "npx --yes claude-mem install 2>/dev/null || npx --yes skills@latest add thedotmack/claude-mem $SCOPE_FLAG --all -y"
+  run_step "Persistent Memory & Context Continuity" \
+    "Maintains cross-session long-term memory and project decisions using local markdown logs (100% free, zero cloud fees)." \
+    "npx --yes skills@latest add memoryplugin/agent-skills $SCOPE_FLAG --all -y"
 
   run_step "Andrej Karpathy Engineering Philosophy" \
     "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." \

@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@playwright/cli": "^0.1.18",
+    "antigravity-workflows": "^1.1.2",
+    "ctx7": "^0.5.9",
+    "firecrawl-cli": "^1.23.3",
+    "uipro-cli": "^2.2.3"
+  }
+}

@@ -256,9 +256,9 @@ function Install-WorkflowsAndPlugins {
 function Install-CodeQualitySkills {
     Write-HeaderSection "🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY"
 
-    Run-Step "Claude-Mem Persistent Session Context" `
-        "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." `
-        "npx --yes claude-mem install 2>$null; npx --yes skills@latest add thedotmack/claude-mem $global:ScopeFlag --all -y"
+    Run-Step "Persistent Memory & Context Continuity" `
+        "Maintains cross-session long-term memory and project decisions using local markdown logs (100% free, zero cloud fees)." `
+        "npx --yes skills@latest add memoryplugin/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Andrej Karpathy Engineering Philosophy" `
         "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." `

@@ -1,0 +1,220 @@
+# Tracking Plan — repo-local source of truth
+#
+# Layout:
+#   analytics/
+#   ├── tracking-plan.yaml       <- this file (small apps)
+#   └── events/
+#       ├── signed_up.yaml        <- or one file per event (recommended for >20 events)
+#       └── _archive/
+#           └── …                  <- sunset events live here
+#
+# Lifecycle: proposed -> live -> deprecated -> sunset (moved to _archive)
+
+version: 1
+naming_school: object_action_snake_case        # one of: object_action_title_case | object_action_snake_case | function_camel_case
+
+# ---------- shared property dictionary ----------
+# Reuse these by `$ref` from event definitions.
+
+properties:
+  plan_name:
+    type: string
+    enum_values: [free, pro, enterprise]
+    description: The active subscription plan.
+    example: pro
+    pii_class: none
+  currency:
+    type: string
+    enum_values: [USD, EUR, GBP]
+    description: ISO 4217 currency code.
+    example: USD
+    pii_class: none
+  user_id:
+    type: string
+    description: Opaque internal user identifier. NEVER email or username.
+    example: usr_a1b2c3d4
+    pii_class: pii
+  workspace_id:
+    type: string
+    description: Opaque workspace / org / account identifier.
+    example: wsp_a1b2c3
+    pii_class: none
+
+# ---------- events ----------
+
+events:
+  # ---- universal ----
+  - name: signed_up
+    description: Account creation completed server-side. Fires once per user lifetime.
+    trigger:
+      web: app/actions/signup.ts > completeSignup
+      mobile: features/onboarding/SignupScreen.tsx > onSuccess
+      side: server                            # client | server | both
+    owner: growth-team
+    lifecycle: live
+    version: v1
+    pii_class: none
+    properties:
+      - name: plan
+        $ref: '#/properties/plan_name'
+        required: true
+      - name: referrer
+        type: string
+        required: false
+        description: utm_source or referrer (sanitized — no tokens).
+        example: producthunt
+        pii_class: quasi
+    consumers:
+      - dashboard:growth-overview
+      - funnel:signup-to-activation
+      - dbt:fct_signups
+
+  # ---- monetization ----
+  - name: subscription_started
+    description: Subscription billing started after trial or direct signup. Server-side only.
+    trigger:
+      web: app/actions/billing.ts > startSubscription
+      side: server
+    owner: growth-team
+    lifecycle: live
+    version: v1
+    pii_class: none
+    properties:
+      - name: plan_name
+        $ref: '#/properties/plan_name'
+        required: true
+      - name: price_cents
+        type: number
+        required: true
+        description: Monthly price in minor units.
+        example: 4900
+        pii_class: none
+      - name: currency
+        $ref: '#/properties/currency'
+        required: true
+      - name: billing_period
+        type: string
+        enum_values: [monthly, annual]
+        required: true
+        description: Billing cadence.
+        example: monthly
+        pii_class: none
+      - name: trial
+        type: boolean
+        required: true
+        description: True if this conversion came from a trial.
+        example: true
+        pii_class: none
+    consumers:
+      - dashboard:revenue-overview
+      - dbt:fct_subscriptions
+
+  # ---- engagement (web) ----
+  - name: $pageview
+    description: Web route change. Fires automatically from the wrapper.
+    trigger:
+      web: app/_analytics/page-view.tsx > PageView
+      side: client
+    owner: growth-team
+    lifecycle: live
+    version: v1
+    pii_class: none
+    properties:
+      - name: route
+        type: string
+        required: true
+        description: Route template (e.g. /products/[id]) — NEVER the raw URL.
+        example: /products/[id]
+        pii_class: none
+      - name: has_query
+        type: boolean
+        required: false
+        description: True if the URL had a query string. The query itself is dropped.
+        example: false
+        pii_class: none
+
+  # ---- engagement (mobile) ----
+  - name: $screen
+    description: Mobile screen focus changed.
+    trigger:
+      mobile: hooks/useScreenView.ts
+      side: client
+    owner: growth-team
+    lifecycle: live
+    version: v1
+    pii_class: none
+    properties:
+      - name: path
+        type: string
+        required: true
+        description: Expo Router pathname.
+        example: /settings/billing
+        pii_class: none
+      - name: has_params
+        type: boolean
+        required: false
+        description: True if route had params. Params themselves dropped to avoid PII (tokens, codes).
+        example: false
+        pii_class: none
+
+  # ---- example of a deprecated event ----
+  - name: user_clicked_signup
+    description: Legacy signup-button click event.
+    trigger:
+      web: components/Header.tsx > SignupButton
+      side: client
+    owner: growth-team
+    lifecycle: deprecated
+    sunset_date: 2026-07-01
+    deprecated_in_favor_of: signed_up         # use server-side `signed_up` instead
+    version: v1
+    pii_class: none
+    properties:
+      - name: variant
+        type: string
+        enum_values: [primary, secondary]
+        required: false
+        description: Button visual variant for A/B tests.
+        example: primary
+        pii_class: none
+
+# ---------- user properties (set on identify) ----------
+
+user_properties:
+  - name: plan
+    $ref: '#/properties/plan_name'
+    description: Current plan.
+  - name: signup_date
+    type: string                              # ISO-8601
+    description: When the user signed up.
+    example: '2026-05-27T12:00:00Z'
+  - name: role
+    type: string
+    enum_values: [owner, admin, member, viewer]
+    description: User role within their workspace.
+
+# ---------- group properties (B2B, set on group()) ----------
+
+group_properties:
+  - name: workspace_id
+    $ref: '#/properties/workspace_id'
+  - name: plan
+    $ref: '#/properties/plan_name'
+  - name: workspace_size
+    type: number
+    description: Number of seats in the workspace.
+    example: 12
+
+# ---------- destinations ----------
+
+destinations:
+  - name: posthog
+    type: product-analytics
+    auth_secret_env: POSTHOG_PROJECT_KEY
+    region: eu
+    retention_days: 365
+  - name: dash0
+    type: otel-rum
+    auth_secret_env: DASH0_INGEST_TOKEN
+    endpoint_env: DASH0_OTLP_ENDPOINT
+    retention_days: 90

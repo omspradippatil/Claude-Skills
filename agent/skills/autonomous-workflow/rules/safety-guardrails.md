@@ -1,0 +1,285 @@
+---
+title: 'Safety Guardrails'
+impact: CRITICAL
+tags:
+  - safety
+  - guardrails
+  - limits
+  - rollback
+---
+
+# Safety Guardrails
+
+## Contents
+
+- [Overview](#overview)
+- [Validation Checkpoints (per Phase)](#validation-checkpoints-per-phase)
+- [Self-Validation Questions](#self-validation-questions)
+- [Stuck-Loop Limit (Phase 4)](#stuck-loop-limit-phase-4)
+- [Executable-Check Integrity (Phase 4)](#executable-check-integrity-phase-4)
+- [Tool Prerequisites](#tool-prerequisites)
+- [Companion-Skill Safety](#companion-skill-safety)
+- [Resource Limits](#resource-limits)
+- [When to Stop and Ask](#when-to-stop-and-ask)
+- [Quality Gates](#quality-gates)
+- [Rollback Procedures](#rollback-procedures)
+- [Checkpoint Failure Protocol](#checkpoint-failure-protocol)
+- [References](#references)
+
+## Overview
+
+Validation checkpoints, resource limits, and rollback procedures for the
+autonomous workflow. These guardrails prevent runaway execution and enable
+clean recovery.
+
+---
+
+## Validation Checkpoints (per Phase)
+
+| Phase | Gate / Checkpoint                                                                                  |
+| ----- | -------------------------------------------------------------------------------------------------- |
+| 0     | Tier selected (Micro / Lite / Full). User confirmed understanding. No unresolved `blocking` missing-information item — even under `--no-confirm`. |
+| 1     | Plan matches requirements. `Skill("confidence", "plan")` >= 90% (mandatory companion, Full Mode only — Lite and Micro have no `plan.md`). Every `[user-stated]` requirement covered by an Acceptance Criterion; every planned `create` has an Existing Code Survey verdict. |
+| 2     | Worktree created with `gw add` (or native `git worktree add` fallback). CWD is the worktree. Deps installed. `plan.md` + `checks.yaml` written under `.agent/{branch}/` (Full Mode). |
+| 3     | Working in isolated worktree. Build/lint passes after each edit. `code-quality(code)` run at end.  |
+| 4     | All tests pass AND every `checks.yaml` check passes (or `unsatisfiable` user-approved) OR user-approved stop after stuck-loop escalation. |
+| 5     | Docs reflect changes. `Skill("docs", "update --auto")` run.                               |
+| 6     | `pr-reviewer` dispatched via `review-loop` (`--critical`; self mode; read-only — findings applied by `implement-suggestion`); blocking findings resolved. Walkthrough shown. Draft PR opened via `Skill("create-pr")`. |
+| 7     | CI green OR user-approved stop. Optional `gw remove` (or `git worktree remove` + `git branch -d`) after merge. |
+
+See each `phase-N-*.md` rule for full gate details.
+
+---
+
+## Self-Validation Questions
+
+| After Phase | Ask                                              |
+| ----------- | ------------------------------------------------ |
+| Phase 1     | Can I explain the approach in 2 sentences?       |
+| Phase 2     | Is `git worktree list` showing the new worktree? (or `gw list` if `gw` is installed) |
+| Phase 3     | Does code compile and lint pass?                 |
+| Phase 4     | Are ALL tests passing (or stop user-approved)?   |
+| Phase 5     | Do docs match the implementation?                |
+| Phase 6     | Is the PR description accurate and walkthrough shown? |
+| Phase 7     | Are CI checks green (or escalation explicit)?    |
+
+---
+
+## Stuck-Loop Limit (Phase 4)
+
+**Mode-aware cap: 3 iterations (Lite Mode) / 5 iterations (Full Mode) on the same failing area.**
+
+| Mode      | Cap | At cap                                                                                  |
+| --------- | --- | --------------------------------------------------------------------------------------- |
+| Lite Mode | 3   | Stop. Run `Skill("confidence", "analysis")`. Auto-replan or escalate to user.       |
+| Full Mode | 5   | Stop. Run `Skill("confidence", "analysis")`. Auto-replan or escalate to user.       |
+
+The mode-aware cap is the single biggest cost-saver in the workflow. More
+than the cap on the same failing area almost always means the mental model
+is wrong — continuing burns tokens without converging.
+
+See [companion-skills.md#stuck-loop-protocol-phase-4](./companion-skills.md#stuck-loop-protocol-phase-4) for the full auto-replan protocol.
+
+---
+
+## Executable-Check Integrity (Phase 4)
+
+Full Mode gates Phase 4 on `.agent/{branch}/checks.yaml`. Verifier-driven
+loops invite gaming — agents demonstrably hardcode expected outputs, edit
+tests, and exploit weak comparisons to force green. These rules are
+**non-relaxable** (full loop in
+[`phase-4-testing.md#executable-checks-loop`](./phase-4-testing.md#executable-checks-loop)):
+
+| Rule | Detail |
+| ---- | ------ |
+| Definitions are executor-immutable | Only `status:` flips freely. `run:`/`setup:` amendments require a `check-run-amended` Progress Log entry. `id:`/`requirement:`/`ears:`/`expect:` — never. A diff touching them is a hard stop. |
+| Four forbidden strategies | Never green a check by modifying tests/checks, overloading comparisons, recording/replaying state, or special-casing the check's inputs. |
+| Abort affordance | A check unsatisfiable-as-specified gets `status: unsatisfiable` + user escalation with evidence — never a workaround. |
+| Necessary, not sufficient | All-green checks never waive the test suite, `pr-reviewer` dispatch, or Phase 7 verifier. |
+
+---
+
+## Tool Prerequisites
+
+| Tool   | Status        | Behavior if missing                                                       |
+| ------ | ------------- | ------------------------------------------------------------------------- |
+| `gh`   | **REQUIRED**  | Stop. Phase 6 (PR creation) and Phase 7 (CI gate) cannot proceed.         |
+| `gw`   | Recommended   | Continue with native `git worktree` fallback; emit one-time warning. See [prerequisites#fallback-to-native-git-worktree](./prerequisites.md#fallback-to-native-git-worktree). |
+
+**`gw` is NOT a hard prerequisite.** The workflow falls back to native
+`git worktree` when `gw` is missing. Only `gh` is hard-required.
+
+## Companion-Skill Safety
+
+| Companion           | Safety-critical? | Behavior if missing                          |
+| ------------------- | ---------------- | -------------------------------------------- |
+| `confidence` (Phase 1) | **Yes** — the Full Mode plan gate (Lite/Micro have no `plan.md` and skip it) | Stop, ask user to install before continuing (Full Mode) |
+| All other companions  | No                       | Log one line, continue without              |
+
+**Companions are NOT safety-critical** — the workflow continues without them.
+The ONLY non-removable companion is `confidence` at Phase 1.
+
+When a companion is unavailable, log to conversation and `plan.md` Progress
+Log:
+
+> `companion: <name> — not available, continuing`
+
+---
+
+## Resource Limits
+
+### Soft Limits (Guidelines)
+
+- Commits: ~3-10 per feature
+- Files changed: ~20 max
+- Time: ~1-2 hours
+
+### Hard Limits (Stop and Ask)
+
+| Limit                                  | Action                          |
+| -------------------------------------- | ------------------------------- |
+| > 50 files changed                     | Scope too large — split PRs     |
+| > 3 hours stuck                        | Fundamental issue — escalate    |
+| > 100 commits                          | Approach is wrong — escalate    |
+| Stuck-loop cap on same failing area (3 Lite / 5 Full) | Run `confidence(analysis)`; one-shot auto-replan or escalate |
+| 2 `ci-auto-fix` handoffs on same PR    | Stop, surface failures to user  |
+
+---
+
+## When to Stop and Ask
+
+1. Requirements ambiguous mid-implementation.
+2. Fundamental blocker encountered.
+3. **Agent-initiated** scope creep detected — *you* are about to expand
+   beyond the requested change on your own initiative (a refactor no one
+   asked for, a "while I'm here" cleanup, a speculative abstraction). This
+   trigger is about restraining **your own** expansion. It is **not** a
+   reason to refuse work the **user** asks for — see
+   [User-requested changes are never scope creep](#user-requested-changes-are-never-scope-creep) below.
+4. Tests reveal misunderstanding.
+5. Resource limits approaching.
+6. Stuck-loop cap hit (3 iterations in Lite Mode / 5 in Full Mode) and auto-replan already used.
+7. Critical companion (`confidence`) unavailable.
+
+### How to Ask
+
+```markdown
+"Pausing autonomous execution — need guidance.
+
+**Situation:** [what happened]
+
+**Issue:** [the blocker]
+
+**Options:**
+
+1. [Option A] — [pros/cons]
+2. [Option B] — [pros/cons]
+
+**My recommendation:** [which and why]
+
+**Question:** [specific question]
+
+Should I proceed with [recommended] or [alternative]?"
+```
+
+### User-requested changes are never scope creep
+
+**Anchor:** `user-requested-changes-are-never-scope-creep`
+
+"Scope creep" is a guard against **you** inventing work. A change the **user**
+explicitly asks for is, by definition, in scope — it is a new requirement, not
+creep. Never refuse or defer a user-requested change on scope-creep grounds.
+This holds at **every** point in the lifecycle, including **after the work is
+"done"** (PR opened, control handed back):
+
+- A user proposing an improvement once they can see the **holistic picture of
+  the finished feature** is exactly when the best refinements surface — the
+  workflow must welcome them, not treat "the task is complete" as a closed door.
+- The correct response to a post-completion improvement is to **fold it in**,
+  not to reject it. Re-detect the tier **for the delta only** (a one-line copy
+  tweak is Micro even if the original feature was Full), then:
+  - **Micro / Lite delta** → apply it single-pass on the same branch, commit,
+    and push to the existing PR.
+  - **Full delta** (architectural, cross-cutting, or 4+ files) → run it through
+    the [edit-driven iteration loop](./planner-executor-handoff.md#edit-driven-iteration-loop):
+    fold the improvement into `plan.md` + `checks.yaml` as a new version,
+    re-clear `confidence(plan)`, then execute the delta.
+- You **may** note the scope delta for the user's awareness ("this is beyond
+  the original ticket — folding it in as a follow-up commit on this PR"), and
+  you **should** still apply the normal gates (the change is verified, tested,
+  and reviewed like any other). What you must **not** do is accept the idea and
+  then decline to act on it, or bounce it back as out-of-scope. Accepted means
+  done.
+
+The one legitimate reason to pause on a user-requested improvement is a genuine
+**blocker or conflict** (it collides with an existing constraint, it is
+technically infeasible as stated, or it needs a decision only the user can
+make) — surface that via [How to Ask](#how-to-ask). Scope size alone is never
+that reason.
+
+---
+
+## Quality Gates
+
+**Before each phase transition:**
+
+- Previous phase checklist complete
+- Self-validation passed
+- No blocking errors
+- Clear to proceed
+
+**Before Phase 3 (CRITICAL GATE):**
+
+- Phase 2 complete — worktree created
+- Currently in worktree directory (NOT user's original directory)
+- Dependencies installed
+- Build system works
+- `plan.md` written under `.agent/{branch}/` (Full Mode)
+
+**If this gate fails, return to Phase 2.**
+
+---
+
+## Rollback Procedures
+
+```bash
+# Undo uncommitted changes
+git checkout .
+
+# Undo last commit (keep changes)
+git reset --soft HEAD~1
+
+# Undo last commit (discard changes)
+git reset --hard HEAD~1
+
+# Return to starting point
+git reset --hard origin/main
+
+# Remove worktree entirely
+gw remove <branch-name> --force                       # with gw
+# or, native fallback:
+git worktree remove "$WORKTREE_PATH" --force \
+  && git branch -D <branch-name>
+```
+
+---
+
+## Checkpoint Failure Protocol
+
+If validation fails:
+
+1. Do NOT proceed to next phase.
+2. Analyze what went wrong.
+3. Fix the issue.
+4. Re-validate.
+5. Only proceed when validation passes.
+
+---
+
+## References
+
+- Related rule: [companion-skills](./companion-skills.md)
+- Related rule: [error-recovery](./error-recovery.md)
+- Related rule: [decision-framework](./decision-framework.md)
+- Related rule: [phase-4-testing](./phase-4-testing.md)
+- Related rule: [phase-7-ci-gate](./phase-7-ci-gate.md)
