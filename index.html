@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Claude-Skills ⚡ 400+ Production AI Coding Agent Skills Suite</title>
+  <meta name="title" content="Claude-Skills ⚡ 400+ Production AI Coding Agent Skills Suite">
+  <meta name="description" content="Supercharge Claude Code, Antigravity, Cursor, and Codex with 400+ verified production skills. Features high-taste UI/UX, system architecture visualizers, Flutter mobile heuristics, Playwright E2E, Agentic SEO, and 100% free local memory.">
+  <meta name="keywords" content="Claude Code, Antigravity, AI Agent Skills, Cursor AI, Codex, Claude Skills, AI Coding Assistant, Agentic SEO, UI UX Pro Max, Taste Skill, Archify, Playwright Skill, Free Local Memory, LLM Tools">
+  <meta name="author" content="Om Pradip Patil">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://omspradippatil.github.io/Claude-Skills/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://omspradippatil.github.io/Claude-Skills/">
+  <meta property="og:title" content="Claude-Skills ⚡ 400+ Production AI Coding Agent Skills Suite">
+  <meta property="og:description" content="The ultimate, non-conflicting multi-platform skills installer for AI coding agents. Enrich your agent with UI/UX taste, architecture visualizers, mobile/web heuristics, and free local memory.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/assets/banner.svg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://omspradippatil.github.io/Claude-Skills/">
+  <meta property="twitter:title" content="Claude-Skills ⚡ 400+ Production AI Coding Agent Skills Suite">
+  <meta property="twitter:description" content="Supercharge Claude Code, Antigravity, Cursor, and Codex with 400+ verified production skills. 100% Free & Local.">
+  <meta property="twitter:image" content="https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/assets/banner.svg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              cyan: '#00F5FF',
+              purple: '#A855F7',
+              pink: '#EC4899',
+              green: '#39FF14',
+              dark: '#07090E',
+              card: '#0D111A',
+              border: '#1E293B',
+              borderHover: '#38BDF8',
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow 3s ease-in-out infinite alternate',
+            'float': 'float 6s ease-in-out infinite',
+            'border-beam': 'borderBeam 4s linear infinite',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 15px rgba(0, 245, 255, 0.2)' },
+              '100%': { boxShadow: '0 0 35px rgba(168, 85, 247, 0.4)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            borderBeam: {
+              '0%': { 'stroke-dashoffset': '0' },
+              '100%': { 'stroke-dashoffset': '-400' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Structured Data JSON-LD Schema (SEO Optimization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Claude-Skills",
+    "operatingSystem": "macOS, Linux, Windows",
+    "applicationCategory": "DeveloperApplication",
+    "description": "The ultimate open-source skills and heuristics suite for AI coding assistants including Claude Code, Antigravity, Cursor, and Codex.",
+    "url": "https://omspradippatil.github.io/Claude-Skills/",
+    "downloadUrl": "https://github.com/omspradippatil/Claude-Skills",
+    "softwareVersion": "2.4.0",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Om Pradip Patil",
+      "url": "https://github.com/omspradippatil"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "128"
+    }
+  }
+  </script>
+
+  <style>
+    body {
+      background-color: #07090E;
+      color: #F1F5F9;
+      overflow-x: hidden;
+    }
+    
+    .glass-card {
+      background: rgba(13, 17, 26, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(0, 245, 255, 0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -10px rgba(0, 245, 255, 0.15);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #00F5FF 0%, #A855F7 50%, #EC4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #38BDF8 0%, #00F5FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .radial-bg {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 245, 255, 0.12) 0%, rgba(168, 85, 247, 0.06) 35%, rgba(7, 9, 14, 0) 70%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07090E;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1E293B;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body class="selection:bg-brand-cyan/20 selection:text-brand-cyan relative">
+
+  <!-- Interactive Canvas Background -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Background Gradients -->
+  <div class="fixed inset-0 radial-bg pointer-events-none z-0"></div>
+
+  <!-- Header / Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card !border-x-0 !border-t-0 bg-opacity-80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-cyan via-brand-purple to-brand-pink flex items-center justify-center shadow-lg shadow-brand-cyan/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="zap" class="w-5 h-5 text-black fill-black"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg tracking-tight flex items-center gap-1.5 text-white">
+            Claude-Skills
+            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20">v2.4</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#features" class="hover:text-brand-cyan transition-colors">Superpowers</a>
+        <a href="#explorer" class="hover:text-brand-cyan transition-colors">Skill Explorer</a>
+        <a href="#lifecycle" class="hover:text-brand-cyan transition-colors">How It Works</a>
+        <a href="#comparison" class="hover:text-brand-cyan transition-colors">Comparison</a>
+        <a href="#faq" class="hover:text-brand-cyan transition-colors">FAQ</a>
+      </nav>
+
+      <!-- CTA Action -->
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/omspradippatil/Claude-Skills" target="_blank" rel="noopener" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-sm font-semibold transition-all hover:scale-105 shadow-sm text-white">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Star on GitHub</span>
+          <span class="px-1.5 py-0.2 text-xs bg-slate-900/60 rounded text-brand-cyan border border-slate-700/80">★ 400+</span>
+        </a>
+        <a href="#install" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-gradient-to-r from-brand-cyan to-brand-purple hover:from-cyan-400 hover:to-purple-500 text-black font-bold text-sm transition-all shadow-md shadow-brand-cyan/20 hover:scale-105">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Install</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="relative z-10 pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-4xl mx-auto pt-6">
+      
+      <!-- Top Announcement Pill -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-800/60 border border-brand-cyan/30 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md shadow-lg shadow-brand-cyan/10">
+        <span class="flex h-2 w-2 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
+        </span>
+        <span class="text-slate-300">400+ Verified Skills Suite for AI Coding Agents</span>
+        <span class="text-brand-cyan font-bold flex items-center gap-0.5">100% Free & Local <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+        Empower Your AI Agent With <br class="hidden sm:inline">
+        <span class="text-gradient">Verified Taste & Superpowers</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-lg sm:text-xl text-slate-400 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+        Stop getting generic boilerplate code. Equip <b>Claude Code, Antigravity, Cursor, and Codex</b> with curated UI/UX heuristics, interactive system visualizers, mobile/web frameworks, agentic SEO, and local persistent memory.
+      </p>
+
+      <!-- Terminal Install Component (Zero Friction) -->
+      <div id="install" class="max-w-2xl mx-auto mb-14 text-left">
+        <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80">
+          
+          <!-- Terminal Header & Tabs -->
+          <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+              <span class="ml-2 text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="terminal" class="w-3.5 h-3.5 text-brand-cyan"></i>
+                quick-install
+              </span>
+            </div>
+
+            <!-- OS / Scope Switcher Tabs -->
+            <div class="flex items-center gap-1 bg-slate-950/80 p-1 rounded-lg border border-slate-800 text-xs font-mono">
+              <button onclick="switchTab('mac')" id="tab-mac" class="px-2.5 py-1 rounded bg-brand-cyan/20 text-brand-cyan font-bold transition-all">macOS / Linux</button>
+              <button onclick="switchTab('win')" id="tab-win" class="px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-all">Windows (PS)</button>
+              <button onclick="switchTab('proj')" id="tab-proj" class="px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-all">Project Scope</button>
+            </div>
+          </div>
+
+          <!-- Code Snippet Area -->
+          <div class="p-5 bg-slate-950/90 relative group font-mono text-sm sm:text-base flex items-center justify-between gap-4">
+            <div class="overflow-x-auto whitespace-nowrap text-slate-200 py-1">
+              <span class="text-brand-pink select-none">$ </span>
+              <span id="command-text" class="text-brand-cyan font-medium">bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"</span>
+            </div>
+
+            <button onclick="copyCommand()" id="copy-btn" class="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600/80 text-xs font-sans font-bold text-white transition-all hover:scale-105 active:scale-95 shadow-md">
+              <i data-lucide="copy" id="copy-icon" class="w-3.5 h-3.5 text-brand-cyan"></i>
+              <span id="copy-label">Copy</span>
+            </button>
+          </div>
+
+          <!-- Terminal Footer Note -->
+          <div class="bg-slate-900/60 px-4 py-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-brand-green"></i>
+              Auto-Confirms All 400+ Sub-Skills (Zero Prompts)
+            </span>
+            <span class="hidden sm:inline text-slate-500 font-mono">100% Free &amp; Open Source</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="glass-card rounded-xl p-4 text-center">
+          <div class="text-3xl font-extrabold text-white font-mono text-gradient-cyan">400+</div>
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wider mt-1">Verified Skills</div>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center">
+          <div class="text-3xl font-extrabold text-white font-mono text-gradient">9 Suites</div>
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wider mt-1">Specialized Domains</div>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center">
+          <div class="text-3xl font-extrabold text-white font-mono text-brand-green">0 Conflict</div>
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wider mt-1">Safe Coexistence</div>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center">
+          <div class="text-3xl font-extrabold text-white font-mono text-brand-pink">$0.00</div>
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wider mt-1">100% Free &amp; Local</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🍱 Bento Grid Superpowers Section -->
+    <section id="features" class="mt-32">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Architected For Production</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+          9 Superpower Suites in One Ecosystem
+        </h3>
+        <p class="text-slate-400 mt-4 text-base sm:text-lg">
+          Each suite is calibrated with strict heuristic boundaries so UI rules never clash with database schemas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Card 1: UI/UX & Taste -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 text-brand-cyan group-hover:scale-110 transition-transform">
+            <i data-lucide="palette" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🎨 Core UI/UX &amp; Taste</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Primary</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Eliminates generic AI boilerplate aesthetics. Generates bespoke design tokens, clean typography hierarchy, and 60fps spring physics animations.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-cyan"></i> UI/UX Pro Max CLI</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-cyan"></i> Taste Skill (13 Anti-Slop Rules)</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-cyan"></i> 49 Motion &amp; Easing Heuristics</li>
+          </ul>
+        </div>
+
+        <!-- Card 2: Architecture & System Maps -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-5 text-brand-purple group-hover:scale-110 transition-transform">
+            <i data-lucide="network" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🏛️ Architecture Maps</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Visualizer</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Compiles codebase topology, AST components, and API sequence charts into verifiable interactive HTML/SVG diagrams with zero cloud lock-in.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-purple"></i> Archify System Mapper</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-purple"></i> Interactive Flow Topologies</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-purple"></i> AST Workflow Analysis</li>
+          </ul>
+        </div>
+
+        <!-- Card 3: Mobile Development -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-5 text-brand-pink group-hover:scale-110 transition-transform">
+            <i data-lucide="smartphone" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">📱 Mobile Engineering</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-pink-500/10 text-pink-400 border border-pink-500/20">Flutter/Dart</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Scans `pubspec.yaml` for official package guidelines, Riverpod/BLoC state management, widget rebuild optimizations, and OWASP mobile security.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-pink"></i> Dart Skills CLI</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-pink"></i> Flutter Claude Heuristics</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-pink"></i> OWASP Mobile MASVS Playbook</li>
+          </ul>
+        </div>
+
+        <!-- Card 4: Web & Playwright -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5 text-blue-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="globe" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🌐 Web &amp; E2E Testing</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Playwright</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Semantic WCAG AA/AAA HTML layouts, 130 Framer Motion interactions, automated visual regression screenshots, and flaky-test healing.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> MengTo 130 Web Skills</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> TestDino Playwright Skill</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> Firecrawl Local Scraper CLI</li>
+          </ul>
+        </div>
+
+        <!-- Card 5: Agentic SEO -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5 text-emerald-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="search" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🔍 Agentic SEO &amp; AEO</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">AI Engine Opt</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            16 sub-skills and 89 evidence scripts for Google rankings and LLM search citations. Generates JSON-LD schemas and Core Web Vitals checks.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Agentic-SEO 10 Specialists</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Ashley Technical SEO Agent</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Schema JSON-LD Generator</li>
+          </ul>
+        </div>
+
+        <!-- Card 6: Backend & Cloud Edge -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-5 text-amber-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🔥 Cloud &amp; Databases</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Edge SQL</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Postgres Row Level Security (RLS) design, serverless Neon PR branching, Firestore rules, and geo-distributed Cloudflare Workers.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Supabase Postgres RLS</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Neon Database Branching</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Cloudflare Workers &amp; D1</li>
+          </ul>
+        </div>
+
+        <!-- Card 7: DevOps & Integrations -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-5 text-indigo-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🐳 DevOps &amp; Composio</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Automation</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Connects your coding agent directly to GitHub Actions, repository PR reviews, automated release workflows, and 1000+ app connectors.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Composio Integration SDK</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Automated PR Review Bots</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Skill Creator Toolkit</li>
+          </ul>
+        </div>
+
+        <!-- Card 8: Universal Workflows -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-5 text-teal-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="git-merge" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🔄 Intelligent Workflows</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-teal-500/10 text-teal-400 border border-teal-500/20">388+ Plugins</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Stack-agnostic, question-driven workflows from Antigravity and the 388+ universal Claude Code plugins library across 20 domains.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Antigravity Workflows CLI</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Universal Claude-Skills Library</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Multi-Agent Orchestration</li>
+          </ul>
+        </div>
+
+        <!-- Card 9: 100% Free Local Memory -->
+        <div class="glass-card rounded-2xl p-6 relative group overflow-hidden border border-slate-800">
+          <div class="w-12 h-12 rounded-xl bg-brand-green/10 border border-brand-green/20 flex items-center justify-center mb-5 text-brand-green group-hover:scale-110 transition-transform">
+            <i data-lucide="cpu" class="w-6 h-6"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xl font-bold text-white">🧠 Local Memory &amp; Quality</h4>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-brand-green/10 text-brand-green border border-brand-green/20">Zero Fees</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
+            Maintains cross-session long-term memory using local markdown logs. Enforces Karpathy simplicity, anti-overengineering, and live docs.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-green"></i> 100% Free Local MemoryPlugin</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-green"></i> Karpathy &amp; Caveman Heuristics</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-green"></i> CTX7 Live Framework Docs</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 🔍 Interactive Live Skill Explorer -->
+    <section id="explorer" class="mt-32">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Interactive Directory</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Explore 400+ Skills</h3>
+        <p class="text-slate-400 mt-4 text-base">Search skills, copy activation prompts, and inspect source repositories instantly.</p>
+      </div>
+
+      <!-- Search & Category Filter Controls -->
+      <div class="glass-card rounded-2xl p-6 mb-8 border border-slate-800">
+        <div class="flex flex-col md:flex-row items-center gap-4">
+          
+          <!-- Search Input -->
+          <div class="relative w-full md:w-1/2">
+            <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="skill-search" oninput="filterSkills()" placeholder="Search by name, prompt or tech (e.g. Flutter, SEO, Taste, Playwright, Postgres)..." class="w-full pl-11 pr-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-cyan transition-colors">
+          </div>
+
+          <!-- Category Chips -->
+          <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-1/2 pb-2 md:pb-0 font-mono text-xs no-scrollbar">
+            <button onclick="setCategory('all')" class="cat-btn active px-3 py-1.5 rounded-lg bg-brand-cyan/20 text-brand-cyan font-bold whitespace-nowrap border border-brand-cyan/30">All (400+)</button>
+            <button onclick="setCategory('ui')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">UI/UX Taste</button>
+            <button onclick="setCategory('arch')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">Archify</button>
+            <button onclick="setCategory('mobile')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">Mobile</button>
+            <button onclick="setCategory('web')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">Web/Playwright</button>
+            <button onclick="setCategory('seo')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">SEO</button>
+            <button onclick="setCategory('backend')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">Backend</button>
+            <button onclick="setCategory('memory')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800">Memory</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Skills Grid Container -->
+      <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Dynamically injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ⚡ Progressive Disclosure Lifecycle Section -->
+    <section id="lifecycle" class="mt-32">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Zero Context Bloat</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">How Progressive Disclosure Works</h3>
+        <p class="text-slate-400 mt-4 text-base">Skills do not dump thousands of lines into your context window at start. They load gracefully in 4 distinct lifecycle stages.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+        <div class="glass-card rounded-2xl p-6 border-t-2 border-brand-cyan">
+          <div class="text-xs font-mono text-brand-cyan font-bold mb-2">STAGE 01</div>
+          <h4 class="text-lg font-bold text-white mb-2">Lightweight Indexing</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            At agent startup, only skill headers (~20 tokens each) are indexed. Token impact is virtually zero.
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-950 font-mono text-[11px] text-slate-400 border border-slate-800">
+            name: taste-skill<br>tokens: ~24 tokens
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-t-2 border-brand-purple">
+          <div class="text-xs font-mono text-brand-purple font-bold mb-2">STAGE 02</div>
+          <h4 class="text-lg font-bold text-white mb-2">Context Activation</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            When you mention a design or database task, the agent injects the full `SKILL.md` rules on-demand.
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-950 font-mono text-[11px] text-brand-purple border border-slate-800">
+            Trigger: "Refactor UI..."<br>Status: Injected
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-t-2 border-brand-pink">
+          <div class="text-xs font-mono text-brand-pink font-bold mb-2">STAGE 03</div>
+          <h4 class="text-lg font-bold text-white mb-2">Local Execution</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Scripts (Archify, Playwright, SEO scrapers) execute locally on your machine with verifiable output.
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-950 font-mono text-[11px] text-brand-pink border border-slate-800">
+            $ archify compile<br>✔ Verified AST
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border-t-2 border-brand-green">
+          <div class="text-xs font-mono text-brand-green font-bold mb-2">STAGE 04</div>
+          <h4 class="text-lg font-bold text-white mb-2">Free Local Memory</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Architectural choices and preferences are saved locally to markdown files for future chat sessions.
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-950 font-mono text-[11px] text-brand-green border border-slate-800">
+            .claude/CLAUDE.md<br>✔ Decisions Saved
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⚖️ Interactive Code Comparator (Before vs After) -->
+    <section id="comparison" class="mt-32">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Side-By-Side Proof</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Generic AI vs Claude-Skills</h3>
+        <p class="text-slate-400 mt-4 text-base">See the difference in code quality, optical whitespace balance, and accessibility.</p>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+        <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-800">
+          
+          <!-- Standard AI Column -->
+          <div class="p-6 bg-slate-950/60">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+              <span class="text-sm font-bold text-red-400 font-mono">❌ Standard AI Output (AI Slop)</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-4">Generic saturated gradients, excessive nested card borders, jarring linear transitions, and no accessibility semantics.</p>
+            <div class="p-4 rounded-xl bg-slate-900/90 font-mono text-xs text-red-300/90 overflow-x-auto border border-red-500/20 leading-relaxed">
+              &lt;!-- Generic AI Template --&gt;<br>
+              &lt;div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-8 rounded-lg shadow-2xl border-4 border-white"&gt;<br>
+              &nbsp;&nbsp;&lt;button class="transition-all duration-300 hover:scale-110 bg-purple-700 text-white font-bold py-2 px-4 rounded"&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;Click Here!<br>
+              &nbsp;&nbsp;&lt;/button&gt;<br>
+              &lt;/div&gt;
+            </div>
+          </div>
+
+          <!-- Claude-Skills Column -->
+          <div class="p-6 bg-slate-950/90">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-green"></span>
+              <span class="text-sm font-bold text-brand-green font-mono">✅ With Claude-Skills Suite</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-4">Calibrated tokens, optical letter spacing, physics spring curves, WCAG AAA accessibility landmarks, and subtle contrast boundaries.</p>
+            <div class="p-4 rounded-xl bg-slate-900/90 font-mono text-xs text-brand-cyan overflow-x-auto border border-brand-cyan/20 leading-relaxed">
+              &lt;!-- High-Taste Heuristic Component --&gt;<br>
+              &lt;section class="relative bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-sm" aria-labelledby="heading"&gt;<br>
+              &nbsp;&nbsp;&lt;button class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-sm transition-transform active:scale-[0.98]"&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;Get Started<br>
+              &nbsp;&nbsp;&lt;/button&gt;<br>
+              &lt;/section&gt;
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 🤖 Supported AI Agents Matrix -->
+    <section class="mt-32">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Universal Compatibility</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Works With Your Favorite Coding Agent</h3>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-center">
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-brand-cyan/50">
+          <i data-lucide="bot" class="w-6 h-6 text-brand-cyan"></i>
+          <span class="text-sm font-bold text-white">Claude Code</span>
+          <span class="text-[10px] font-mono text-brand-green">● Native</span>
+        </div>
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-brand-purple/50">
+          <i data-lucide="sparkles" class="w-6 h-6 text-brand-purple"></i>
+          <span class="text-sm font-bold text-white">Antigravity</span>
+          <span class="text-[10px] font-mono text-brand-green">● Supported</span>
+        </div>
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-brand-pink/50">
+          <i data-lucide="mouse-pointer-click" class="w-6 h-6 text-brand-pink"></i>
+          <span class="text-sm font-bold text-white">Cursor</span>
+          <span class="text-[10px] font-mono text-brand-green">● Supported</span>
+        </div>
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-blue-400/50">
+          <i data-lucide="code-2" class="w-6 h-6 text-blue-400"></i>
+          <span class="text-sm font-bold text-white">Codex / OpenCode</span>
+          <span class="text-[10px] font-mono text-brand-green">● Supported</span>
+        </div>
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-emerald-400/50">
+          <i data-lucide="terminal-square" class="w-6 h-6 text-emerald-400"></i>
+          <span class="text-sm font-bold text-white">Gemini CLI</span>
+          <span class="text-[10px] font-mono text-brand-green">● Supported</span>
+        </div>
+        <div class="glass-card rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:border-amber-400/50">
+          <i data-lucide="command" class="w-6 h-6 text-amber-400"></i>
+          <span class="text-sm font-bold text-white">Cline &amp; Aider</span>
+          <span class="text-[10px] font-mono text-brand-green">● Supported</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ❓ FAQ Section -->
+    <section id="faq" class="mt-32 mb-20 max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">Got Questions?</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Frequently Asked Questions</h3>
+      </div>
+
+      <div class="space-y-4">
+        
+        <details class="glass-card rounded-xl p-5 group cursor-pointer border border-slate-800">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>Are the installed skills completely free?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+            Yes, 100%. We removed any dependencies on paid proprietary plugins. All memory persistence, architecture visualizers, heuristics, and testing skills run locally on your hardware with zero subscriptions or API fees.
+          </p>
+        </details>
+
+        <details class="glass-card rounded-xl p-5 group cursor-pointer border border-slate-800">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>Will these skills slow down my AI coding assistant?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+            No. Thanks to the Progressive Disclosure system, only ~20 tokens per skill are registered on agent boot. Full heuristics and instructions are only injected when a matching user prompt triggers that specific skill.
+          </p>
+        </details>
+
+        <details class="glass-card rounded-xl p-5 group cursor-pointer border border-slate-800">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>What is the difference between Global and Project Scope?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+            Global installation places skills in `~/.agents/skills` and `~/.claude/skills` so they are available across every project on your computer. Project scope installs skills inside your current directory (`./.claude/skills` and `./.agent/skills`), ideal for team repositories and project-isolated workflows.
+          </p>
+        </details>
+
+        <details class="glass-card rounded-xl p-5 group cursor-pointer border border-slate-800">
+          <summary class="font-bold text-white flex items-center justify-between list-none">
+            <span>How do I completely uninstall all skills?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+            Simply run `./install.sh --uninstall` or use the quick uninstaller: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.sh)"`. It cleanly removes all symlinks, CLIs, and cloned repositories.
+          </p>
+        </details>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-card !border-x-0 !border-b-0 py-12 relative z-10 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-cyan to-brand-purple flex items-center justify-center">
+          <i data-lucide="zap" class="w-4 h-4 text-black fill-black"></i>
+        </div>
+        <span class="font-bold text-white">Claude-Skills Suite</span>
+        <span class="text-xs text-slate-500 font-mono">Released under MIT License</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-sm">
+        <a href="https://github.com/omspradippatil/Claude-Skills" target="_blank" rel="noopener" class="hover:text-brand-cyan transition-colors flex items-center gap-1.5">
+          <i data-lucide="github" class="w-4 h-4"></i> GitHub Repository
+        </a>
+        <a href="https://github.com/omspradippatil/Claude-Skills/blob/main/README.md" target="_blank" rel="noopener" class="hover:text-brand-cyan transition-colors">Documentation</a>
+        <a href="#install" class="hover:text-brand-cyan transition-colors">Install</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Lucide Icons Initialization
+    lucide.createIcons();
+
+    // Command Switcher
+    const commands = {
+      mac: 'bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"',
+      win: 'irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex',
+      proj: './install.sh --project --all'
+    };
+
+    function switchTab(type) {
+      document.getElementById('command-text').innerText = commands[type];
+      
+      document.querySelectorAll('#tab-mac, #tab-win, #tab-proj').forEach(btn => {
+        btn.className = "px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-all";
+      });
+      
+      const activeBtn = document.getElementById('tab-' + type);
+      activeBtn.className = "px-2.5 py-1 rounded bg-brand-cyan/20 text-brand-cyan font-bold transition-all";
+    }
+
+    // Copy to Clipboard with Feedback
+    function copyCommand() {
+      const text = document.getElementById('command-text').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        const icon = document.getElementById('copy-icon');
+        const label = document.getElementById('copy-label');
+        
+        btn.classList.add('!bg-brand-green', '!text-black');
+        label.innerText = 'Copied!';
+        
+        setTimeout(() => {
+          btn.classList.remove('!bg-brand-green', '!text-black');
+          label.innerText = 'Copy';
+        }, 2000);
+      });
+    }
+
+    // Skills Database for Live Search
+    const skillsData = [
+      { name: 'uipro-cli', cat: 'ui', title: 'UI/UX Pro Max CLI', desc: 'Design token system, UI heuristics, color palettes, and typography hierarchy.', prompt: 'uipro init --ai antigravity: Generate a design token system for a fintech dashboard.' },
+      { name: 'taste-skill', cat: 'ui', title: 'Taste Skill (13 Anti-Slop Rules)', desc: 'Strips generic AI styling; enforces optical letter spacing, contrast, and layout rhythm.', prompt: 'Redesign this settings view. Apply high taste, clean typography hierarchy, and remove generic AI borders/shadows.' },
+      { name: 'mthines/agent-skills', cat: 'ui', title: 'Accessible 60fps Motion', desc: '49 physics-based spring curves, micro-interactions, gesture response, and easing.', prompt: 'Add spring physics transitions and micro-interactions to the modal open and accordion drawer.' },
+      { name: 'archify', cat: 'arch', title: 'Archify System Mapper', desc: 'Compiles codebase topology and API sequence charts into interactive HTML/SVG maps.', prompt: 'Use archify to map this repository\'s runtime architecture and data flow as an interactive HTML diagram.' },
+      { name: 'flutter-claude-skills', cat: 'mobile', title: 'Flutter & Dart Heuristics', desc: 'Widget rebuild optimization, Riverpod/BLoC architecture, and native bridges.', prompt: 'Optimize this ListView widget tree to prevent unnecessary rebuilds using const constructors and selector hooks.' },
+      { name: 'OWASP-mobile', cat: 'mobile', title: 'OWASP Mobile Security', desc: 'Audits mobile source code for hardcoded secrets, insecure IPC, and MASVS rules.', prompt: 'Audit this Flutter application against OWASP MASVS for hardcoded keys and insecure biometric storage.' },
+      { name: 'frontend-agent-skills', cat: 'web', title: 'Frontend Accessibility (WCAG)', desc: 'Semantic HTML5, ARIA landmarks, and responsive CSS grid/flexbox layouts.', prompt: 'Refactor this navbar and hero section to be fully accessible with semantic ARIA landmarks.' },
+      { name: 'MengTo-Skills', cat: 'web', title: '130 Web Transitions Collection', desc: 'Framer Motion patterns, scroll-driven visual sequences, and CSS keyframe animations.', prompt: 'Create a smooth scroll-driven card expansion effect using Framer Motion and Tailwind CSS.' },
+      { name: 'testdino-playwright', cat: 'web', title: 'TestDino Playwright Skill', desc: 'AI test generator, fixture optimizer, and flaky-test auto-healing toolkit.', prompt: 'Write an end-to-end Playwright test suite for user authentication with fixtures and auto-retry.' },
+      { name: 'agentic-seo', cat: 'seo', title: 'Agentic SEO Suite (16 Sub-Skills)', desc: 'Technical SEO analysis engine, 10 specialist agents, and 89 evidence collectors.', prompt: 'Run a full technical SEO audit on this landing page and generate JSON-LD schema for SoftwareApplication.' },
+      { name: 'ashley-seo', cat: 'seo', title: 'Ashley SEO & Indexing Agent', desc: 'OpenGraph metadata, JSON-LD structured schemas, sitemaps, and Core Web Vitals.', prompt: 'Check our OpenGraph meta tags, canonical URLs, and sitemap configuration for Google indexing.' },
+      { name: 'supabase-skills', cat: 'backend', title: 'Supabase Postgres RLS', desc: 'Row Level Security policies, Edge Functions (Deno), and realtime subscriptions.', prompt: 'Design a PostgreSQL schema for a multi-tenant SaaS with strict Row Level Security (RLS) policies.' },
+      { name: 'neondatabase-skills', cat: 'backend', title: 'Neon Database Branching', desc: 'Serverless Postgres, instant database branching for PRs, and query optimization.', prompt: 'Configure database branching for CI/CD pull requests and optimize indexing strategy.' },
+      { name: 'cloudflare-skills', cat: 'backend', title: 'Cloudflare Workers & D1', desc: 'Edge Workers, D1 SQL databases, R2 object storage, and KV cache headers.', prompt: 'Write a Cloudflare Worker with D1 SQL binding and edge cache headers for geo-distributed API responses.' },
+      { name: 'composiohq-skills', cat: 'devops', title: 'Composio 1000+ Integrations', desc: 'GitHub Actions automation, PR review bots, issue handlers, and app workflows.', prompt: 'Set up a GitHub Action that triggers automated code review on every pull request using Composio.' },
+      { name: 'memoryplugin', cat: 'memory', title: '100% Free Local Memory', desc: 'Preserves context and decisions across sessions via local markdown logs (Zero API fees).', prompt: 'What architectural decisions did we make yesterday regarding user permissions?' },
+      { name: 'karpathy-skills', cat: 'memory', title: 'Andrej Karpathy Heuristics', desc: 'Prioritizes clarity, minimal abstractions, zero fluff, and clean foundational code.', prompt: 'Refactor this utility module following Karpathy principles: simple loops, zero over-engineering, maximum clarity.' },
+      { name: 'ctx7', cat: 'memory', title: 'CTX7 Live Framework Docs', desc: 'Indexes and injects latest framework documentation directly into the agent context.', prompt: 'ctx7 index react-router@v7: Show the exact route loader configuration for nested layouts.' }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderSkills(skills) {
+      const grid = document.getElementById('skills-grid');
+      if (skills.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-500 font-mono">No matching skills found. Try searching for "flutter", "taste", "seo", or "playwright".</div>';
+        return;
+      }
+
+      grid.innerHTML = skills.map(s => `
+        <div class="glass-card rounded-xl p-5 border border-slate-800 hover:border-brand-cyan/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-brand-cyan border border-slate-700">${s.name}</span>
+              <span class="text-[10px] font-mono uppercase text-slate-500">${s.cat}</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-2">${s.title}</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">${s.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-slate-800/80">
+            <div class="text-[11px] font-mono text-slate-500 mb-1.5 flex items-center justify-between">
+              <span>Example Prompt:</span>
+              <button onclick="copyPrompt('${s.prompt.replace(/'/g, "\\'")}', this)" class="text-brand-cyan hover:underline text-[10px] font-bold">Copy Prompt</button>
+            </div>
+            <div class="p-2 rounded bg-slate-950 font-mono text-[11px] text-slate-300 truncate border border-slate-800">
+              "${s.prompt}"
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterSkills() {
+      const query = document.getElementById('skill-search').value.toLowerCase();
+      const filtered = skillsData.filter(s => {
+        const matchesCat = currentCategory === 'all' || s.cat === currentCategory;
+        const matchesQuery = s.name.toLowerCase().includes(query) || s.title.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query) || s.prompt.toLowerCase().includes(query);
+        return matchesCat && matchesQuery;
+      });
+      renderSkills(filtered);
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.className = "cat-btn px-3 py-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white whitespace-nowrap border border-slate-800";
+      });
+      event.target.className = "cat-btn active px-3 py-1.5 rounded-lg bg-brand-cyan/20 text-brand-cyan font-bold whitespace-nowrap border border-brand-cyan/30";
+      filterSkills();
+    }
+
+    function copyPrompt(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = 'Copied!';
+        btn.classList.add('text-brand-green');
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.classList.remove('text-brand-green');
+        }, 1500);
+      });
+    }
+
+    // Initial render
+    renderSkills(skillsData);
+
+    // Interactive Particle Canvas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(0, 245, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+</body>
+</html>
