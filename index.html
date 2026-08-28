@@ -33,7 +33,7 @@
   <!-- Google Fonts & Tailwind CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -42,38 +42,16 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Outfit"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
             brand: {
-              cyan: '#00F5FF',
-              purple: '#A855F7',
-              pink: '#EC4899',
-              green: '#39FF14',
-              dark: '#07090E',
-              card: '#0D111A',
-              border: '#1E293B',
-              borderHover: '#38BDF8',
-            }
-          },
-          animation: {
-            'glow-pulse': 'glow 3s ease-in-out infinite alternate',
-            'float': 'float 6s ease-in-out infinite',
-            'border-beam': 'borderBeam 4s linear infinite',
-          },
-          keyframes: {
-            glow: {
-              '0%': { boxShadow: '0 0 15px rgba(0, 245, 255, 0.2)' },
-              '100%': { boxShadow: '0 0 35px rgba(168, 85, 247, 0.4)' },
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            borderBeam: {
-              '0%': { 'stroke-dashoffset': '0' },
-              '100%': { 'stroke-dashoffset': '-400' }
+              cyan: '#00E5FF',
+              dark: '#0a0a0a',
+              card: 'rgba(255, 255, 255, 0.02)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderHover: 'rgba(255, 255, 255, 0.15)',
             }
           }
         }
@@ -116,39 +94,48 @@
 
   <style>
     body {
-      background-color: #07090E;
+      background-color: #0a0a0a;
       color: #F1F5F9;
       overflow-x: hidden;
     }
     
+    .noise-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
     .glass-card {
-      background: rgba(13, 17, 26, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(25, 25, 25, 0.4);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 24px -8px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
     .glass-card:hover {
-      border-color: rgba(0, 245, 255, 0.35);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px -10px rgba(0, 245, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #00F5FF 0%, #A855F7 50%, #EC4899 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .text-gradient-cyan {
-      background: linear-gradient(135deg, #38BDF8 0%, #00F5FF 100%);
+      background: linear-gradient(135deg, #00E5FF 0%, #0077FF 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .radial-bg {
-      background: radial-gradient(circle at 50% 0%, rgba(0, 245, 255, 0.12) 0%, rgba(168, 85, 247, 0.06) 35%, rgba(7, 9, 14, 0) 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.08) 0%, rgba(10, 10, 10, 0) 60%);
     }
 
     /* Custom Scrollbar */
@@ -157,7 +144,7 @@
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #07090E;
+      background: #0a0a0a;
     }
     ::-webkit-scrollbar-thumb {
       background: #1E293B;
@@ -169,9 +156,10 @@
   </style>
 </head>
 <body class="selection:bg-brand-cyan/20 selection:text-brand-cyan relative">
+  <div class="noise-overlay"></div>
 
   <!-- Interactive Canvas Background -->
-  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-10"></canvas>
 
   <!-- Background Gradients -->
   <div class="fixed inset-0 radial-bg pointer-events-none z-0"></div>
@@ -180,7 +168,7 @@
   <header class="fixed top-0 left-0 right-0 z-50 glass-card !border-x-0 !border-t-0 bg-opacity-80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-cyan via-brand-purple to-brand-pink flex items-center justify-center shadow-lg shadow-brand-cyan/20 group-hover:scale-105 transition-transform">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-cyan to-blue-500 flex items-center justify-center shadow-lg shadow-brand-cyan/20 group-hover:scale-105 transition-transform">
           <i data-lucide="zap" class="w-5 h-5 text-black fill-black"></i>
         </div>
         <div class="flex flex-col">
@@ -207,7 +195,7 @@
           <span class="hidden sm:inline">Star on GitHub</span>
           <span class="px-1.5 py-0.2 text-xs bg-slate-900/60 rounded text-brand-cyan border border-slate-700/80">★ 400+</span>
         </a>
-        <a href="#install" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-gradient-to-r from-brand-cyan to-brand-purple hover:from-cyan-400 hover:to-purple-500 text-black font-bold text-sm transition-all shadow-md shadow-brand-cyan/20 hover:scale-105">
+        <a href="#install" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-brand-cyan hover:bg-cyan-400 text-black font-bold text-sm transition-all shadow-[0_0_15px_rgba(0,229,255,0.3)] hover:shadow-[0_0_25px_rgba(0,229,255,0.5)] hover:scale-105">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span>Install</span>
         </a>
@@ -221,13 +209,12 @@
     <div class="text-center max-w-4xl mx-auto pt-6">
       
       <!-- Top Announcement Pill -->
-      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-800/60 border border-brand-cyan/30 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md shadow-lg shadow-brand-cyan/10">
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-800/40 border border-slate-700/60 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md">
         <span class="flex h-2 w-2 relative">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
         </span>
         <span class="text-slate-300">400+ Verified Skills Suite for AI Coding Agents</span>
-        <span class="text-brand-cyan font-bold flex items-center gap-0.5">100% Free & Local <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+        <span class="text-brand-cyan font-semibold flex items-center gap-0.5">100% Free & Local <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </div>
 
       <!-- Main Headline -->
@@ -781,6 +768,20 @@
       const activeBtn = document.getElementById('tab-' + type);
       activeBtn.className = "px-2.5 py-1 rounded bg-brand-cyan/20 text-brand-cyan font-bold transition-all";
     }
+
+    function detectOS() {
+      const platform = navigator.platform.toLowerCase();
+      const userAgent = navigator.userAgent.toLowerCase();
+      if (platform.includes('mac') || userAgent.includes('mac')) return 'mac';
+      if (platform.includes('linux') || userAgent.includes('linux')) return 'mac'; // Uses same bash script
+      if (platform.includes('win') || userAgent.includes('win')) return 'win';
+      return 'mac'; // Fallback
+    }
+
+    // Auto-detect OS on load
+    document.addEventListener('DOMContentLoaded', () => {
+      switchTab(detectOS());
+    });
 
     // Copy to Clipboard with Feedback
     function copyCommand() {
