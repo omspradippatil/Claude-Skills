@@ -6,7 +6,6 @@
 # ==============================================================================
 
 BOLD="\033[1m"
-DIM="\033[2m"
 CYAN="\033[36m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
@@ -22,16 +21,16 @@ echo -e "${RESET}"
 echo -e "${YELLOW}Uninstalling all global skills CLI entries...${RESET}"
 npx --yes skills@latest remove --all -g -y 2>/dev/null || true
 
-echo -e "${YELLOW}Uninstalling global npm packages (uipro-cli, @playwright/cli, firecrawl-cli, ctx7)...${RESET}"
-npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 2>/dev/null || true
+echo -e "${YELLOW}Uninstalling global npm packages (uipro-cli, @playwright/cli, firecrawl-cli, ctx7, antigravity-workflows)...${RESET}"
+npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>/dev/null || true
 
 if command -v dart >/dev/null 2>&1; then
   echo -e "${YELLOW}Deactivating global Dart skills CLI...${RESET}"
   dart pub global deactivate skills 2>/dev/null || true
 fi
 
-echo -e "${YELLOW}Removing cloned Flutter Claude skills directory...${RESET}"
-rm -rf ~/.claude/skills/flutter-skills
+echo -e "${YELLOW}Removing cloned Claude skills directories...${RESET}"
+rm -rf ~/.claude/skills/flutter-skills ~/.claude/skills/seo ~/.claude/skills/claude-skills
 
 echo ""
 echo -e "${GREEN}${BOLD}✔ All AI skills and global tools have been removed successfully!${RESET}"

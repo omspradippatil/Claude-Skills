@@ -87,8 +87,16 @@ function Install-CoreUiUx {
         "npx --yes skills@latest add mthines/agent-skills -g -y"
 }
 
+function Install-ArchitectureSkills {
+    Write-HeaderSection "🏛️ 2. ARCHITECTURE & SYSTEM VISUALIZATION"
+
+    Run-Step "Archify System Mapper" `
+        "Compiles codebase topology and workflows into beautiful, verifiable interactive HTML/SVG diagrams with motion." `
+        "npx --yes skills@latest add tt-a1i/archify -g -y"
+}
+
 function Install-MobileSkills {
-    Write-HeaderSection "📱 2. MOBILE APP DEVELOPMENT (FLUTTER / DART / NATIVE)"
+    Write-HeaderSection "📱 3. MOBILE APP DEVELOPMENT (FLUTTER / DART / NATIVE)"
 
     if (Get-Command dart -ErrorAction SilentlyContinue) {
         Run-Step "Dart Skills CLI" `
@@ -124,7 +132,7 @@ function Install-MobileSkills {
 }
 
 function Install-WebSkills {
-    Write-HeaderSection "🌐 3. WEB FRONTEND, DOM & BROWSER AUTOMATION"
+    Write-HeaderSection "🌐 4. WEB FRONTEND, DOM & BROWSER AUTOMATION"
 
     Run-Step "Frontend Agent Skills" `
         "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." `
@@ -134,11 +142,11 @@ function Install-WebSkills {
         "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." `
         "npx --yes skills@latest add MengTo/Skills -g -y"
 
-    Run-Step "SEO & Indexing Agent" `
-        "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." `
-        "npx --yes skills@latest add ashleytheash/seo-agent-skill -g -y"
+    Run-Step "TestDino Playwright Skill" `
+        "AI-powered Playwright testing toolkit: best practices, test generators, fixture optimizations, and flaky test healing." `
+        "npx --yes skills@latest add testdino-hq/playwright-skill -g -y"
 
-    Run-Step "Playwright Browser Automation" `
+    Run-Step "Playwright Browser Automation CLI" `
         "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." `
         "npm install -g @playwright/cli@latest; playwright-cli install --skills"
 
@@ -147,8 +155,32 @@ function Install-WebSkills {
         "npm install -g firecrawl-cli"
 }
 
+function Install-SeoSkills {
+    Write-HeaderSection "🔍 5. AGENTIC SEO & SEARCH OPTIMIZATION"
+
+    $seoSkillsDir = Join-Path $HOME ".claude\skills\seo"
+    $claudeSkillsDir = Join-Path $HOME ".claude\skills"
+    if (!(Test-Path $claudeSkillsDir)) {
+        New-Item -ItemType Directory -Force -Path $claudeSkillsDir | Out-Null
+    }
+
+    if (Test-Path $seoSkillsDir) {
+        Run-Step "Agentic SEO Skill Suite (Update)" `
+            "LLM-first SEO analysis engine: 16 sub-skills, 10 specialist agents, and 89 utility scripts for deep audits and schemas." `
+            "git -C `"$seoSkillsDir`" pull"
+    } else {
+        Run-Step "Agentic SEO Skill Suite (Clone)" `
+            "LLM-first SEO analysis engine: 16 sub-skills, 10 specialist agents, and 89 utility scripts for deep audits and schemas." `
+            "git clone https://github.com/Bhanunamikaze/Agentic-SEO-Skill.git `"$seoSkillsDir`""
+    }
+
+    Run-Step "Ashley SEO & Indexing Agent" `
+        "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." `
+        "npx --yes skills@latest add ashleytheash/seo-agent-skill -g -y"
+}
+
 function Install-BackendSkills {
-    Write-HeaderSection "🔥 4. BACKEND, DATABASES & CLOUD EDGE"
+    Write-HeaderSection "🔥 6. BACKEND, DATABASES & CLOUD EDGE"
 
     Run-Step "Supabase Agent Skills" `
         "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." `
@@ -168,7 +200,7 @@ function Install-BackendSkills {
 }
 
 function Install-DevOpsSkills {
-    Write-HeaderSection "🐳 5. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS"
+    Write-HeaderSection "🐳 7. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS"
 
     Run-Step "Docker Skills" `
         "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." `
@@ -183,8 +215,36 @@ function Install-DevOpsSkills {
         "npx --yes skills@latest add postman/agent-skills -g -y"
 }
 
+function Install-WorkflowsAndPlugins {
+    Write-HeaderSection "🔄 8. INTELLIGENT WORKFLOWS & CROSS-AGENT PLUGINS"
+
+    Run-Step "Antigravity Workflows CLI" `
+        "Stack-agnostic, question-driven workflows that detect project frameworks and adapt step-by-step." `
+        "npm install -g antigravity-workflows"
+
+    $claudeSkillsLibDir = Join-Path $HOME ".claude\skills\claude-skills"
+    $claudeSkillsDir = Join-Path $HOME ".claude\skills"
+    if (!(Test-Path $claudeSkillsDir)) {
+        New-Item -ItemType Directory -Force -Path $claudeSkillsDir | Out-Null
+    }
+
+    if (Test-Path $claudeSkillsLibDir) {
+        Run-Step "Claude Skills Universal Library (Update)" `
+            "Comprehensive suite of 388+ engineering, architecture, C-level advisory, security, and productivity skills." `
+            "git -C `"$claudeSkillsLibDir`" pull"
+    } else {
+        Run-Step "Claude Skills Universal Library (Clone)" `
+            "Comprehensive suite of 388+ engineering, architecture, C-level advisory, security, and productivity skills." `
+            "git clone https://github.com/alirezarezvani/claude-skills.git `"$claudeSkillsLibDir`""
+    }
+}
+
 function Install-CodeQualitySkills {
-    Write-HeaderSection "🧠 6. CODE QUALITY, OBSERVABILITY & PERSISTENT MEMORY"
+    Write-HeaderSection "🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY"
+
+    Run-Step "Claude-Mem Persistent Session Context" `
+        "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." `
+        "npx --yes claude-mem install"
 
     Run-Step "Andrej Karpathy Engineering Philosophy" `
         "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." `
@@ -222,6 +282,11 @@ function Uninstall-CoreUiUx {
     Run-Step "Remove Motion Skills" "Removes motion skills" "npx --yes skills@latest remove -g -y agent-skills"
 }
 
+function Uninstall-ArchitectureSkills {
+    Write-HeaderSection "🗑️  REMOVING ARCHITECTURE SKILLS"
+    Run-Step "Remove Archify Skill" "Removes Archify system mapper" "npx --yes skills@latest remove -g -y archify"
+}
+
 function Uninstall-MobileSkills {
     Write-HeaderSection "🗑️  REMOVING MOBILE APP SKILLS"
     if (Get-Command dart -ErrorAction SilentlyContinue) {
@@ -240,7 +305,16 @@ function Uninstall-WebSkills {
     Run-Step "Uninstall Playwright CLI & Firecrawl" "Removes global web CLIs" "npm uninstall -g @playwright/cli firecrawl-cli"
     Run-Step "Remove Frontend Agent Skills" "Removes frontend skills" "npx --yes skills@latest remove -g -y frontend-agent-skills"
     Run-Step "Remove Web Design Collection" "Removes web animation skills" "npx --yes skills@latest remove -g -y Skills"
-    Run-Step "Remove SEO Agent" "Removes SEO agent skills" "npx --yes skills@latest remove -g -y seo-agent-skill"
+    Run-Step "Remove TestDino Playwright Skill" "Removes TestDino Playwright skill" "npx --yes skills@latest remove -g -y playwright-skill"
+}
+
+function Uninstall-SeoSkills {
+    Write-HeaderSection "🗑️  REMOVING SEO SKILLS"
+    $seoSkillsDir = Join-Path $HOME ".claude\skills\seo"
+    if (Test-Path $seoSkillsDir) {
+        Run-Step "Remove Agentic SEO Skill Repo" "Deletes cloned Agentic SEO folder" "Remove-Item -Recurse -Force `"$seoSkillsDir`""
+    }
+    Run-Step "Remove Ashley SEO Agent" "Removes Ashley SEO agent skills" "npx --yes skills@latest remove -g -y seo-agent-skill"
 }
 
 function Uninstall-BackendSkills {
@@ -258,9 +332,19 @@ function Uninstall-DevOpsSkills {
     Run-Step "Remove Postman Skills" "Removes Postman OpenAPI skills" "npx --yes skills@latest remove -g -y postman"
 }
 
+function Uninstall-WorkflowsAndPlugins {
+    Write-HeaderSection "🗑️  REMOVING WORKFLOWS & PLUGIN LIBRARIES"
+    Run-Step "Uninstall Antigravity Workflows CLI" "Removes global antigravity-workflows CLI" "npm uninstall -g antigravity-workflows"
+    $claudeSkillsLibDir = Join-Path $HOME ".claude\skills\claude-skills"
+    if (Test-Path $claudeSkillsLibDir) {
+        Run-Step "Remove Claude Skills Library" "Deletes cloned claude-skills repo" "Remove-Item -Recurse -Force `"$claudeSkillsLibDir`""
+    }
+}
+
 function Uninstall-CodeQualitySkills {
     Write-HeaderSection "🗑️  REMOVING CODE QUALITY & MEMORY SKILLS"
     Run-Step "Uninstall CTX7 Indexer" "Removes global ctx7 CLI" "npm uninstall -g ctx7"
+    Run-Step "Remove Claude-Mem Context" "Removes claude-mem context" "npx --yes skills@latest remove -g -y claude-mem"
     Run-Step "Remove Andrej Karpathy Skills" "Removes Karpathy engineering rules" "npx --yes skills@latest remove -g -y andrej-karpathy-skills"
     Run-Step "Remove Caveman Skills" "Removes anti-bloat rules" "npx --yes skills@latest remove -g -y caveman"
     Run-Step "Remove Ponytail Skills" "Removes ponytail rules" "npx --yes skills@latest remove -g -y ponytail"
@@ -275,17 +359,17 @@ function Uninstall-AllSkills {
     npx --yes skills@latest remove --all -g -y 2>$null
 
     Write-Host "Uninstalling global npm packages..." -ForegroundColor Yellow
-    npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 2>$null
+    npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>$null
 
     if (Get-Command dart -ErrorAction SilentlyContinue) {
         Write-Host "Deactivating global Dart skills..." -ForegroundColor Yellow
         dart pub global deactivate skills 2>$null
     }
 
-    $flutterSkillsDir = Join-Path $HOME ".claude\skills\flutter-skills"
-    if (Test-Path $flutterSkillsDir) {
-        Write-Host "Removing cloned Claude skills directory..." -ForegroundColor Yellow
-        Remove-Item -Recurse -Force $flutterSkillsDir 2>$null
+    Write-Host "Removing cloned Claude skills directories..." -ForegroundColor Yellow
+    $dirs = @("$HOME\.claude\skills\flutter-skills", "$HOME\.claude\skills\seo", "$HOME\.claude\skills\claude-skills")
+    foreach ($d in $dirs) {
+        if (Test-Path $d) { Remove-Item -Recurse -Force $d 2>$null }
     }
 
     Write-Host ""
@@ -301,9 +385,9 @@ function Main {
 
     Write-Host "Select an action or project configuration:" -ForegroundColor White
     Write-Host ""
-    Write-Host "  1) 📱 Install: Mobile Application   (Flutter / Dart / Native + UI/UX + Backend + DevOps + Quality)" -ForegroundColor Cyan
-    Write-Host "  2) 🌐 Install: Web Application      (Frontend + DOM + SEO + Playwright + Backend + DevOps + Quality)" -ForegroundColor Cyan
-    Write-Host "  3) 🚀 Install: All-in-One Full Suite (Install ALL Mobile, Web, UI/UX, Cloud, DevOps & Quality skills)" -ForegroundColor Cyan
+    Write-Host "  1) 📱 Install: Mobile Application   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
+    Write-Host "  2) 🌐 Install: Web Application      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
+    Write-Host "  3) 🚀 Install: All-in-One Full Suite (Install ALL 9 Categories & 400+ Skills without conflicts)" -ForegroundColor Cyan
     Write-Host "  4) 🎯 Install: Custom Selection      (Choose specific skill categories to install)" -ForegroundColor Cyan
     Write-Host "  5) 🗑️  Delete / Uninstall Skills      (Remove installed skills, CLIs, and configs)" -ForegroundColor Red
     Write-Host ""
@@ -315,26 +399,35 @@ function Main {
         "1" {
             Write-Host "`n🚀 Starting Mobile Application Skills Installation..." -ForegroundColor Green
             Install-CoreUiUx
+            Install-ArchitectureSkills
             Install-MobileSkills
+            Install-SeoSkills
             Install-BackendSkills
             Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
             Install-CodeQualitySkills
         }
         "2" {
             Write-Host "`n🚀 Starting Web Application Skills Installation..." -ForegroundColor Green
             Install-CoreUiUx
+            Install-ArchitectureSkills
             Install-WebSkills
+            Install-SeoSkills
             Install-BackendSkills
             Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
             Install-CodeQualitySkills
         }
         "3" {
             Write-Host "`n🚀 Starting Complete All-in-One Skills Installation..." -ForegroundColor Green
             Install-CoreUiUx
+            Install-ArchitectureSkills
             Install-MobileSkills
             Install-WebSkills
+            Install-SeoSkills
             Install-BackendSkills
             Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
             Install-CodeQualitySkills
         }
         "4" {
@@ -343,11 +436,17 @@ function Main {
             $c1 = Read-Host "Install 🎨 Core UI/UX & Taste skills? [Y/n]"
             if ($c1 -notmatch "^[Nn]") { Install-CoreUiUx }
 
+            $cArch = Read-Host "Install 🏛️ Architecture & System Visualizer (Archify)? [Y/n]"
+            if ($cArch -notmatch "^[Nn]") { Install-ArchitectureSkills }
+
             $c2 = Read-Host "Install 📱 Mobile App (Flutter/Dart) skills? [Y/n]"
             if ($c2 -notmatch "^[Nn]") { Install-MobileSkills }
 
-            $c3 = Read-Host "Install 🌐 Web Frontend & Browser skills? [Y/n]"
+            $c3 = Read-Host "Install 🌐 Web Frontend & Browser (Playwright) skills? [Y/n]"
             if ($c3 -notmatch "^[Nn]") { Install-WebSkills }
+
+            $cSeo = Read-Host "Install 🔍 Agentic SEO & Indexing skills? [Y/n]"
+            if ($cSeo -notmatch "^[Nn]") { Install-SeoSkills }
 
             $c4 = Read-Host "Install 🔥 Backend & Cloud Edge skills? [Y/n]"
             if ($c4 -notmatch "^[Nn]") { Install-BackendSkills }
@@ -355,7 +454,10 @@ function Main {
             $c5 = Read-Host "Install 🐳 DevOps & Integrations skills? [Y/n]"
             if ($c5 -notmatch "^[Nn]") { Install-DevOpsSkills }
 
-            $c6 = Read-Host "Install 🧠 Code Quality & Memory skills? [Y/n]"
+            $cWf = Read-Host "Install 🔄 Intelligent Workflows & Claude Skills Suite? [Y/n]"
+            if ($cWf -notmatch "^[Nn]") { Install-WorkflowsAndPlugins }
+
+            $c6 = Read-Host "Install 🧠 Code Quality, Claude-Mem & Sentry skills? [Y/n]"
             if ($c6 -notmatch "^[Nn]") { Install-CodeQualitySkills }
         }
         "5" {
@@ -370,17 +472,26 @@ function Main {
                 $u1 = Read-Host "Remove 🎨 Core UI/UX skills? [y/N]"
                 if ($u1 -match "^[Yy]") { Uninstall-CoreUiUx }
 
+                $uArch = Read-Host "Remove 🏛️ Architecture skills (Archify)? [y/N]"
+                if ($uArch -match "^[Yy]") { Uninstall-ArchitectureSkills }
+
                 $u2 = Read-Host "Remove 📱 Mobile App skills? [y/N]"
                 if ($u2 -match "^[Yy]") { Uninstall-MobileSkills }
 
                 $u3 = Read-Host "Remove 🌐 Web Frontend & Browser skills? [y/N]"
                 if ($u3 -match "^[Yy]") { Uninstall-WebSkills }
 
+                $uSeo = Read-Host "Remove 🔍 SEO skills? [y/N]"
+                if ($uSeo -match "^[Yy]") { Uninstall-SeoSkills }
+
                 $u4 = Read-Host "Remove 🔥 Backend & Cloud Edge skills? [y/N]"
                 if ($u4 -match "^[Yy]") { Uninstall-BackendSkills }
 
                 $u5 = Read-Host "Remove 🐳 DevOps & Integrations skills? [y/N]"
                 if ($u5 -match "^[Yy]") { Uninstall-DevOpsSkills }
+
+                $uWf = Read-Host "Remove 🔄 Workflows & Plugins? [y/N]"
+                if ($uWf -match "^[Yy]") { Uninstall-WorkflowsAndPlugins }
 
                 $u6 = Read-Host "Remove 🧠 Code Quality & Memory skills? [y/N]"
                 if ($u6 -match "^[Yy]") { Uninstall-CodeQualitySkills }
@@ -392,10 +503,13 @@ function Main {
         Default {
             Write-Host "`nInvalid option. Defaulting to Complete All-in-One installation." -ForegroundColor Yellow
             Install-CoreUiUx
+            Install-ArchitectureSkills
             Install-MobileSkills
             Install-WebSkills
+            Install-SeoSkills
             Install-BackendSkills
             Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
             Install-CodeQualitySkills
         }
     }
