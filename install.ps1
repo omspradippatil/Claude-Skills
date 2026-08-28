@@ -71,7 +71,7 @@ function Check-Prerequisites {
 }
 
 # ==============================================================================
-# INSTALLATION FUNCTIONS (ALL SKILLS SELECTED BY DEFAULT VIA --all)
+# INSTALLATION FUNCTIONS (ALL SKILLS AUTO-CONFIRMED VIA -g --all -y)
 # ==============================================================================
 
 function Install-CoreUiUx {
@@ -83,11 +83,11 @@ function Install-CoreUiUx {
 
     Run-Step "Taste Skill" `
         "Enforces human-like visual balance, clean typography, whitespace discipline, and eliminates generic AI aesthetics." `
-        "npx --yes skills@latest add Leonxlnx/taste-skill -g --all"
+        "npx --yes skills@latest add Leonxlnx/taste-skill -g --all -y"
 
     Run-Step "Accessible & Performant Motion" `
         "Provides context for physics-based springs, easing curves, micro-interactions, gesture response, and 60fps animations." `
-        "npx --yes skills@latest add mthines/agent-skills -g --all"
+        "npx --yes skills@latest add mthines/agent-skills -g --all -y"
 }
 
 function Install-ArchitectureSkills {
@@ -95,7 +95,7 @@ function Install-ArchitectureSkills {
 
     Run-Step "Archify System Mapper" `
         "Compiles codebase topology and workflows into beautiful, verifiable interactive HTML/SVG diagrams with motion." `
-        "npx --yes skills@latest add tt-a1i/archify -g --all"
+        "npx --yes skills@latest add tt-a1i/archify -g --all -y"
 }
 
 function Install-MobileSkills {
@@ -125,13 +125,9 @@ function Install-MobileSkills {
             "git clone https://github.com/Harishwarrior/flutter-claude-skills.git `"$flutterSkillsDir`""
     }
 
-    Run-Step "Fastlane Skills" `
-        "Automates screenshot generation, keystore signing, metadata packaging, build numbering, and Play Store / TestFlight releases." `
-        "npx --yes skills@latest add fastlane/agent-skills -g --all"
-
     Run-Step "OWASP Mobile & API Security Playbook" `
         "Audits mobile source code for hardcoded secrets, insecure IPC, weak local encryption, and broken mobile API endpoints." `
-        "npx --yes skills@latest add OWASP/secure-agent-playbook -g --all"
+        "npx --yes skills@latest add OWASP/secure-agent-playbook -g --all -y"
 }
 
 function Install-WebSkills {
@@ -139,15 +135,15 @@ function Install-WebSkills {
 
     Run-Step "Frontend Agent Skills" `
         "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." `
-        "npx --yes skills@latest add hueyexe/frontend-agent-skills -g --all"
+        "npx --yes skills@latest add hueyexe/frontend-agent-skills -g --all -y"
 
     Run-Step "Web Design & Interaction Collection" `
         "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." `
-        "npx --yes skills@latest add MengTo/Skills -g --all"
+        "npx --yes skills@latest add MengTo/Skills -g --all -y"
 
     Run-Step "TestDino Playwright Skill" `
         "AI-powered Playwright testing toolkit: best practices, test generators, fixture optimizations, and flaky test healing." `
-        "npx --yes skills@latest add testdino-hq/playwright-skill -g --all"
+        "npx --yes skills@latest add testdino-hq/playwright-skill -g --all -y"
 
     Run-Step "Playwright Browser Automation CLI" `
         "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." `
@@ -179,7 +175,7 @@ function Install-SeoSkills {
 
     Run-Step "Ashley SEO & Indexing Agent" `
         "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." `
-        "npx --yes skills@latest add ashleytheash/seo-agent-skill -g --all"
+        "npx --yes skills@latest add ashleytheash/seo-agent-skill -g --all -y"
 }
 
 function Install-BackendSkills {
@@ -187,19 +183,19 @@ function Install-BackendSkills {
 
     Run-Step "Supabase Agent Skills" `
         "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." `
-        "npx --yes skills@latest add supabase/agent-skills -g --all"
+        "npx --yes skills@latest add supabase/agent-skills -g --all -y"
 
     Run-Step "Firebase Agent Skills" `
         "Firestore document design, Firebase Cloud Messaging (FCM) push notifications, security rules, and serverless Cloud Functions." `
-        "npx --yes skills@latest add firebase/agent-skills -g --all"
+        "npx --yes skills@latest add firebase/agent-skills -g --all -y"
 
     Run-Step "Neon Database Skills" `
         "Serverless Postgres, database branching for PRs, index tuning, connection pooling, and low-latency SQL optimization." `
-        "npx --yes skills@latest add neondatabase/agent-skills -g --all"
+        "npx --yes skills@latest add neondatabase/agent-skills -g --all -y"
 
     Run-Step "Cloudflare Ecosystem" `
         "Workers, D1 SQL, R2 object storage, KV key-value stores, rate limiting, and edge API caching configurations." `
-        "npx --yes skills@latest add https://github.com/cloudflare/skills -g --all"
+        "npx --yes skills@latest add https://github.com/cloudflare/skills -g --all -y"
 }
 
 function Install-DevOpsSkills {
@@ -207,15 +203,15 @@ function Install-DevOpsSkills {
 
     Run-Step "Docker Skills" `
         "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." `
-        "npx --yes skills@latest add docker/agent-skills -g --all"
+        "npx --yes skills@latest add docker/agent-skills -g --all -y"
 
     Run-Step "Composio Integration" `
         "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and external workflow automations." `
-        "npx --yes skills@latest add composiohq/skills -g --all"
+        "npx --yes skills@latest add composiohq/skills -g --all -y"
 
     Run-Step "Postman / OpenAPI Skills" `
         "Ingests Swagger/OpenAPI specifications, generates strongly typed data models (Dart/TS), and automates endpoint contract testing." `
-        "npx --yes skills@latest add postman/agent-skills -g --all"
+        "npx --yes skills@latest add postman/agent-skills -g --all -y"
 }
 
 function Install-WorkflowsAndPlugins {
@@ -247,27 +243,27 @@ function Install-CodeQualitySkills {
 
     Run-Step "Claude-Mem Persistent Session Context" `
         "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." `
-        "npx --yes claude-mem install 2>$null; npx --yes skills@latest add thedotmack/claude-mem -g --all"
+        "npx --yes claude-mem install 2>$null; npx --yes skills@latest add thedotmack/claude-mem -g --all -y"
 
     Run-Step "Andrej Karpathy Engineering Philosophy" `
         "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." `
-        "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g --all"
+        "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g --all -y"
 
     Run-Step "Caveman (Anti-Overengineering)" `
         "Eliminates framework bloat, prevents over-engineering, enforces simple directory architectures, and refuses micro-abstractions." `
-        "npx --yes skills@latest add JuliusBrussee/caveman -g --all"
+        "npx --yes skills@latest add JuliusBrussee/caveman -g --all -y"
 
     Run-Step "Ponytail Skills" `
         "Enforces clean software design patterns, eliminating bloated libraries and preserving codebase simplicity." `
-        "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g --all"
+        "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g --all -y"
 
     Run-Step "MemoryPlugin (Cross-Session Persistence)" `
         "Provides cross-session long-term memory so the agent retains project context, design preferences, and architectural decisions." `
-        "npx --yes skills@latest add memoryplugin/agent-skills -g --all"
+        "npx --yes skills@latest add memoryplugin/agent-skills -g --all -y"
 
     Run-Step "Sentry for AI" `
         "Automated root-cause analysis for production exceptions, stack trace parsing, and regression pinpointing." `
-        "npx --yes skills@latest add getsentry/sentry-for-ai -g --all"
+        "npx --yes skills@latest add getsentry/sentry-for-ai -g --all -y"
 
     Run-Step "CTX7 Documentation Indexer" `
         "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." `
@@ -304,7 +300,7 @@ function Uninstall-AllSkills {
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
 }
 
-# Main Script Entry Point - Automatically runs all installs with --all default selection
+# Main Script Entry Point - Automatically runs all installs in one go
 function Main {
     if ($Uninstall) {
         Uninstall-AllSkills
@@ -314,7 +310,7 @@ function Main {
     Write-Banner
     Check-Prerequisites
 
-    Write-Host "🚀 Automatically installing and configuring all elite skills with default selection enabled..." -ForegroundColor Green
+    Write-Host "🚀 Installing and configuring all skills in one go (Zero prompts)..." -ForegroundColor Green
 
     Install-CoreUiUx
     Install-ArchitectureSkills
