@@ -7,7 +7,9 @@
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 param(
-    [switch]$Uninstall
+    [switch]$Uninstall,
+    [switch]$Global,
+    [switch]$Project
 )
 
 function Write-Banner {
@@ -70,24 +72,50 @@ function Check-Prerequisites {
     Write-Host ""
 }
 
+# Scope Settings
+$global:ScopeFlag = "-g"
+$global:ScopeNpm = "-g"
+$global:ScopeDesc = "Global (~/.agents & system-wide)"
+$global:SkillsDir = Join-Path $HOME ".claude\skills"
+
+function Set-Scope([string]$choice) {
+    if ($choice -eq "2") {
+        $global:ScopeFlag = ""
+        $global:ScopeNpm = ""
+        $global:ScopeDesc = "Project Directory ($((Get-Location).Path))"
+        $global:SkillsDir = Join-Path (Get-Location).Path ".claude\skills"
+        $agentDir = Join-Path (Get-Location).Path ".agent\skills"
+        if (!(Test-Path $global:SkillsDir)) { New-Item -ItemType Directory -Force -Path $global:SkillsDir | Out-Null }
+        if (!(Test-Path $agentDir)) { New-Item -ItemType Directory -Force -Path $agentDir | Out-Null }
+    } else {
+        $global:ScopeFlag = "-g"
+        $global:ScopeNpm = "-g"
+        $global:ScopeDesc = "Global (~/.agents & system-wide)"
+        $global:SkillsDir = Join-Path $HOME ".claude\skills"
+        if (!(Test-Path $global:SkillsDir)) { New-Item -ItemType Directory -Force -Path $global:SkillsDir | Out-Null }
+    }
+}
+
 # ==============================================================================
-# INSTALLATION FUNCTIONS (ALL SKILLS AUTO-CONFIRMED VIA -g --all -y)
+# INSTALLATION FUNCTIONS (ALL SKILLS AUTO-CONFIRMED VIA --all -y)
 # ==============================================================================
 
 function Install-CoreUiUx {
     Write-HeaderSection "🎨 1. CORE UI/UX, DESIGN SYSTEMS & TASTE"
     
-    Run-Step "UI/UX Pro Max CLI" `
-        "Generates design guidelines, UI heuristics, color palettes, accessibility checks, and layout hierarchies." `
-        "npm install -g uipro-cli"
+    if ($global:ScopeNpm -eq "-g") {
+        Run-Step "UI/UX Pro Max CLI" "Generates design guidelines, UI heuristics, and layout hierarchies." "npm install -g uipro-cli"
+    } else {
+        Run-Step "UI/UX Pro Max CLI" "Generates design guidelines, UI heuristics, and layout hierarchies." "npm install --save-dev uipro-cli"
+    }
 
     Run-Step "Taste Skill" `
         "Enforces human-like visual balance, clean typography, whitespace discipline, and eliminates generic AI aesthetics." `
-        "npx --yes skills@latest add Leonxlnx/taste-skill -g --all -y"
+        "npx --yes skills@latest add Leonxlnx/taste-skill $global:ScopeFlag --all -y"
 
     Run-Step "Accessible & Performant Motion" `
         "Provides context for physics-based springs, easing curves, micro-interactions, gesture response, and 60fps animations." `
-        "npx --yes skills@latest add mthines/agent-skills -g --all -y"
+        "npx --yes skills@latest add mthines/agent-skills $global:ScopeFlag --all -y"
 }
 
 function Install-ArchitectureSkills {
@@ -95,7 +123,7 @@ function Install-ArchitectureSkills {
 
     Run-Step "Archify System Mapper" `
         "Compiles codebase topology and workflows into beautiful, verifiable interactive HTML/SVG diagrams with motion." `
-        "npx --yes skills@latest add tt-a1i/archify -g --all -y"
+        "npx --yes skills@latest add tt-a1i/archify $global:ScopeFlag --all -y"
 }
 
 function Install-MobileSkills {
@@ -109,12 +137,7 @@ function Install-MobileSkills {
         Write-Host "⚠ Dart SDK not found. Skipping 'dart pub global activate skills'. (Install Flutter/Dart if developing mobile apps)." -ForegroundColor Yellow
     }
 
-    $flutterSkillsDir = Join-Path $HOME ".claude\skills\flutter-skills"
-    $claudeSkillsDir = Join-Path $HOME ".claude\skills"
-    if (!(Test-Path $claudeSkillsDir)) {
-        New-Item -ItemType Directory -Force -Path $claudeSkillsDir | Out-Null
-    }
-
+    $flutterSkillsDir = Join-Path $global:SkillsDir "flutter-skills"
     if (Test-Path $flutterSkillsDir) {
         Run-Step "Community Flutter Claude Skills (Update)" `
             "Context rules for widget rebuild optimization, Riverpod/BLoC patterns, native bridges, and platform conventions." `
@@ -127,7 +150,7 @@ function Install-MobileSkills {
 
     Run-Step "OWASP Mobile & API Security Playbook" `
         "Audits mobile source code for hardcoded secrets, insecure IPC, weak local encryption, and broken mobile API endpoints." `
-        "npx --yes skills@latest add OWASP/secure-agent-playbook -g --all -y"
+        "npx --yes skills@latest add OWASP/secure-agent-playbook $global:ScopeFlag --all -y"
 }
 
 function Install-WebSkills {
@@ -135,34 +158,29 @@ function Install-WebSkills {
 
     Run-Step "Frontend Agent Skills" `
         "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." `
-        "npx --yes skills@latest add hueyexe/frontend-agent-skills -g --all -y"
+        "npx --yes skills@latest add hueyexe/frontend-agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Web Design & Interaction Collection" `
         "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." `
-        "npx --yes skills@latest add MengTo/Skills -g --all -y"
+        "npx --yes skills@latest add MengTo/Skills $global:ScopeFlag --all -y"
 
     Run-Step "TestDino Playwright Skill" `
         "AI-powered Playwright testing toolkit: best practices, test generators, fixture optimizations, and flaky test healing." `
-        "npx --yes skills@latest add testdino-hq/playwright-skill -g --all -y"
+        "npx --yes skills@latest add testdino-hq/playwright-skill $global:ScopeFlag --all -y"
 
-    Run-Step "Playwright Browser Automation CLI" `
-        "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." `
-        "npm install -g @playwright/cli@latest; playwright-cli install --skills"
-
-    Run-Step "Firecrawl CLI" `
-        "Crawls, cleans, and converts web pages into LLM-ready clean markdown for real-time web scraping and doc ingestion." `
-        "npm install -g firecrawl-cli"
+    if ($global:ScopeNpm -eq "-g") {
+        Run-Step "Playwright Browser Automation CLI" "Headless browser automation for UI regression checks." "npm install -g @playwright/cli@latest; playwright-cli install --skills"
+        Run-Step "Firecrawl CLI" "Crawls and converts web pages into clean markdown." "npm install -g firecrawl-cli"
+    } else {
+        Run-Step "Playwright Browser Automation CLI" "Headless browser automation for UI regression checks." "npm install --save-dev @playwright/cli@latest"
+        Run-Step "Firecrawl CLI" "Crawls and converts web pages into clean markdown." "npm install --save-dev firecrawl-cli"
+    }
 }
 
 function Install-SeoSkills {
     Write-HeaderSection "🔍 5. AGENTIC SEO & SEARCH OPTIMIZATION"
 
-    $seoSkillsDir = Join-Path $HOME ".claude\skills\seo"
-    $claudeSkillsDir = Join-Path $HOME ".claude\skills"
-    if (!(Test-Path $claudeSkillsDir)) {
-        New-Item -ItemType Directory -Force -Path $claudeSkillsDir | Out-Null
-    }
-
+    $seoSkillsDir = Join-Path $global:SkillsDir "seo"
     if (Test-Path $seoSkillsDir) {
         Run-Step "Agentic SEO Skill Suite (Update)" `
             "LLM-first SEO analysis engine: 16 sub-skills, 10 specialist agents, and 89 utility scripts for deep audits and schemas." `
@@ -175,7 +193,7 @@ function Install-SeoSkills {
 
     Run-Step "Ashley SEO & Indexing Agent" `
         "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." `
-        "npx --yes skills@latest add ashleytheash/seo-agent-skill -g --all -y"
+        "npx --yes skills@latest add ashleytheash/seo-agent-skill $global:ScopeFlag --all -y"
 }
 
 function Install-BackendSkills {
@@ -183,19 +201,19 @@ function Install-BackendSkills {
 
     Run-Step "Supabase Agent Skills" `
         "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." `
-        "npx --yes skills@latest add supabase/agent-skills -g --all -y"
+        "npx --yes skills@latest add supabase/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Firebase Agent Skills" `
         "Firestore document design, Firebase Cloud Messaging (FCM) push notifications, security rules, and serverless Cloud Functions." `
-        "npx --yes skills@latest add firebase/agent-skills -g --all -y"
+        "npx --yes skills@latest add firebase/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Neon Database Skills" `
         "Serverless Postgres, database branching for PRs, index tuning, connection pooling, and low-latency SQL optimization." `
-        "npx --yes skills@latest add neondatabase/agent-skills -g --all -y"
+        "npx --yes skills@latest add neondatabase/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Cloudflare Ecosystem" `
         "Workers, D1 SQL, R2 object storage, KV key-value stores, rate limiting, and edge API caching configurations." `
-        "npx --yes skills@latest add https://github.com/cloudflare/skills -g --all -y"
+        "npx --yes skills@latest add https://github.com/cloudflare/skills $global:ScopeFlag --all -y"
 }
 
 function Install-DevOpsSkills {
@@ -203,30 +221,27 @@ function Install-DevOpsSkills {
 
     Run-Step "Docker Skills" `
         "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." `
-        "npx --yes skills@latest add docker/agent-skills -g --all -y"
+        "npx --yes skills@latest add docker/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Composio Integration" `
         "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and external workflow automations." `
-        "npx --yes skills@latest add composiohq/skills -g --all -y"
+        "npx --yes skills@latest add composiohq/skills $global:ScopeFlag --all -y"
 
     Run-Step "Postman / OpenAPI Skills" `
         "Ingests Swagger/OpenAPI specifications, generates strongly typed data models (Dart/TS), and automates endpoint contract testing." `
-        "npx --yes skills@latest add postman/agent-skills -g --all -y"
+        "npx --yes skills@latest add postman/agent-skills $global:ScopeFlag --all -y"
 }
 
 function Install-WorkflowsAndPlugins {
     Write-HeaderSection "🔄 8. INTELLIGENT WORKFLOWS & CROSS-AGENT PLUGINS"
 
-    Run-Step "Antigravity Workflows CLI" `
-        "Stack-agnostic, question-driven workflows that detect project frameworks and adapt step-by-step." `
-        "npm install -g antigravity-workflows"
-
-    $claudeSkillsLibDir = Join-Path $HOME ".claude\skills\claude-skills"
-    $claudeSkillsDir = Join-Path $HOME ".claude\skills"
-    if (!(Test-Path $claudeSkillsDir)) {
-        New-Item -ItemType Directory -Force -Path $claudeSkillsDir | Out-Null
+    if ($global:ScopeNpm -eq "-g") {
+        Run-Step "Antigravity Workflows CLI" "Stack-agnostic, question-driven workflows." "npm install -g antigravity-workflows"
+    } else {
+        Run-Step "Antigravity Workflows CLI" "Stack-agnostic, question-driven workflows." "npm install --save-dev antigravity-workflows"
     }
 
+    $claudeSkillsLibDir = Join-Path $global:SkillsDir "claude-skills"
     if (Test-Path $claudeSkillsLibDir) {
         Run-Step "Claude Skills Universal Library (Update)" `
             "Comprehensive suite of 388+ engineering, architecture, C-level advisory, security, and productivity skills." `
@@ -243,31 +258,33 @@ function Install-CodeQualitySkills {
 
     Run-Step "Claude-Mem Persistent Session Context" `
         "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." `
-        "npx --yes claude-mem install 2>$null; npx --yes skills@latest add thedotmack/claude-mem -g --all -y"
+        "npx --yes claude-mem install 2>$null; npx --yes skills@latest add thedotmack/claude-mem $global:ScopeFlag --all -y"
 
     Run-Step "Andrej Karpathy Engineering Philosophy" `
         "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." `
-        "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g --all -y"
+        "npx --yes skills@latest add multica-ai/andrej-karpathy-skills $global:ScopeFlag --all -y"
 
     Run-Step "Caveman (Anti-Overengineering)" `
         "Eliminates framework bloat, prevents over-engineering, enforces simple directory architectures, and refuses micro-abstractions." `
-        "npx --yes skills@latest add JuliusBrussee/caveman -g --all -y"
+        "npx --yes skills@latest add JuliusBrussee/caveman $global:ScopeFlag --all -y"
 
     Run-Step "Ponytail Skills" `
         "Enforces clean software design patterns, eliminating bloated libraries and preserving codebase simplicity." `
-        "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g --all -y"
+        "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills $global:ScopeFlag --all -y"
 
     Run-Step "MemoryPlugin (Cross-Session Persistence)" `
         "Provides cross-session long-term memory so the agent retains project context, design preferences, and architectural decisions." `
-        "npx --yes skills@latest add memoryplugin/agent-skills -g --all -y"
+        "npx --yes skills@latest add memoryplugin/agent-skills $global:ScopeFlag --all -y"
 
     Run-Step "Sentry for AI" `
         "Automated root-cause analysis for production exceptions, stack trace parsing, and regression pinpointing." `
-        "npx --yes skills@latest add getsentry/sentry-for-ai -g --all -y"
+        "npx --yes skills@latest add getsentry/sentry-for-ai $global:ScopeFlag --all -y"
 
-    Run-Step "CTX7 Documentation Indexer" `
-        "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." `
-        "npm install -g ctx7"
+    if ($global:ScopeNpm -eq "-g") {
+        Run-Step "CTX7 Documentation Indexer" "Indexes and injects the latest framework docs." "npm install -g ctx7"
+    } else {
+        Run-Step "CTX7 Documentation Indexer" "Indexes and injects the latest framework docs." "npm install --save-dev ctx7"
+    }
 }
 
 # ==============================================================================
@@ -279,6 +296,7 @@ function Uninstall-AllSkills {
     
     Write-Host "Uninstalling all global skills CLI registry entries..." -ForegroundColor Yellow
     npx --yes skills@latest remove --all -g -y 2>$null
+    npx --yes skills@latest remove --all -y 2>$null
 
     Write-Host "Uninstalling global npm packages..." -ForegroundColor Yellow
     npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>$null
@@ -289,7 +307,13 @@ function Uninstall-AllSkills {
     }
 
     Write-Host "Removing cloned Claude skills directories..." -ForegroundColor Yellow
-    $dirs = @("$HOME\.claude\skills\flutter-skills", "$HOME\.claude\skills\seo", "$HOME\.claude\skills\claude-skills")
+    $dirs = @(
+        "$HOME\.claude\skills\flutter-skills",
+        "$HOME\.claude\skills\seo",
+        "$HOME\.claude\skills\claude-skills",
+        ".claude\skills",
+        ".agent\skills"
+    )
     foreach ($d in $dirs) {
         if (Test-Path $d) { Remove-Item -Recurse -Force $d 2>$null }
     }
@@ -300,7 +324,7 @@ function Uninstall-AllSkills {
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
 }
 
-# Main Script Entry Point - Automatically runs all installs in one go
+# Main Script Entry Point
 function Main {
     if ($Uninstall) {
         Uninstall-AllSkills
@@ -310,21 +334,117 @@ function Main {
     Write-Banner
     Check-Prerequisites
 
-    Write-Host "🚀 Installing and configuring all skills in one go (Zero prompts)..." -ForegroundColor Green
+    # STEP 1: Choose Installation Scope
+    Write-Host "Where would you like to install the skills?" -ForegroundColor White
+    Write-Host ""
+    Write-Host "  1) 🌍 Global            (Recommended: Available across all projects in ~/.agents & system-wide)" -ForegroundColor Cyan
+    Write-Host "  2) 📁 Current Project   (Install only in this project folder: $((Get-Location).Path))" -ForegroundColor Cyan
+    Write-Host ""
+    
+    $scopeChoice = Read-Host "Select install scope [1-2] (default: 1)"
+    if ([string]::IsNullOrWhiteSpace($scopeChoice)) { $scopeChoice = "1" }
+    Set-Scope $scopeChoice
 
-    Install-CoreUiUx
-    Install-ArchitectureSkills
-    Install-MobileSkills
-    Install-WebSkills
-    Install-SeoSkills
-    Install-BackendSkills
-    Install-DevOpsSkills
-    Install-WorkflowsAndPlugins
-    Install-CodeQualitySkills
+    # STEP 2: Choose Skill Configuration Suite
+    Write-Host ""
+    Write-Host "Which skills configuration would you like to install into [$global:ScopeDesc]?" -ForegroundColor White
+    Write-Host ""
+    Write-Host "  1) 🚀 All-in-One Full Suite (Install ALL 9 Categories & 400+ Skills without conflicts)" -ForegroundColor Cyan
+    Write-Host "  2) 📱 Mobile Application   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
+    Write-Host "  3) 🌐 Web Application      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
+    Write-Host "  4) 🎯 Custom Selection     (Choose specific skill categories to install)" -ForegroundColor Cyan
+    Write-Host "  5) 🗑️  Delete / Uninstall   (Remove installed skills and configurations)" -ForegroundColor Red
+    Write-Host ""
+
+    $suiteChoice = Read-Host "Select skill suite [1-5] (default: 1)"
+    if ([string]::IsNullOrWhiteSpace($suiteChoice)) { $suiteChoice = "1" }
+
+    switch ($suiteChoice) {
+        "1" {
+            Write-Host "`n🚀 Starting All-in-One Skills Installation into $global:ScopeDesc..." -ForegroundColor Green
+            Install-CoreUiUx
+            Install-ArchitectureSkills
+            Install-MobileSkills
+            Install-WebSkills
+            Install-SeoSkills
+            Install-BackendSkills
+            Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
+            Install-CodeQualitySkills
+        }
+        "2" {
+            Write-Host "`n🚀 Starting Mobile Application Skills Installation into $global:ScopeDesc..." -ForegroundColor Green
+            Install-CoreUiUx
+            Install-ArchitectureSkills
+            Install-MobileSkills
+            Install-SeoSkills
+            Install-BackendSkills
+            Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
+            Install-CodeQualitySkills
+        }
+        "3" {
+            Write-Host "`n🚀 Starting Web Application Skills Installation into $global:ScopeDesc..." -ForegroundColor Green
+            Install-CoreUiUx
+            Install-ArchitectureSkills
+            Install-WebSkills
+            Install-SeoSkills
+            Install-BackendSkills
+            Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
+            Install-CodeQualitySkills
+        }
+        "4" {
+            Write-Host "`nSelect categories to install into $global:ScopeDesc:" -ForegroundColor White
+
+            $c1 = Read-Host "Install 🎨 Core UI/UX & Taste skills? [Y/n]"
+            if ($c1 -notmatch "^[Nn]") { Install-CoreUiUx }
+
+            $cArch = Read-Host "Install 🏛️ Architecture & System Visualizer (Archify)? [Y/n]"
+            if ($cArch -notmatch "^[Nn]") { Install-ArchitectureSkills }
+
+            $c2 = Read-Host "Install 📱 Mobile App (Flutter/Dart) skills? [Y/n]"
+            if ($c2 -notmatch "^[Nn]") { Install-MobileSkills }
+
+            $c3 = Read-Host "Install 🌐 Web Frontend & Browser (Playwright) skills? [Y/n]"
+            if ($c3 -notmatch "^[Nn]") { Install-WebSkills }
+
+            $cSeo = Read-Host "Install 🔍 Agentic SEO & Indexing skills? [Y/n]"
+            if ($cSeo -notmatch "^[Nn]") { Install-SeoSkills }
+
+            $c4 = Read-Host "Install 🔥 Backend & Cloud Edge skills? [Y/n]"
+            if ($c4 -notmatch "^[Nn]") { Install-BackendSkills }
+
+            $c5 = Read-Host "Install 🐳 DevOps & Integrations skills? [Y/n]"
+            if ($c5 -notmatch "^[Nn]") { Install-DevOpsSkills }
+
+            $cWf = Read-Host "Install 🔄 Intelligent Workflows & Claude Skills Suite? [Y/n]"
+            if ($cWf -notmatch "^[Nn]") { Install-WorkflowsAndPlugins }
+
+            $c6 = Read-Host "Install 🧠 Code Quality, Claude-Mem & Sentry skills? [Y/n]"
+            if ($c6 -notmatch "^[Nn]") { Install-CodeQualitySkills }
+        }
+        "5" {
+            Uninstall-AllSkills
+            return
+        }
+        Default {
+            Write-Host "`nDefaulting to Complete All-in-One installation into $global:ScopeDesc..." -ForegroundColor Yellow
+            Install-CoreUiUx
+            Install-ArchitectureSkills
+            Install-MobileSkills
+            Install-WebSkills
+            Install-SeoSkills
+            Install-BackendSkills
+            Install-DevOpsSkills
+            Install-WorkflowsAndPlugins
+            Install-CodeQualitySkills
+        }
+    }
 
     Write-Host ""
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
-    Write-Host " 🎉 ALL SKILLS HAVE BEEN INSTALLED & CONFIGURED SUCCESSFULLY! 🎉          " -ForegroundColor Green
+    Write-Host " 🎉 ALL SKILLS HAVE BEEN INSTALLED & CONFIGURED IN [$global:ScopeDesc]! 🎉" -ForegroundColor Green
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
     Write-Host ""
     Write-Host "💡 Quick Tip: To initialize project-level design tokens in any UI project, run: uipro init --ai antigravity" -ForegroundColor Cyan

@@ -28,7 +28,33 @@ powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.c
 
 ---
 
-## 🗑️ One-Liner Quick Uninstall
+## 🎯 Clean 2-Step Setup Flow
+
+When you run the command, you will be prompted with two simple choices:
+
+### Step 1: Choose Installation Scope
+```text
+Where would you like to install the skills?
+
+  1) 🌍 Global            (Recommended: Available across all projects in ~/.agents & system-wide)
+  2) 📁 Current Project   (Install only in this project folder)
+```
+
+### Step 2: Choose Skill Configuration
+```text
+Which skills configuration would you like to install?
+
+  1) 🚀 All-in-One Full Suite (Install ALL 9 Categories & 400+ Skills without conflicts)
+  2) 📱 Mobile Application   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)
+  3) 🌐 Web Application      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)
+  4) 🎯 Custom Selection     (Choose specific skill categories to install)
+  5) 🗑️  Delete / Uninstall   (Remove installed skills and configurations)
+```
+
+> **Note**: Once you make your selection, all sub-skills are **automatically selected and confirmed** (`--all -y`). You never have to select individual skills manually!
+
+---
+
 
 To completely remove all installed skills, global packages, and cloned repositories in one command:
 
