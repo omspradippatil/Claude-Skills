@@ -4,6 +4,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Skills directories & local clones
+.claude/
+.agents/
+
 # Temporary & System files
 .DS_Store
 Thumbs.db
