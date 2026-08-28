@@ -79,12 +79,12 @@ check_prerequisites() {
 # Scope Flags (Global vs Project Directory)
 SCOPE_FLAG="-g"
 SCOPE_NPM="-g"
-SCOPE_DESC="Global (~/.agents / system-wide)"
+SCOPE_DESC="Global (~/.agents & system-wide)"
 SKILLS_DIR="$HOME/.claude/skills"
 
 set_scope() {
   local scope_choice="$1"
-  if [ "$scope_choice" == "2" ]; then
+  if [ "$scope_choice" == "2" ] || [ "$scope_choice" == "project" ]; then
     SCOPE_FLAG=""
     SCOPE_NPM=""
     SCOPE_DESC="Project Directory ($(pwd))"
@@ -331,52 +331,85 @@ uninstall_all_skills() {
 
 # Main Execution Flow
 main() {
-  if [ "$1" == "--uninstall" ] || [ "$1" == "-u" ]; then
-    uninstall_all_skills
-    exit 0
-  fi
+  SCOPE_INPUT=""
+  SUITE_INPUT=""
+
+  # Parse CLI arguments if supplied
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --global|-g)
+        SCOPE_INPUT="1"
+        shift
+        ;;
+      --project|-p)
+        SCOPE_INPUT="2"
+        shift
+        ;;
+      --all|-a|--full)
+        SUITE_INPUT="1"
+        shift
+        ;;
+      --mobile|-m)
+        SUITE_INPUT="2"
+        shift
+        ;;
+      --web|-w)
+        SUITE_INPUT="3"
+        shift
+        ;;
+      --uninstall|-u)
+        uninstall_all_skills
+        exit 0
+        ;;
+      *)
+        shift
+        ;;
+    esac
+  done
 
   print_banner
   check_prerequisites
 
   # STEP 1: Choose Installation Scope (Global vs Project Directory)
-  echo -e "${BOLD}Where would you like to install the skills?${RESET}"
-  echo ""
-  echo -e "  ${CYAN}1)${RESET} 🌍 ${BOLD}Global${RESET}            (Recommended: Available across all projects in ~/.agents & system-wide)"
-  echo -e "  ${CYAN}2)${RESET} 📁 ${BOLD}Current Project${RESET}   (Install only in this project folder: $(pwd))"
-  echo ""
-  echo -n -e "${YELLOW}Select install scope [1-2] (default: 1): ${RESET}"
-  
-  scope_input=""
-  if [ -e /dev/tty ]; then
-    read -r scope_input < /dev/tty 2>/dev/null || scope_input="1"
-  else
-    read -r scope_input || scope_input="1"
+  if [ -z "$SCOPE_INPUT" ]; then
+    echo -e "${BOLD}Where would you like to install the skills?${RESET}"
+    echo ""
+    echo -e "  ${CYAN}1)${RESET} 🌍 ${BOLD}Global${RESET}            (Recommended: Available across all projects in ~/.agents & system-wide)"
+    echo -e "  ${CYAN}2)${RESET} 📁 ${BOLD}Current Project${RESET}   (Install only in this project folder: $(pwd))"
+    echo ""
+    echo -n -e "${YELLOW}Select install scope [1-2] (default: 1): ${RESET}"
+    
+    if [ -t 0 ] || [ -e /dev/tty ]; then
+      read -r SCOPE_INPUT < /dev/tty 2>/dev/null || read -r SCOPE_INPUT || SCOPE_INPUT="1"
+    else
+      read -r SCOPE_INPUT || SCOPE_INPUT="1"
+    fi
+    [ -z "$SCOPE_INPUT" ] && SCOPE_INPUT="1"
   fi
-  [ -z "$scope_input" ] && scope_input="1"
-  set_scope "$scope_input"
+  set_scope "$SCOPE_INPUT"
 
   # STEP 2: Choose Skill Configuration Suite
-  echo ""
-  echo -e "${BOLD}Which skills configuration would you like to install into [${SCOPE_DESC}]?${RESET}"
-  echo ""
-  echo -e "  ${CYAN}1)${RESET} 🚀 ${BOLD}All-in-One Full Suite${RESET} (Install ALL 9 Categories & 400+ Skills without conflicts)"
-  echo -e "  ${CYAN}2)${RESET} 📱 ${BOLD}Mobile Application${RESET}   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)"
-  echo -e "  ${CYAN}3)${RESET} 🌐 ${BOLD}Web Application${RESET}      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)"
-  echo -e "  ${CYAN}4)${RESET} 🎯 ${BOLD}Custom Selection${RESET}     (Choose specific skill categories to install)"
-  echo -e "  ${RED}5)${RESET} 🗑️  ${BOLD}Delete / Uninstall${RESET}   (Remove installed skills and configurations)"
-  echo ""
-  echo -n -e "${YELLOW}Select skill suite [1-5] (default: 1): ${RESET}"
+  if [ -z "$SUITE_INPUT" ]; then
+    echo ""
+    echo -e "${BOLD}Which skills configuration would you like to install into [${SCOPE_DESC}]?${RESET}"
+    echo ""
+    echo -e "  ${CYAN}1)${RESET} 🚀 ${BOLD}All-in-One Full Suite${RESET} (Install ALL 9 Categories & 400+ Skills without conflicts)"
+    echo -e "  ${CYAN}2)${RESET} 📱 ${BOLD}Mobile Application${RESET}   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)"
+    echo -e "  ${CYAN}3)${RESET} 🌐 ${BOLD}Web Application${RESET}      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)"
+    echo -e "  ${CYAN}4)${RESET} 🎯 ${BOLD}Custom Selection${RESET}     (Choose specific skill categories to install)"
+    echo -e "  ${RED}5)${RESET} 🗑️  ${BOLD}Delete / Uninstall${RESET}   (Remove installed skills and configurations)"
+    echo ""
+    echo -n -e "${YELLOW}Select skill suite [1-5] (default: 1): ${RESET}"
 
-  suite_input=""
-  if [ -e /dev/tty ]; then
-    read -r suite_input < /dev/tty 2>/dev/null || suite_input="1"
-  else
-    read -r suite_input || suite_input="1"
+    if [ -t 0 ] || [ -e /dev/tty ]; then
+      read -r SUITE_INPUT < /dev/tty 2>/dev/null || read -r SUITE_INPUT || SUITE_INPUT="1"
+    else
+      read -r SUITE_INPUT || SUITE_INPUT="1"
+    fi
+    [ -z "$SUITE_INPUT" ] && SUITE_INPUT="1"
   fi
-  [ -z "$suite_input" ] && suite_input="1"
 
-  case "$suite_input" in
+  case "$SUITE_INPUT" in
     1|"")
       echo -e "\n${GREEN}🚀 Starting All-in-One Skills Installation into ${SCOPE_DESC}...${RESET}"
       install_core_ui_ux
