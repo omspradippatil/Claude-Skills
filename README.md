@@ -2,7 +2,9 @@
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&pause=1000&color=00F5FF&center=true&vCenter=true&width=700&lines=The+Ultimate+Agentic+Coding+Skills+Suite;400%2B+Production+Skills+for+Claude%2C+Antigravity+%26+Cursor;Zero-Conflict+•+Multi-Platform+•+100%25+Free+%26+Local" alt="Typing SVG" />
+<p align="center">
+  <img src="./assets/banner.svg" alt="AI Coding Agent Skills Suite" width="800" />
+</p>
 
 <p align="center">
   <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Skills%20Suite-400%2B%20Production%20Skills-00F5FF?style=for-the-badge&logo=codeforces&logoColor=black" alt="Skills Suite" /></a>
