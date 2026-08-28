@@ -219,17 +219,9 @@ function Install-BackendSkills {
 function Install-DevOpsSkills {
     Write-HeaderSection "🐳 7. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS"
 
-    Run-Step "Docker Skills" `
-        "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." `
-        "npx --yes skills@latest add docker/agent-skills $global:ScopeFlag --all -y"
-
     Run-Step "Composio Integration" `
-        "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and external workflow automations." `
+        "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and 1000+ external app automations." `
         "npx --yes skills@latest add composiohq/skills $global:ScopeFlag --all -y"
-
-    Run-Step "Postman / OpenAPI Skills" `
-        "Ingests Swagger/OpenAPI specifications, generates strongly typed data models (Dart/TS), and automates endpoint contract testing." `
-        "npx --yes skills@latest add postman/agent-skills $global:ScopeFlag --all -y"
 }
 
 function Install-WorkflowsAndPlugins {

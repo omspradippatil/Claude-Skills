@@ -199,11 +199,9 @@ flowchart TD
 <tr>
 <td width="33%" valign="top">
 
-### 🐳 7. DevOps & Orchestration
-*Hardened infrastructure & APIs.*
-- **Docker Skills**: Multi-stage minimal containerization.
-- **Composio Integration**: GitHub Actions & PR bot automation.
-- **Postman Skills**: OpenAPI/Swagger contract testing & TS models.
+### 🐳 7. DevOps & Integrations
+*Orchestration & 1000+ app connectors.*
+- **Composio Integration**: GitHub Actions, PR bot automation, Gmail alerts, and 1000+ app toolchains.
 
 </td>
 <td width="33%" valign="top">
@@ -347,13 +345,11 @@ flowchart TD
 </details>
 
 <details>
-<summary><b>🐳 7. DevOps, Infrastructure & Integrations</b></summary>
+<summary><b>🐳 7. DevOps & Integrations</b></summary>
 
 | Skill / Package | Core Capability | Example Activation Prompt |
 | :--- | :--- | :--- |
-| **`docker/agent-skills`** | Multi-stage Dockerfile generation & container hardening | `"Create a multi-stage production Dockerfile for a Next.js / Flutter web app with non-root security user."` |
-| **`composiohq/skills`** | GitHub Actions automation, PR bots & issue workflows | `"Set up a GitHub Action that triggers automated code review on every pull request using Composio."` |
-| **`postman/agent-skills`** | Ingests OpenAPI specs and produces strongly typed TS/Dart models | `"Ingest openapi.yaml and generate strongly typed TypeScript API clients with Zod validation schemas."` |
+| **`composiohq/skills`** | GitHub Actions automation, PR bots, Gmail alerts & 1000+ app connectors | `"Set up a GitHub Action that triggers automated code review on every pull request using Composio."` |
 
 </details>
 
