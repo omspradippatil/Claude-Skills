@@ -6,6 +6,9 @@
 #>
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+param(
+    [switch]$Uninstall
+)
 
 function Write-Banner {
     Write-Host ""
@@ -275,83 +278,6 @@ function Install-CodeQualitySkills {
 # UNINSTALLATION FUNCTIONS
 # ==============================================================================
 
-function Uninstall-CoreUiUx {
-    Write-HeaderSection "🗑️  REMOVING CORE UI/UX & TASTE SKILLS"
-    Run-Step "Uninstall UI/UX Pro Max CLI" "Removes global uipro-cli" "npm uninstall -g uipro-cli"
-    Run-Step "Remove Taste Skill" "Removes taste skill" "npx --yes skills@latest remove -g -y taste-skill"
-    Run-Step "Remove Motion Skills" "Removes motion skills" "npx --yes skills@latest remove -g -y agent-skills"
-}
-
-function Uninstall-ArchitectureSkills {
-    Write-HeaderSection "🗑️  REMOVING ARCHITECTURE SKILLS"
-    Run-Step "Remove Archify Skill" "Removes Archify system mapper" "npx --yes skills@latest remove -g -y archify"
-}
-
-function Uninstall-MobileSkills {
-    Write-HeaderSection "🗑️  REMOVING MOBILE APP SKILLS"
-    if (Get-Command dart -ErrorAction SilentlyContinue) {
-        Run-Step "Deactivate Dart Skills CLI" "Removes global dart skills" "dart pub global deactivate skills"
-    }
-    $flutterSkillsDir = Join-Path $HOME ".claude\skills\flutter-skills"
-    if (Test-Path $flutterSkillsDir) {
-        Run-Step "Remove Flutter Skills Folder" "Deletes cloned flutter-skills folder" "Remove-Item -Recurse -Force `"$flutterSkillsDir`""
-    }
-    Run-Step "Remove Fastlane Skills" "Removes fastlane agent skills" "npx --yes skills@latest remove -g -y fastlane"
-    Run-Step "Remove OWASP Security Playbook" "Removes mobile security playbook" "npx --yes skills@latest remove -g -y secure-agent-playbook"
-}
-
-function Uninstall-WebSkills {
-    Write-HeaderSection "🗑️  REMOVING WEB & BROWSER SKILLS"
-    Run-Step "Uninstall Playwright CLI & Firecrawl" "Removes global web CLIs" "npm uninstall -g @playwright/cli firecrawl-cli"
-    Run-Step "Remove Frontend Agent Skills" "Removes frontend skills" "npx --yes skills@latest remove -g -y frontend-agent-skills"
-    Run-Step "Remove Web Design Collection" "Removes web animation skills" "npx --yes skills@latest remove -g -y Skills"
-    Run-Step "Remove TestDino Playwright Skill" "Removes TestDino Playwright skill" "npx --yes skills@latest remove -g -y playwright-skill"
-}
-
-function Uninstall-SeoSkills {
-    Write-HeaderSection "🗑️  REMOVING SEO SKILLS"
-    $seoSkillsDir = Join-Path $HOME ".claude\skills\seo"
-    if (Test-Path $seoSkillsDir) {
-        Run-Step "Remove Agentic SEO Skill Repo" "Deletes cloned Agentic SEO folder" "Remove-Item -Recurse -Force `"$seoSkillsDir`""
-    }
-    Run-Step "Remove Ashley SEO Agent" "Removes Ashley SEO agent skills" "npx --yes skills@latest remove -g -y seo-agent-skill"
-}
-
-function Uninstall-BackendSkills {
-    Write-HeaderSection "🗑️  REMOVING BACKEND & CLOUD SKILLS"
-    Run-Step "Remove Supabase Skills" "Removes Supabase skills" "npx --yes skills@latest remove -g -y supabase"
-    Run-Step "Remove Firebase Skills" "Removes Firebase skills" "npx --yes skills@latest remove -g -y firebase"
-    Run-Step "Remove Neon Skills" "Removes Neon database skills" "npx --yes skills@latest remove -g -y neondatabase"
-    Run-Step "Remove Cloudflare Skills" "Removes Cloudflare skills" "npx --yes skills@latest remove -g -y cloudflare"
-}
-
-function Uninstall-DevOpsSkills {
-    Write-HeaderSection "🗑️  REMOVING DEVOPS & INTEGRATION SKILLS"
-    Run-Step "Remove Docker Skills" "Removes Docker skills" "npx --yes skills@latest remove -g -y docker"
-    Run-Step "Remove Composio Skills" "Removes Composio skills" "npx --yes skills@latest remove -g -y composio"
-    Run-Step "Remove Postman Skills" "Removes Postman OpenAPI skills" "npx --yes skills@latest remove -g -y postman"
-}
-
-function Uninstall-WorkflowsAndPlugins {
-    Write-HeaderSection "🗑️  REMOVING WORKFLOWS & PLUGIN LIBRARIES"
-    Run-Step "Uninstall Antigravity Workflows CLI" "Removes global antigravity-workflows CLI" "npm uninstall -g antigravity-workflows"
-    $claudeSkillsLibDir = Join-Path $HOME ".claude\skills\claude-skills"
-    if (Test-Path $claudeSkillsLibDir) {
-        Run-Step "Remove Claude Skills Library" "Deletes cloned claude-skills repo" "Remove-Item -Recurse -Force `"$claudeSkillsLibDir`""
-    }
-}
-
-function Uninstall-CodeQualitySkills {
-    Write-HeaderSection "🗑️  REMOVING CODE QUALITY & MEMORY SKILLS"
-    Run-Step "Uninstall CTX7 Indexer" "Removes global ctx7 CLI" "npm uninstall -g ctx7"
-    Run-Step "Remove Claude-Mem Context" "Removes claude-mem context" "npx --yes skills@latest remove -g -y claude-mem"
-    Run-Step "Remove Andrej Karpathy Skills" "Removes Karpathy engineering rules" "npx --yes skills@latest remove -g -y andrej-karpathy-skills"
-    Run-Step "Remove Caveman Skills" "Removes anti-bloat rules" "npx --yes skills@latest remove -g -y caveman"
-    Run-Step "Remove Ponytail Skills" "Removes ponytail rules" "npx --yes skills@latest remove -g -y ponytail"
-    Run-Step "Remove MemoryPlugin" "Removes cross-session memory skills" "npx --yes skills@latest remove -g -y memoryplugin"
-    Run-Step "Remove Sentry for AI" "Removes Sentry AI skills" "npx --yes skills@latest remove -g -y sentry-for-ai"
-}
-
 function Uninstall-AllSkills {
     Write-HeaderSection "🗑️  REMOVING ALL INSTALLED SKILLS & GLOBAL PACKAGES"
     
@@ -378,145 +304,31 @@ function Uninstall-AllSkills {
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
 }
 
-# Main Script Entry Point
+# Main Script Entry Point - Automatically runs all installs without interactive prompts
 function Main {
+    if ($Uninstall) {
+        Uninstall-AllSkills
+        return
+    }
+
     Write-Banner
     Check-Prerequisites
 
-    Write-Host "Select an action or project configuration:" -ForegroundColor White
-    Write-Host ""
-    Write-Host "  1) 📱 Install: Mobile Application   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
-    Write-Host "  2) 🌐 Install: Web Application      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)" -ForegroundColor Cyan
-    Write-Host "  3) 🚀 Install: All-in-One Full Suite (Install ALL 9 Categories & 400+ Skills without conflicts)" -ForegroundColor Cyan
-    Write-Host "  4) 🎯 Install: Custom Selection      (Choose specific skill categories to install)" -ForegroundColor Cyan
-    Write-Host "  5) 🗑️  Delete / Uninstall Skills      (Remove installed skills, CLIs, and configs)" -ForegroundColor Red
-    Write-Host ""
-    
-    $choice = Read-Host "Select an option [1-5] (default: 3)"
-    if ([string]::IsNullOrWhiteSpace($choice)) { $choice = "3" }
+    Write-Host "🚀 Automatically configuring and installing all elite skills for your project..." -ForegroundColor Green
 
-    switch ($choice) {
-        "1" {
-            Write-Host "`n🚀 Starting Mobile Application Skills Installation..." -ForegroundColor Green
-            Install-CoreUiUx
-            Install-ArchitectureSkills
-            Install-MobileSkills
-            Install-SeoSkills
-            Install-BackendSkills
-            Install-DevOpsSkills
-            Install-WorkflowsAndPlugins
-            Install-CodeQualitySkills
-        }
-        "2" {
-            Write-Host "`n🚀 Starting Web Application Skills Installation..." -ForegroundColor Green
-            Install-CoreUiUx
-            Install-ArchitectureSkills
-            Install-WebSkills
-            Install-SeoSkills
-            Install-BackendSkills
-            Install-DevOpsSkills
-            Install-WorkflowsAndPlugins
-            Install-CodeQualitySkills
-        }
-        "3" {
-            Write-Host "`n🚀 Starting Complete All-in-One Skills Installation..." -ForegroundColor Green
-            Install-CoreUiUx
-            Install-ArchitectureSkills
-            Install-MobileSkills
-            Install-WebSkills
-            Install-SeoSkills
-            Install-BackendSkills
-            Install-DevOpsSkills
-            Install-WorkflowsAndPlugins
-            Install-CodeQualitySkills
-        }
-        "4" {
-            Write-Host "`nSelect categories to install:" -ForegroundColor White
-
-            $c1 = Read-Host "Install 🎨 Core UI/UX & Taste skills? [Y/n]"
-            if ($c1 -notmatch "^[Nn]") { Install-CoreUiUx }
-
-            $cArch = Read-Host "Install 🏛️ Architecture & System Visualizer (Archify)? [Y/n]"
-            if ($cArch -notmatch "^[Nn]") { Install-ArchitectureSkills }
-
-            $c2 = Read-Host "Install 📱 Mobile App (Flutter/Dart) skills? [Y/n]"
-            if ($c2 -notmatch "^[Nn]") { Install-MobileSkills }
-
-            $c3 = Read-Host "Install 🌐 Web Frontend & Browser (Playwright) skills? [Y/n]"
-            if ($c3 -notmatch "^[Nn]") { Install-WebSkills }
-
-            $cSeo = Read-Host "Install 🔍 Agentic SEO & Indexing skills? [Y/n]"
-            if ($cSeo -notmatch "^[Nn]") { Install-SeoSkills }
-
-            $c4 = Read-Host "Install 🔥 Backend & Cloud Edge skills? [Y/n]"
-            if ($c4 -notmatch "^[Nn]") { Install-BackendSkills }
-
-            $c5 = Read-Host "Install 🐳 DevOps & Integrations skills? [Y/n]"
-            if ($c5 -notmatch "^[Nn]") { Install-DevOpsSkills }
-
-            $cWf = Read-Host "Install 🔄 Intelligent Workflows & Claude Skills Suite? [Y/n]"
-            if ($cWf -notmatch "^[Nn]") { Install-WorkflowsAndPlugins }
-
-            $c6 = Read-Host "Install 🧠 Code Quality, Claude-Mem & Sentry skills? [Y/n]"
-            if ($c6 -notmatch "^[Nn]") { Install-CodeQualitySkills }
-        }
-        "5" {
-            Write-Host "`n🗑️  Uninstall Options:" -ForegroundColor Red
-            Write-Host "  1) Delete ALL installed skills and global packages"
-            Write-Host "  2) Delete specific skill categories"
-            Write-Host ""
-            $unChoice = Read-Host "Select uninstall option [1-2] (default: 1)"
-            if ([string]::IsNullOrWhiteSpace($unChoice)) { $unChoice = "1" }
-
-            if ($unChoice -eq "2") {
-                $u1 = Read-Host "Remove 🎨 Core UI/UX skills? [y/N]"
-                if ($u1 -match "^[Yy]") { Uninstall-CoreUiUx }
-
-                $uArch = Read-Host "Remove 🏛️ Architecture skills (Archify)? [y/N]"
-                if ($uArch -match "^[Yy]") { Uninstall-ArchitectureSkills }
-
-                $u2 = Read-Host "Remove 📱 Mobile App skills? [y/N]"
-                if ($u2 -match "^[Yy]") { Uninstall-MobileSkills }
-
-                $u3 = Read-Host "Remove 🌐 Web Frontend & Browser skills? [y/N]"
-                if ($u3 -match "^[Yy]") { Uninstall-WebSkills }
-
-                $uSeo = Read-Host "Remove 🔍 SEO skills? [y/N]"
-                if ($uSeo -match "^[Yy]") { Uninstall-SeoSkills }
-
-                $u4 = Read-Host "Remove 🔥 Backend & Cloud Edge skills? [y/N]"
-                if ($u4 -match "^[Yy]") { Uninstall-BackendSkills }
-
-                $u5 = Read-Host "Remove 🐳 DevOps & Integrations skills? [y/N]"
-                if ($u5 -match "^[Yy]") { Uninstall-DevOpsSkills }
-
-                $uWf = Read-Host "Remove 🔄 Workflows & Plugins? [y/N]"
-                if ($uWf -match "^[Yy]") { Uninstall-WorkflowsAndPlugins }
-
-                $u6 = Read-Host "Remove 🧠 Code Quality & Memory skills? [y/N]"
-                if ($u6 -match "^[Yy]") { Uninstall-CodeQualitySkills }
-            } else {
-                Uninstall-AllSkills
-            }
-            return
-        }
-        Default {
-            Write-Host "`nInvalid option. Defaulting to Complete All-in-One installation." -ForegroundColor Yellow
-            Install-CoreUiUx
-            Install-ArchitectureSkills
-            Install-MobileSkills
-            Install-WebSkills
-            Install-SeoSkills
-            Install-BackendSkills
-            Install-DevOpsSkills
-            Install-WorkflowsAndPlugins
-            Install-CodeQualitySkills
-        }
-    }
+    Install-CoreUiUx
+    Install-ArchitectureSkills
+    Install-MobileSkills
+    Install-WebSkills
+    Install-SeoSkills
+    Install-BackendSkills
+    Install-DevOpsSkills
+    Install-WorkflowsAndPlugins
+    Install-CodeQualitySkills
 
     Write-Host ""
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
-    Write-Host " 🎉 ALL SKILLS HAVE BEEN CONFIGURED & INSTALLED SUCCESSFULLY! 🎉           " -ForegroundColor Green
+    Write-Host " 🎉 ALL SKILLS HAVE BEEN INSTALLED & CONFIGURED SUCCESSFULLY! 🎉          " -ForegroundColor Green
     Write-Host "═════════════════════════════════════════════════════════════════════════" -ForegroundColor Green
     Write-Host ""
     Write-Host "💡 Quick Tip: To initialize project-level design tokens in any UI project, run: uipro init --ai antigravity" -ForegroundColor Cyan
