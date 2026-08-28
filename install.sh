@@ -77,7 +77,7 @@ check_prerequisites() {
 }
 
 # ==============================================================================
-# INSTALLATION FUNCTIONS
+# INSTALLATION FUNCTIONS (ALL SKILLS SELECTED BY DEFAULT VIA --all)
 # ==============================================================================
 
 # 🎨 1. CORE UI/UX, DESIGN SYSTEMS & TASTE (PRIMARY FOCUS)
@@ -90,11 +90,11 @@ install_core_ui_ux() {
 
   run_step "Taste Skill" \
     "Enforces human-like visual balance, clean typography, whitespace discipline, and eliminates generic AI aesthetics." \
-    "npx --yes skills@latest add Leonxlnx/taste-skill -g"
+    "npx --yes skills@latest add Leonxlnx/taste-skill -g --all"
 
   run_step "Accessible & Performant Motion" \
     "Provides context for physics-based springs, easing curves, micro-interactions, gesture response, and 60fps animations." \
-    "npx --yes skills@latest add mthines/agent-skills -g"
+    "npx --yes skills@latest add mthines/agent-skills -g --all"
 }
 
 # 🏛️ 2. ARCHITECTURE & SYSTEM VISUALIZATION
@@ -103,7 +103,7 @@ install_architecture_skills() {
 
   run_step "Archify System Mapper" \
     "Compiles codebase topology and workflows into beautiful, verifiable interactive HTML/SVG diagrams with motion." \
-    "npx --yes skills@latest add tt-a1i/archify -g"
+    "npx --yes skills@latest add tt-a1i/archify -g --all"
 }
 
 # 📱 3. MOBILE APP DEVELOPMENT (FLUTTER / DART / NATIVE)
@@ -124,11 +124,11 @@ install_mobile_skills() {
 
   run_step "Fastlane Skills" \
     "Automates screenshot generation, keystore signing, metadata packaging, build numbering, and Play Store / TestFlight releases." \
-    "npx --yes skills@latest add fastlane/agent-skills -g"
+    "npx --yes skills@latest add fastlane/agent-skills -g --all"
 
   run_step "OWASP Mobile & API Security Playbook" \
     "Audits mobile source code for hardcoded secrets, insecure IPC, weak local encryption, and broken mobile API endpoints." \
-    "npx --yes skills@latest add OWASP/secure-agent-playbook -g"
+    "npx --yes skills@latest add OWASP/secure-agent-playbook -g --all"
 }
 
 # 🌐 4. WEB FRONTEND, DOM & BROWSER AUTOMATION
@@ -137,15 +137,15 @@ install_web_skills() {
 
   run_step "Frontend Agent Skills" \
     "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." \
-    "npx --yes skills@latest add hueyexe/frontend-agent-skills -g"
+    "npx --yes skills@latest add hueyexe/frontend-agent-skills -g --all"
 
   run_step "Web Design & Interaction Collection" \
     "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." \
-    "npx --yes skills@latest add MengTo/Skills -g"
+    "npx --yes skills@latest add MengTo/Skills -g --all"
 
   run_step "TestDino Playwright Skill" \
     "AI-powered Playwright testing toolkit: best practices, test generators, fixture optimizations, and flaky test healing." \
-    "npx --yes skills@latest add testdino-hq/playwright-skill -g"
+    "npx --yes skills@latest add testdino-hq/playwright-skill -g --all"
 
   run_step "Playwright Browser Automation CLI" \
     "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." \
@@ -166,7 +166,7 @@ install_seo_skills() {
 
   run_step "Ashley SEO & Indexing Agent" \
     "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." \
-    "npx --yes skills@latest add ashleytheash/seo-agent-skill -g"
+    "npx --yes skills@latest add ashleytheash/seo-agent-skill -g --all"
 }
 
 # 🔥 6. BACKEND, DATABASES & CLOUD EDGE
@@ -175,19 +175,19 @@ install_backend_skills() {
 
   run_step "Supabase Agent Skills" \
     "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." \
-    "npx --yes skills@latest add supabase/agent-skills -g"
+    "npx --yes skills@latest add supabase/agent-skills -g --all"
 
   run_step "Firebase Agent Skills" \
     "Firestore document design, Firebase Cloud Messaging (FCM) push notifications, security rules, and serverless Cloud Functions." \
-    "npx --yes skills@latest add firebase/agent-skills -g"
+    "npx --yes skills@latest add firebase/agent-skills -g --all"
 
   run_step "Neon Database Skills" \
     "Serverless Postgres, database branching for PRs, index tuning, connection pooling, and low-latency SQL optimization." \
-    "npx --yes skills@latest add neondatabase/agent-skills -g"
+    "npx --yes skills@latest add neondatabase/agent-skills -g --all"
 
   run_step "Cloudflare Ecosystem" \
     "Workers, D1 SQL, R2 object storage, KV key-value stores, rate limiting, and edge API caching configurations." \
-    "npx --yes skills@latest add https://github.com/cloudflare/skills -g"
+    "npx --yes skills@latest add https://github.com/cloudflare/skills -g --all"
 }
 
 # 🐳 7. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS
@@ -196,15 +196,15 @@ install_devops_skills() {
 
   run_step "Docker Skills" \
     "Multi-stage Dockerfile generation, docker-compose orchestration, local database mock services, and container hardening." \
-    "npx --yes skills@latest add docker/agent-skills -g"
+    "npx --yes skills@latest add docker/agent-skills -g --all"
 
   run_step "Composio Integration" \
     "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and external workflow automations." \
-    "npx --yes skills@latest add composiohq/skills -g"
+    "npx --yes skills@latest add composiohq/skills -g --all"
 
   run_step "Postman / OpenAPI Skills" \
     "Ingests Swagger/OpenAPI specifications, generates strongly typed data models (Dart/TS), and automates endpoint contract testing." \
-    "npx --yes skills@latest add postman/agent-skills -g"
+    "npx --yes skills@latest add postman/agent-skills -g --all"
 }
 
 # 🔄 8. INTELLIGENT WORKFLOWS & CROSS-AGENT PLUGINS
@@ -226,27 +226,27 @@ install_code_quality_skills() {
 
   run_step "Claude-Mem Persistent Session Context" \
     "Preserves context across sessions by capturing tool actions and injecting semantic summaries into future chats." \
-    "npx --yes claude-mem install 2>/dev/null || npx --yes skills@latest add thedotmack/claude-mem -g"
+    "npx --yes claude-mem install 2>/dev/null || npx --yes skills@latest add thedotmack/claude-mem -g --all"
 
   run_step "Andrej Karpathy Engineering Philosophy" \
     "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." \
-    "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g"
+    "npx --yes skills@latest add multica-ai/andrej-karpathy-skills -g --all"
 
   run_step "Caveman (Anti-Overengineering)" \
     "Eliminates framework bloat, prevents over-engineering, enforces simple directory architectures, and refuses micro-abstractions." \
-    "npx --yes skills@latest add JuliusBrussee/caveman -g"
+    "npx --yes skills@latest add JuliusBrussee/caveman -g --all"
 
   run_step "Ponytail Skills" \
     "Enforces clean software design patterns, eliminating bloated libraries and preserving codebase simplicity." \
-    "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g"
+    "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills -g --all"
 
   run_step "MemoryPlugin (Cross-Session Persistence)" \
     "Provides cross-session long-term memory so the agent retains project context, design preferences, and architectural decisions." \
-    "npx --yes skills@latest add memoryplugin/agent-skills -g"
+    "npx --yes skills@latest add memoryplugin/agent-skills -g --all"
 
   run_step "Sentry for AI" \
     "Automated root-cause analysis for production exceptions, stack trace parsing, and regression pinpointing." \
-    "npx --yes skills@latest add getsentry/sentry-for-ai -g"
+    "npx --yes skills@latest add getsentry/sentry-for-ai -g --all"
 
   run_step "CTX7 Documentation Indexer" \
     "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." \
@@ -280,7 +280,7 @@ uninstall_all_skills() {
   echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
 }
 
-# Main Execution Flow - Directly installs all best-in-class skills without prompts
+# Main Execution Flow - Directly installs all best-in-class skills with --all default selection
 main() {
   if [ "$1" == "--uninstall" ] || [ "$1" == "-u" ]; then
     uninstall_all_skills
@@ -290,7 +290,7 @@ main() {
   print_banner
   check_prerequisites
 
-  echo -e "${GREEN}${BOLD}🚀 Automatically configuring and installing all elite skills for your project...${RESET}"
+  echo -e "${GREEN}${BOLD}🚀 Automatically installing and configuring all elite skills with default selection enabled...${RESET}"
   
   install_core_ui_ux
   install_architecture_skills
