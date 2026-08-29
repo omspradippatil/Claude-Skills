@@ -90,6 +90,24 @@ set_scope() {
     SCOPE_DESC="Project Directory ($(pwd))"
     SKILLS_DIR="$(pwd)/.claude/skills"
     mkdir -p "$SKILLS_DIR" "$(pwd)/.agent/skills"
+    
+    echo -n -e "\n${YELLOW}Would you like to add the skills directory to your .gitignore? [Y/n]: ${RESET}"
+    if [ -t 0 ] || [ -e /dev/tty ]; then
+      read -r IGNORE_INPUT < /dev/tty 2>/dev/null || read -r IGNORE_INPUT || IGNORE_INPUT="y"
+    else
+      read -r IGNORE_INPUT || IGNORE_INPUT="y"
+    fi
+    if [[ ! "$IGNORE_INPUT" =~ ^[Nn] ]]; then
+      if [ ! -f .gitignore ]; then
+        echo -e "${GREEN}Creating .gitignore and adding skills directories...${RESET}"
+        echo -e ".claude/skills\n.agent/skills\n.agents/skills" > .gitignore
+      else
+        echo -e "${GREEN}Updating existing .gitignore...${RESET}"
+        grep -q -F ".claude/skills" .gitignore || echo ".claude/skills" >> .gitignore
+        grep -q -F ".agent/skills" .gitignore || echo ".agent/skills" >> .gitignore
+        grep -q -F ".agents/skills" .gitignore || echo ".agents/skills" >> .gitignore
+      fi
+    fi
   else
     SCOPE_FLAG="-g"
     SCOPE_NPM="-g"

@@ -1,4 +1,4 @@
-# ⚡ AI Coding Agent Skills & Tooling Suite
+# ⚡ 14+ Ultimate Skills for AI Coding Agents
 
 <div align="center">
 
@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Skills%20Suite-400%2B%20Production%20Skills-00F5FF?style=for-the-badge&logo=codeforces&logoColor=black" alt="Skills Suite" /></a>
+  <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Skills%20Suite-14%2B%20Ultimate%20Domain%20Skills-00F5FF?style=for-the-badge&logo=codeforces&logoColor=black" alt="Skills Suite" /></a>
   <a href="https://github.com/omspradippatil/Claude-Skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-39FF14?style=for-the-badge&logo=opensourceinitiative&logoColor=black" alt="License" /></a>
   <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Cost-100%25%20Free%20%26%20Open--Source-FF007F?style=for-the-badge&logo=airplayvideo&logoColor=white" alt="Cost" /></a>
   <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Compatibility-Claude%20%7C%20Antigravity%20%7C%20Cursor%20%7C%20Codex-7928CA?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="Compatibility" /></a>
