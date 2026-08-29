@@ -1,0 +1,4 @@
+interface:
+  display_name: "GSC SEO Prioritizer"
+  short_description: "Prioritize SEO fixes from GSC data"
+  default_prompt: "Use $gsc-seo-prioritizer to analyze Search Console data and decide which SEO fixes to prioritize."
