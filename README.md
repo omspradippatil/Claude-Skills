@@ -11,6 +11,7 @@
   <a href="https://github.com/omspradippatil/Claude-Skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-39FF14?style=for-the-badge&logo=opensourceinitiative&logoColor=black" alt="License" /></a>
   <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Cost-100%25%20Free%20%26%20Open--Source-FF007F?style=for-the-badge&logo=airplayvideo&logoColor=white" alt="Cost" /></a>
   <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Compatibility-Claude%20%7C%20Antigravity%20%7C%20Cursor%20%7C%20Codex-7928CA?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="Compatibility" /></a>
+  <a href="https://om-patil.com/donate"><img src="https://img.shields.io/badge/Donate-Support%20Project-FFDD00?style=for-the-badge&logo=githubsponsors&logoColor=black" alt="Donate" /></a>
 </p>
 
 <p align="center">
@@ -397,5 +398,8 @@ irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstal
 Made with ⚡ for high-performance AI coding agents.
 
 [![GitHub stars](https://img.shields.io/github/stars/omspradippatil/Claude-Skills?style=social)](https://github.com/omspradippatil/Claude-Skills)
+
+<br>
+<p>If you find this project helpful, consider <a href="https://om-patil.com/donate">supporting its development</a>.</p>
 
 </div>
