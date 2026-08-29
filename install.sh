@@ -117,197 +117,17 @@ set_scope() {
   fi
 }
 
+
 # ==============================================================================
-# INSTALLATION FUNCTIONS (SUPPORTING BOTH GLOBAL & PROJECT DIRECTORY)
+# INSTALLATION FUNCTIONS (ZERO BLOAT)
 # ==============================================================================
 
-# 🎨 1. CORE UI/UX, DESIGN SYSTEMS & TASTE (PRIMARY FOCUS)
-install_core_ui_ux() {
-  print_header "🎨 1. CORE UI/UX, DESIGN SYSTEMS & TASTE"
+install_ultimate_skills() {
+  print_header "🚀 INSTALLING 14 ULTIMATE DOMAIN SKILLS"
   
-  if [ -n "$SCOPE_NPM" ]; then
-    run_step "UI/UX Pro Max CLI" \
-      "Generates design guidelines, UI heuristics, color palettes, accessibility checks, and layout hierarchies." \
-      "npm install -g uipro-cli"
-  else
-    run_step "UI/UX Pro Max CLI" \
-      "Generates design guidelines, UI heuristics, color palettes, accessibility checks, and layout hierarchies." \
-      "npm install --save-dev uipro-cli"
-  fi
-
-  run_step "Taste Skill" \
-    "Enforces human-like visual balance, clean typography, whitespace discipline, and eliminates generic AI aesthetics." \
-    "npx --yes skills@latest add Leonxlnx/taste-skill $SCOPE_FLAG --all -y"
-
-  run_step "Accessible & Performant Motion" \
-    "Provides context for physics-based springs, easing curves, micro-interactions, gesture response, and 60fps animations." \
-    "npx --yes skills@latest add mthines/agent-skills $SCOPE_FLAG --all -y"
-}
-
-# 🏛️ 2. ARCHITECTURE & SYSTEM VISUALIZATION
-install_architecture_skills() {
-  print_header "🏛️ 2. ARCHITECTURE & SYSTEM VISUALIZATION"
-
-  run_step "Archify System Mapper" \
-    "Compiles codebase topology and workflows into beautiful, verifiable interactive HTML/SVG diagrams with motion." \
-    "npx --yes skills@latest add tt-a1i/archify $SCOPE_FLAG --all -y"
-}
-
-# 📱 3. MOBILE APP DEVELOPMENT (FLUTTER / DART / NATIVE)
-install_mobile_skills() {
-  print_header "📱 3. MOBILE APP DEVELOPMENT (FLUTTER / DART / NATIVE)"
-
-  if command -v dart >/dev/null 2>&1; then
-    run_step "Dart Skills CLI" \
-      "Scans pubspec.yaml and registers official, package-specific instructions directly into your agent." \
-      "dart pub global activate skills"
-  else
-    echo -e "${YELLOW}⚠ Dart SDK not found. Skipping 'dart pub global activate skills'. (Install Flutter/Dart if developing mobile apps).${RESET}"
-  fi
-
-  run_step "Community Flutter Claude Skills" \
-    "Context rules for widget rebuild optimization, Riverpod/BLoC patterns, native bridges, and platform conventions." \
-    "mkdir -p $SKILLS_DIR && if [ -d $SKILLS_DIR/flutter-skills ]; then git -C $SKILLS_DIR/flutter-skills pull; else git clone https://github.com/Harishwarrior/flutter-claude-skills.git $SKILLS_DIR/flutter-skills; fi"
-
-  run_step "OWASP Mobile & API Security Playbook" \
-    "Audits mobile source code for hardcoded secrets, insecure IPC, weak local encryption, and broken mobile API endpoints." \
-    "npx --yes skills@latest add OWASP/secure-agent-playbook $SCOPE_FLAG --all -y"
-}
-
-# 🌐 4. WEB FRONTEND, DOM & BROWSER AUTOMATION
-install_web_skills() {
-  print_header "🌐 4. WEB FRONTEND, DOM & BROWSER AUTOMATION"
-
-  run_step "Frontend Agent Skills" \
-    "Web-specific accessibility (WCAG), semantic HTML, responsive CSS grid/flexbox layouts, and UX copy formatting." \
-    "npx --yes skills@latest add hueyexe/frontend-agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Web Design & Interaction Collection" \
-    "Specialized CSS keyframes, layout transitions, scroll-driven effects, and Framer Motion patterns for modern websites." \
-    "npx --yes skills@latest add MengTo/Skills $SCOPE_FLAG --all -y"
-
-  run_step "TestDino Playwright Skill" \
-    "AI-powered Playwright testing toolkit: best practices, test generators, fixture optimizations, and flaky test healing." \
-    "npx --yes skills@latest add testdino-hq/playwright-skill $SCOPE_FLAG --all -y"
-
-  if [ -n "$SCOPE_NPM" ]; then
-    run_step "Playwright Browser Automation CLI" \
-      "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." \
-      "npm install -g @playwright/cli@latest && playwright-cli install --skills"
-
-    run_step "Firecrawl CLI" \
-      "Crawls, cleans, and converts web pages into LLM-ready clean markdown for real-time web scraping and doc ingestion." \
-      "npm install -g firecrawl-cli"
-  else
-    run_step "Playwright Browser Automation CLI" \
-      "Headless browser automation for UI visual regression checks, synthetic user workflows, E2E testing, and screenshots." \
-      "npm install --save-dev @playwright/cli@latest"
-
-    run_step "Firecrawl CLI" \
-      "Crawls, cleans, and converts web pages into LLM-ready clean markdown for real-time web scraping and doc ingestion." \
-      "npm install --save-dev firecrawl-cli"
-  fi
-}
-
-# 🔍 5. AGENTIC SEO & SEARCH VISIBILITY
-install_seo_skills() {
-  print_header "🔍 5. AGENTIC SEO & SEARCH OPTIMIZATION"
-
-  run_step "Agentic SEO Skill Suite" \
-    "LLM-first SEO analysis engine: 16 sub-skills, 10 specialist agents, and 89 utility scripts for deep audits and schemas." \
-    "mkdir -p $SKILLS_DIR/seo && if [ -d $SKILLS_DIR/seo/.git ]; then git -C $SKILLS_DIR/seo pull; else git clone https://github.com/Bhanunamikaze/Agentic-SEO-Skill.git $SKILLS_DIR/seo; fi"
-
-  run_step "Ashley SEO & Indexing Agent" \
-    "Audits technical on-page SEO, OpenGraph data, JSON-LD structured schemas, robots.txt, sitemaps, and Core Web Vitals." \
-    "npx --yes skills@latest add ashleytheash/seo-agent-skill $SCOPE_FLAG --all -y"
-}
-
-# 🔥 6. BACKEND, DATABASES & CLOUD EDGE
-install_backend_skills() {
-  print_header "🔥 6. BACKEND, DATABASES & CLOUD EDGE"
-
-  run_step "Supabase Agent Skills" \
-    "PostgreSQL architecture, Row Level Security (RLS) policies, Edge Functions (Deno), realtime subscriptions, and Auth triggers." \
-    "npx --yes skills@latest add supabase/agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Firebase Agent Skills" \
-    "Firestore document design, Firebase Cloud Messaging (FCM) push notifications, security rules, and serverless Cloud Functions." \
-    "npx --yes skills@latest add firebase/agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Neon Database Skills" \
-    "Serverless Postgres, database branching for PRs, index tuning, connection pooling, and low-latency SQL optimization." \
-    "npx --yes skills@latest add neondatabase/agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Cloudflare Ecosystem" \
-    "Workers, D1 SQL, R2 object storage, KV key-value stores, rate limiting, and edge API caching configurations." \
-    "npx --yes skills@latest add https://github.com/cloudflare/skills $SCOPE_FLAG --all -y"
-}
-
-# 🐳 7. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS
-install_devops_skills() {
-  print_header "🐳 7. DEVOPS, LOCAL INFRASTRUCTURE & INTEGRATIONS"
-
-  run_step "Composio Integration" \
-    "Connects agent directly to GitHub Actions, repository issues, pull requests, Gmail alerts, and 1000+ external app automations." \
-    "npx --yes skills@latest add composiohq/skills $SCOPE_FLAG --all -y"
-}
-
-# 🔄 8. INTELLIGENT WORKFLOWS & CROSS-AGENT PLUGINS
-install_workflows_and_plugins() {
-  print_header "🔄 8. INTELLIGENT WORKFLOWS & CROSS-AGENT PLUGINS"
-
-  if [ -n "$SCOPE_NPM" ]; then
-    run_step "Antigravity Workflows CLI" \
-      "Stack-agnostic, question-driven workflows that detect project frameworks and adapt step-by-step." \
-      "npm install -g antigravity-workflows"
-  else
-    run_step "Antigravity Workflows CLI" \
-      "Stack-agnostic, question-driven workflows that detect project frameworks and adapt step-by-step." \
-      "npm install --save-dev antigravity-workflows"
-  fi
-
-  run_step "Claude Skills Universal Library (388+ Skills)" \
-    "Comprehensive suite of 388+ engineering, architecture, C-level advisory, security, and productivity skills." \
-    "mkdir -p $SKILLS_DIR/claude-skills && if [ -d $SKILLS_DIR/claude-skills/.git ]; then git -C $SKILLS_DIR/claude-skills pull; else git clone https://github.com/alirezarezvani/claude-skills.git $SKILLS_DIR/claude-skills; fi"
-}
-
-  # 🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY
-install_code_quality_skills() {
-  print_header "🧠 9. CODE QUALITY, SECURITY & PERSISTENT MEMORY"
-
-  run_step "Persistent Memory & Context Continuity" \
-    "Maintains cross-session long-term memory and project decisions using local markdown logs (100% free, zero cloud fees)." \
-    "npx --yes skills@latest add memoryplugin/agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Andrej Karpathy Engineering Philosophy" \
-    "Prioritizes clarity, minimal abstractions, readability, clean foundational code, and strict engineering discipline." \
-    "npx --yes skills@latest add multica-ai/andrej-karpathy-skills $SCOPE_FLAG --all -y"
-
-  run_step "Caveman (Anti-Overengineering)" \
-    "Eliminates framework bloat, prevents over-engineering, enforces simple directory architectures, and refuses micro-abstractions." \
-    "npx --yes skills@latest add JuliusBrussee/caveman $SCOPE_FLAG --all -y"
-
-  run_step "Ponytail Skills" \
-    "Enforces clean software design patterns, eliminating bloated libraries and preserving codebase simplicity." \
-    "npx --yes skills@latest add https://github.com/DietrichGebert/ponytail/tree/main/skills $SCOPE_FLAG --all -y"
-
-  run_step "MemoryPlugin (Cross-Session Persistence)" \
-    "Provides cross-session long-term memory so the agent retains project context, design preferences, and architectural decisions." \
-    "npx --yes skills@latest add memoryplugin/agent-skills $SCOPE_FLAG --all -y"
-
-  run_step "Sentry for AI" \
-    "Automated root-cause analysis for production exceptions, stack trace parsing, and regression pinpointing." \
-    "npx --yes skills@latest add getsentry/sentry-for-ai $SCOPE_FLAG --all -y"
-
-  if [ -n "$SCOPE_NPM" ]; then
-    run_step "CTX7 Documentation Indexer" \
-      "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." \
-      "npm install -g ctx7"
-  else
-    run_step "CTX7 Documentation Indexer" \
-      "Indexes and injects the latest framework/library documentation directly into the agent context, eliminating hallucinations." \
-      "npm install --save-dev ctx7"
-  fi
+  run_step "Downloading Ultimate Skills" \
+    "Cloning the consolidated zero-bloat Ultimate Skills directly from the source repository." \
+    "rm -rf /tmp/claude-skills-tmp && git clone --depth 1 https://github.com/omspradippatil/Claude-Skills.git /tmp/claude-skills-tmp && mkdir -p $SKILLS_DIR && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* $SKILLS_DIR/ && rm -rf /tmp/claude-skills-tmp"
 }
 
 # ==============================================================================
@@ -422,76 +242,22 @@ main() {
   case "$SUITE_INPUT" in
     1|"")
       echo -e "\n${GREEN}🚀 Starting All-in-One Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_core_ui_ux
-      install_architecture_skills
-      install_mobile_skills
-      install_web_skills
-      install_seo_skills
-      install_backend_skills
-      install_devops_skills
-      install_workflows_and_plugins
-      install_code_quality_skills
+      install_ultimate_skills
       ;;
     2)
       echo -e "\n${GREEN}🚀 Starting Mobile Application Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_core_ui_ux
-      install_architecture_skills
-      install_mobile_skills
-      install_seo_skills
-      install_backend_skills
-      install_devops_skills
-      install_workflows_and_plugins
-      install_code_quality_skills
+      install_ultimate_skills
       ;;
     3)
       echo -e "\n${GREEN}🚀 Starting Web Application Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_core_ui_ux
-      install_architecture_skills
-      install_web_skills
-      install_seo_skills
-      install_backend_skills
-      install_devops_skills
-      install_workflows_and_plugins
-      install_code_quality_skills
+      install_ultimate_skills
       ;;
     4)
       echo -e "\n${BOLD}Select categories to install into ${SCOPE_DESC}:${RESET}"
       
       echo -n -e "Install 🎨 Core UI/UX & Taste skills? [Y/n]: "
       read -r c1 < /dev/tty 2>/dev/null || c1="y"
-      [[ "$c1" =~ ^[Nn] ]] || install_core_ui_ux
-
-      echo -n -e "Install 🏛️ Architecture & System Visualizer (Archify)? [Y/n]: "
-      read -r cArch < /dev/tty 2>/dev/null || cArch="y"
-      [[ "$cArch" =~ ^[Nn] ]] || install_architecture_skills
-
-      echo -n -e "Install 📱 Mobile App (Flutter/Dart) skills? [Y/n]: "
-      read -r c2 < /dev/tty 2>/dev/null || c2="y"
-      [[ "$c2" =~ ^[Nn] ]] || install_mobile_skills
-
-      echo -n -e "Install 🌐 Web Frontend & Browser (Playwright) skills? [Y/n]: "
-      read -r c3 < /dev/tty 2>/dev/null || c3="y"
-      [[ "$c3" =~ ^[Nn] ]] || install_web_skills
-
-      echo -n -e "Install 🔍 Agentic SEO & Indexing skills? [Y/n]: "
-      read -r cSeo < /dev/tty 2>/dev/null || cSeo="y"
-      [[ "$cSeo" =~ ^[Nn] ]] || install_seo_skills
-
-      echo -n -e "Install 🔥 Backend & Cloud Edge skills? [Y/n]: "
-      read -r c4 < /dev/tty 2>/dev/null || c4="y"
-      [[ "$c4" =~ ^[Nn] ]] || install_backend_skills
-
-      echo -n -e "Install 🐳 DevOps & Integrations skills? [Y/n]: "
-      read -r c5 < /dev/tty 2>/dev/null || c5="y"
-      [[ "$c5" =~ ^[Nn] ]] || install_devops_skills
-
-      echo -n -e "Install 🔄 Intelligent Workflows & Claude Skills Suite? [Y/n]: "
-      read -r cWf < /dev/tty 2>/dev/null || cWf="y"
-      [[ "$cWf" =~ ^[Nn] ]] || install_workflows_and_plugins
-
-      echo -n -e "Install 🧠 Code Quality, Claude-Mem & Sentry skills? [Y/n]: "
-      read -r c6 < /dev/tty 2>/dev/null || c6="y"
-      [[ "$c6" =~ ^[Nn] ]] || install_code_quality_skills
+      [[ "$c1" =~ ^[Nn] ]] || install_ultimate_skills
       ;;
     5)
       uninstall_all_skills
@@ -499,15 +265,7 @@ main() {
       ;;
     *)
       echo -e "\n${RED}Invalid option. Defaulting to Complete All-in-One installation.${RESET}"
-      install_core_ui_ux
-      install_architecture_skills
-      install_mobile_skills
-      install_web_skills
-      install_seo_skills
-      install_backend_skills
-      install_devops_skills
-      install_workflows_and_plugins
-      install_code_quality_skills
+      install_ultimate_skills
       ;;
   esac
 
