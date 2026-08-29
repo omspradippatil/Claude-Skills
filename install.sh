@@ -274,8 +274,6 @@ main() {
   echo -e "${GREEN}${BOLD} 🎉 ALL SKILLS HAVE BEEN INSTALLED & CONFIGURED IN [${SCOPE_DESC}]! 🎉   ${RESET}"
   echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
   echo ""
-  echo -e "${CYAN}💡 Quick Tip:${RESET} To initialize project-level design tokens in any UI project, run: ${YELLOW}uipro init --ai antigravity${RESET}"
-  echo ""
 }
 
 main "$@"
