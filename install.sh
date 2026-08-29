@@ -81,6 +81,7 @@ SCOPE_FLAG="-g"
 SCOPE_NPM="-g"
 SCOPE_DESC="Global (~/.agents & system-wide)"
 SKILLS_DIR="$HOME/.claude/skills"
+AGENTS_DIR="$HOME/.gemini/config/skills"
 
 set_scope() {
   local scope_choice="$1"
@@ -89,7 +90,8 @@ set_scope() {
     SCOPE_NPM=""
     SCOPE_DESC="Project Directory ($(pwd))"
     SKILLS_DIR="$(pwd)/.claude/skills"
-    mkdir -p "$SKILLS_DIR" "$(pwd)/.agent/skills"
+    AGENTS_DIR="$(pwd)/.agents/skills"
+    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR"
     
     echo -n -e "\n${YELLOW}Would you like to add the skills directory to your .gitignore? [Y/n]: ${RESET}"
     if [ -t 0 ] || [ -e /dev/tty ]; then
@@ -113,7 +115,8 @@ set_scope() {
     SCOPE_NPM="-g"
     SCOPE_DESC="Global (~/.agents & system-wide)"
     SKILLS_DIR="$HOME/.claude/skills"
-    mkdir -p "$SKILLS_DIR"
+    AGENTS_DIR="$HOME/.gemini/config/skills"
+    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR"
   fi
 }
 
@@ -127,7 +130,7 @@ install_ultimate_skills() {
   
   run_step "Downloading Ultimate Skills" \
     "Cloning the consolidated zero-bloat Ultimate Skills directly from the source repository." \
-    "rm -rf /tmp/claude-skills-tmp && git clone --depth 1 https://github.com/omspradippatil/Claude-Skills.git /tmp/claude-skills-tmp && mkdir -p $SKILLS_DIR && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* $SKILLS_DIR/ && rm -rf /tmp/claude-skills-tmp"
+    "rm -rf /tmp/claude-skills-tmp && git clone --depth 1 https://github.com/omspradippatil/Claude-Skills.git /tmp/claude-skills-tmp && mkdir -p \"$SKILLS_DIR\" \"$AGENTS_DIR\" && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* \"$SKILLS_DIR/\" && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* \"$AGENTS_DIR/\" && rm -rf /tmp/claude-skills-tmp"
 }
 
 # ==============================================================================
