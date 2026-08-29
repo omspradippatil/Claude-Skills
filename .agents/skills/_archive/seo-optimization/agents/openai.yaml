@@ -1,4 +1,0 @@
-interface:
-  display_name: "SEO Optimization"
-  short_description: "Diagnose and prioritize SEO fixes"
-  default_prompt: "Use $seo-optimization to analyze SEO issues and recommend structural and page-level fixes."
