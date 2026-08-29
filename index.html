@@ -213,7 +213,7 @@
         <span class="flex h-2 w-2 relative">
           <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
         </span>
-        <span class="text-slate-300">400+ Verified Skills Suite for AI Coding Agents</span>
+        <span class="text-slate-300">14+ Ultimate Master Skills for AI Coding Agents</span>
         <span class="text-brand-cyan font-semibold flex items-center gap-0.5">100% Free & Local <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </div>
 
@@ -803,24 +803,14 @@
 
     // Skills Database for Live Search
     const skillsData = [
-      { name: 'uipro-cli', cat: 'ui', title: 'UI/UX Pro Max CLI', desc: 'Design token system, UI heuristics, color palettes, and typography hierarchy.', prompt: 'uipro init --ai antigravity: Generate a design token system for a fintech dashboard.' },
-      { name: 'taste-skill', cat: 'ui', title: 'Taste Skill (13 Anti-Slop Rules)', desc: 'Strips generic AI styling; enforces optical letter spacing, contrast, and layout rhythm.', prompt: 'Redesign this settings view. Apply high taste, clean typography hierarchy, and remove generic AI borders/shadows.' },
-      { name: 'mthines/agent-skills', cat: 'ui', title: 'Accessible 60fps Motion', desc: '49 physics-based spring curves, micro-interactions, gesture response, and easing.', prompt: 'Add spring physics transitions and micro-interactions to the modal open and accordion drawer.' },
-      { name: 'archify', cat: 'arch', title: 'Archify System Mapper', desc: 'Compiles codebase topology and API sequence charts into interactive HTML/SVG maps.', prompt: 'Use archify to map this repository\'s runtime architecture and data flow as an interactive HTML diagram.' },
-      { name: 'flutter-claude-skills', cat: 'mobile', title: 'Flutter & Dart Heuristics', desc: 'Widget rebuild optimization, Riverpod/BLoC architecture, and native bridges.', prompt: 'Optimize this ListView widget tree to prevent unnecessary rebuilds using const constructors and selector hooks.' },
-      { name: 'OWASP-mobile', cat: 'mobile', title: 'OWASP Mobile Security', desc: 'Audits mobile source code for hardcoded secrets, insecure IPC, and MASVS rules.', prompt: 'Audit this Flutter application against OWASP MASVS for hardcoded keys and insecure biometric storage.' },
-      { name: 'frontend-agent-skills', cat: 'web', title: 'Frontend Accessibility (WCAG)', desc: 'Semantic HTML5, ARIA landmarks, and responsive CSS grid/flexbox layouts.', prompt: 'Refactor this navbar and hero section to be fully accessible with semantic ARIA landmarks.' },
-      { name: 'MengTo-Skills', cat: 'web', title: '130 Web Transitions Collection', desc: 'Framer Motion patterns, scroll-driven visual sequences, and CSS keyframe animations.', prompt: 'Create a smooth scroll-driven card expansion effect using Framer Motion and Tailwind CSS.' },
-      { name: 'testdino-playwright', cat: 'web', title: 'TestDino Playwright Skill', desc: 'AI test generator, fixture optimizer, and flaky-test auto-healing toolkit.', prompt: 'Write an end-to-end Playwright test suite for user authentication with fixtures and auto-retry.' },
-      { name: 'agentic-seo', cat: 'seo', title: 'Agentic SEO Suite (16 Sub-Skills)', desc: 'Technical SEO analysis engine, 10 specialist agents, and 89 evidence collectors.', prompt: 'Run a full technical SEO audit on this landing page and generate JSON-LD schema for SoftwareApplication.' },
-      { name: 'ashley-seo', cat: 'seo', title: 'Ashley SEO & Indexing Agent', desc: 'OpenGraph metadata, JSON-LD structured schemas, sitemaps, and Core Web Vitals.', prompt: 'Check our OpenGraph meta tags, canonical URLs, and sitemap configuration for Google indexing.' },
-      { name: 'supabase-skills', cat: 'backend', title: 'Supabase Postgres RLS', desc: 'Row Level Security policies, Edge Functions (Deno), and realtime subscriptions.', prompt: 'Design a PostgreSQL schema for a multi-tenant SaaS with strict Row Level Security (RLS) policies.' },
-      { name: 'neondatabase-skills', cat: 'backend', title: 'Neon Database Branching', desc: 'Serverless Postgres, instant database branching for PRs, and query optimization.', prompt: 'Configure database branching for CI/CD pull requests and optimize indexing strategy.' },
-      { name: 'cloudflare-skills', cat: 'backend', title: 'Cloudflare Workers & D1', desc: 'Edge Workers, D1 SQL databases, R2 object storage, and KV cache headers.', prompt: 'Write a Cloudflare Worker with D1 SQL binding and edge cache headers for geo-distributed API responses.' },
-      { name: 'composiohq-skills', cat: 'devops', title: 'Composio 1000+ Integrations', desc: 'GitHub Actions automation, PR review bots, issue handlers, and app workflows.', prompt: 'Set up a GitHub Action that triggers automated code review on every pull request using Composio.' },
-      { name: 'memoryplugin', cat: 'memory', title: '100% Free Local Memory', desc: 'Preserves context and decisions across sessions via local markdown logs (Zero API fees).', prompt: 'What architectural decisions did we make yesterday regarding user permissions?' },
-      { name: 'karpathy-skills', cat: 'memory', title: 'Andrej Karpathy Heuristics', desc: 'Prioritizes clarity, minimal abstractions, zero fluff, and clean foundational code.', prompt: 'Refactor this utility module following Karpathy principles: simple loops, zero over-engineering, maximum clarity.' },
-      { name: 'ctx7', cat: 'memory', title: 'CTX7 Live Framework Docs', desc: 'Indexes and injects latest framework documentation directly into the agent context.', prompt: 'ctx7 index react-router@v7: Show the exact route loader configuration for nested layouts.' }
+      { name: 'ultimate-frontend-design', cat: 'ui', title: 'Ultimate Frontend Design', desc: 'A mega-catalog of UI aesthetics, true glassmorphism, Brutalism, and typography hierarchies.', prompt: 'Redesign this dashboard using the "Dark Glass Clean Layout" aesthetic from your ultimate-frontend-design catalog.' },
+      { name: 'ultimate-security-auditor', cat: 'arch', title: 'Ultimate Security Auditor', desc: 'Unified OWASP reviews, LLM risk assessments, API hardening, and mobile security checks.', prompt: 'Perform a comprehensive security audit on these API endpoints using the OWASP guidelines.' },
+      { name: 'ultimate-cloudflare-expert', cat: 'backend', title: 'Ultimate Cloudflare Expert', desc: 'Edge Workers, D1 SQL, R2, durable objects, and local Wrangler sandbox mastery.', prompt: 'Architect a serverless KV store and Edge Worker caching strategy.' },
+      { name: 'ultimate-testing-qa', cat: 'web', title: 'Ultimate Testing QA', desc: 'Playwright, E2E stabilization, CI auto-fix workflows, and surgical patching heuristics.', prompt: 'Generate robust Playwright UI regression tests for this checkout flow with auto-retry fixtures.' },
+      { name: 'ultimate-llm-optimization', cat: 'memory', title: 'Ultimate LLM Optimization', desc: 'Caveman heuristics, Karpathy rules, minimal abstractions, and token-saving strategies.', prompt: 'Refactor this module. Remove all abstraction bloat and follow the Caveman strict guidelines.' },
+      { name: 'ultimate-web-animation', cat: 'ui', title: 'Ultimate Web Animation', desc: 'GSAP, cinematic scroll-scrubbing, physics-based springs, and WebGL transitions.', prompt: 'Implement a smooth scroll-triggered stagger animation for these bento grid cards.' },
+      { name: 'ultimate-seo-marketing', cat: 'seo', title: 'Ultimate SEO & Marketing', desc: 'Technical SEO engine, GSC prioritization, pricing page layouts, and JSON-LD structured schemas.', prompt: 'Run a technical SEO audit on this landing page and generate JSON-LD schema.' },
+      { name: 'ultimate-firebase-expert', cat: 'backend', title: 'Ultimate Firebase Expert', desc: 'Firestore architecture, RLS security rules, Auth, and Serverless Cloud Functions.', prompt: 'Design a Firestore document schema with strict collection group security rules.' }
     ];
 
     let currentCategory = 'all';
