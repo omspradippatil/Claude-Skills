@@ -1,6 +1,6 @@
 ---
 name: ultimate-assets-media
-description: Consolidated ultimate skill containing expert knowledge for assets media. Use this for all tasks in this domain.
+description: Activate this skill to optimize images (WebP/AVIF), fonts, lazy loading, and media performance on the web.
 ---
 
 # Ultimate Assets Media

@@ -1,6 +1,6 @@
 ---
 name: ultimate-security-auditor
-description: Consolidated ultimate skill containing expert knowledge for security auditor. Use this for all tasks in this domain.
+description: Activate this skill to perform OWASP security audits, penetration testing, threat modeling, or securing endpoints.
 ---
 
 # Ultimate Security Auditor

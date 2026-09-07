@@ -1,6 +1,6 @@
 ---
 name: ultimate-frontend-design
-description: Consolidated ultimate skill containing expert knowledge for frontend design. Use this for all tasks in this domain.
+description: Activate this skill for UI/UX tasks, CSS styling, layout building, component design, or aesthetic improvements.
 ---
 
 # Ultimate Frontend Design

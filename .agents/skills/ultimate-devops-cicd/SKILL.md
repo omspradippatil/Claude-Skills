@@ -1,6 +1,6 @@
 ---
 name: ultimate-devops-cicd
-description: Master heuristics for Infrastructure, Docker, GitHub Actions, and CI/CD Pipelines.
+description: Activate this skill for tasks involving GitHub Actions, Docker, CI/CD pipelines, containerization, or deployment workflows.
 ---
 
 # Ultimate DevOps & CI/CD

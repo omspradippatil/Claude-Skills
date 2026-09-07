@@ -1,6 +1,6 @@
 ---
 name: ultimate-ux-research
-description: Consolidated ultimate skill containing expert knowledge for ux research. Use this for all tasks in this domain.
+description: Activate this skill for user discovery, usability heuristics, reducing cognitive load, or UX copywriting.
 ---
 
 # Ultimate Ux Research

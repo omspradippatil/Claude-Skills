@@ -1,6 +1,6 @@
 ---
 name: ultimate-testing-qa
-description: Consolidated ultimate skill containing expert knowledge for testing qa. Use this for all tasks in this domain.
+description: Activate this skill for writing unit tests, TDD, Playwright E2E tests, Jest, or stabilizing flaky test suites.
 ---
 
 # Ultimate Testing Qa
@@ -3239,55 +3239,7 @@ Open threads at exit: <count>
 CI at exit: <green | pending | red (<failing check names>) | error (<verbatim query failure>) | not run (--no-ci) | none on this repo>
   ci-auto-fix handoffs: <CI_HANDOFFS> of 2
 
-PR description: <refreshed | unchanged (no code applied) | skipped (--no-refresh)>
-Linear note: <posted <ticket> | no ticket linked | Linear MCP unavailable | skipped>
-
-Final pr-reviewer verdict: <PASS | FAIL | n/a (external review)>
-Head commit: <sha>
-```
-
-Surface remaining open threads prominently if the cap was reached or the
-no-progress guard tripped. Do not silently drop them — an open thread at exit is
-a human-judgment flag the user must resolve.
-
-**A red check at exit gets the same treatment.** Name the failing checks and say
-the loop stopped with CI red. Never describe such a run as converged — zero open
-threads over a red build is not a review-ready PR.
-
-##### Hard rules
-
-- **The only permitted `polish` invocation is `Skill("polish", "simplify")`.** Non-simplify modes trigger an internal agent pass and create a dispatch cycle.
-- **This loop runs at the top level, never inside a sub-agent.** Its first sub-step is a delegation, so a caller that dispatches the loop instead of running it spends the delegation budget one level too high and the loop can only skip at iteration 0 ([Caller contract](#caller-contract--run-this-loop-at-the-top-level-never-inside-a-sub-agent)). A caller limited to one dispatch passes `--external-review` **deliberately** — the loop never adds that flag to itself.
-- **One missing-`Task` skip is terminal.** Never retry the dispatch and never work around it: the tool's absence is fixed by the dispatch topology before any code is read, so a retry costs a round trip and returns the same answer.
-- **A skip is never reported as convergence, and never as report-only.** Zero open threads plus green CI is not convergence when no review pass produced a verdict; say plainly that the loop did not run and the PR was not reviewed.
-- **Convergence never green-washes.** The loop resolves a thread only via a fix or an honest reply. A live finding the agent cannot fix or honestly decline stays open and is surfaced — the loop never resolves it to terminate. This is `implement-suggestion --resolve-all`'s safety valve, inherited here.
-- **Never write to GitHub directly, except the Step 2 description refresh.** `pr-reviewer` posts the `COMMENT` review and `implement-suggestion` resolves threads; this skill orchestrates. The one direct write it owns is the final `gh pr edit --body` refresh.
-- **Never undraft the PR.** This skill converges; the user makes the final undraft decision.
-- **One `implement-suggestion` per iteration, no `--watch`.** The loop drives re-review; `--watch` waits for external bots and would conflict.
-- **Cap is a hard limit.** If threads are still open at the cap, surface them and stop. Do not extend the cap silently.
-- **Convergence requires CI settled, not just threads resolved.** Unless `--no-ci` is set, a red check blocks the clean-convergence exit. Reporting zero open threads over a red build is the CI-shaped version of green-washing.
-- **Never fix CI in this context.** Sub-step D classifies and delegates to `ci-auto-fix`; it applies no fix itself, and every `ci-auto-fix` refusal (no `--no-verify`, no `continue-on-error`, no skipped suites, no weakened assertions) holds transitively.
-- **Never carry CI watch state — query it.** Sub-step D reads check state statelessly at the current remote head and writes nothing; it never records a verdict or a spent budget for another phase to inherit, and it never reintroduces a cross-phase watch-state file ([`diagnostic-surface.md`](../../workflow/autonomous-workflow/rules/diagnostic-surface.md) — *watch state is queried, never carried*). `CI_HANDOFFS` is counted inside this run only.
-- **A failed poll is never a quiet reviewer.** Under `--external-review`, `POLL_ERROR` aborts with `poll error`. Converting a broken probe into "the reviewer had nothing to say" reports a never-reviewed PR as converged.
-- **Never restate the shared poll.** `--external-review` calls [`review-activity-poll.md`](../../../agents/shared/rules/review-activity-poll.md); copying the block forks four correctness properties that are individually easy to drop.
-
-##### Relationship to other skills
-
-| Skill | Relationship |
-| --- | --- |
-| `pr-reviewer` | Sub-step A: the find pass (read-only); resolves its own addressed threads on re-review; this skill drives re-review between iterations. |
-| `implement-suggestion --resolve-all` | Sub-step B: the apply + resolve pass; invoked single-shot (no `--watch`) with `--resolve-all` so non-fix threads (questions, discussions, declines) are answered and resolved. |
-| `polish simplify` | Sub-step C: the cleanup pass; only the simplify mode, never full `polish`. |
-| `create-pr` description-contract | Step 2 reuses [`description-contract.md`](../../delivery/create-pr/rules/description-contract.md) for the PR-description refresh — single source of truth with `create-pr`. |
-| `polish` (bare) | **Downstream, not a caller.** `polish`'s Pass A invokes `pr-reviewer` directly and never calls `review-loop`; this loop only invokes `Skill("polish", "simplify")`. |
-| `create-pr` | Upstream caller — delegates post-draft review to `review-loop` after opening the draft PR. |
-| `autonomous-workflow` Phase 6/7 | Invokes `review-loop` in place of the retired `reviewer` agent dispatches. |
-| `review-changes` | Routes to `review-loop` as the primary convergence entry point. |
-| `ci-auto-fix` | Sub-step D: dispatched as a subagent on a red check, capped at 2 handoffs per run. Owns the fix; this loop only classifies and delegates. Skipped under `--no-ci`. |
-| `review-activity-poll` | Shared rule owning the `--external-review` wait — [`agents/shared/rules/review-activity-poll.md`](../../../agents/shared/rules/review-activity-poll.md), co-owned with `implement-suggestion --watch`. |
-| `implement-suggestion --watch` | **Sibling, never nested.** Both wait on an out-of-process reviewer via the shared poll; `--watch` is the thin one (apply + push + stop, and it reads CI only as a stop reason). This loop adds `--resolve-all`, simplify, CI delegation, and the description refresh. The hard rule *one `implement-suggestion` per iteration, no `--watch`* keeps them from stacking. |
-
-
+PR description: Activate this skill for writing unit tests, TDD, Playwright E2E tests, Jest, or stabilizing flaky test suites.
 ---
 
 ### safe-refactor

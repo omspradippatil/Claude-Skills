@@ -1,6 +1,7 @@
 ---
 name: ultimate-persistent-memory
 description: Enforces the maintenance of a persistent project ledger to preserve context across sessions.
+trigger: always_on
 ---
 
 # Ultimate Persistent Memory

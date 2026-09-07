@@ -1,6 +1,6 @@
 ---
 name: ultimate-mobile-engineering
-description: Master heuristics for Mobile App Development, React Native, and Flutter.
+description: Activate this skill for mobile app development, React Native, Flutter, Swift, native bridges, or mobile UX.
 ---
 
 # Ultimate Mobile Engineering

@@ -1,6 +1,6 @@
 ---
 name: ultimate-state-management
-description: Heuristics for complex frontend state, server caching, and avoiding spaghetti data flows.
+description: Activate this skill for complex frontend state, React Query/SWR data fetching, Zustand/Redux global stores, or XState.
 ---
 
 # Ultimate State Management

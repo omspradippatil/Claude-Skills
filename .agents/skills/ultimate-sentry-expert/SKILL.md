@@ -1,6 +1,6 @@
 ---
 name: ultimate-sentry-expert
-description: Consolidated ultimate skill containing expert knowledge for sentry expert. Use this for all tasks in this domain.
+description: Activate this skill for error tracking, telemetry, performance monitoring, or configuring Sentry SDKs.
 ---
 
 # Ultimate Sentry Expert

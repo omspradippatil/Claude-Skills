@@ -1,6 +1,7 @@
 ---
 name: ultimate-engineering-discipline
 description: Strict behavioral rules to prevent AI Slop, over-engineering, and silent regressions.
+trigger: always_on
 ---
 
 # Ultimate Engineering Discipline

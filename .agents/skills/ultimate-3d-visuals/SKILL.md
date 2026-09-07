@@ -1,6 +1,6 @@
 ---
 name: ultimate-3d-visuals
-description: Consolidated ultimate skill containing expert knowledge for 3d visuals. Use this for all tasks in this domain.
+description: Activate this skill for tasks involving Three.js, WebGL, shaders, 3D models, canvas rendering, or spatial visuals.
 ---
 
 # Ultimate 3D Visuals

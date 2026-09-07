@@ -82,6 +82,7 @@ SCOPE_NPM="-g"
 SCOPE_DESC="Global (~/.agents & system-wide)"
 SKILLS_DIR="$HOME/.claude/skills"
 AGENTS_DIR="$HOME/.gemini/config/skills"
+AGENTS_RULES_DIR="$HOME/.gemini/config/rules"
 
 set_scope() {
   local scope_choice="$1"
@@ -91,7 +92,8 @@ set_scope() {
     SCOPE_DESC="Project Directory ($(pwd))"
     SKILLS_DIR="$(pwd)/.claude/skills"
     AGENTS_DIR="$(pwd)/.agents/skills"
-    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR"
+    AGENTS_RULES_DIR="$(pwd)/.agents/rules"
+    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR" "$AGENTS_RULES_DIR"
     
     echo -n -e "\n${YELLOW}Would you like to add the skills directory to your .gitignore? [Y/n]: ${RESET}"
     if [ -t 0 ] || [ -e /dev/tty ]; then
@@ -116,7 +118,8 @@ set_scope() {
     SCOPE_DESC="Global (~/.agents & system-wide)"
     SKILLS_DIR="$HOME/.claude/skills"
     AGENTS_DIR="$HOME/.gemini/config/skills"
-    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR"
+    AGENTS_RULES_DIR="$HOME/.gemini/config/rules"
+    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR" "$AGENTS_RULES_DIR"
   fi
 }
 
@@ -126,7 +129,7 @@ set_scope() {
 # ==============================================================================
 
 install_ultimate_skills() {
-  print_header "🚀 INSTALLING 21 ULTIMATE DOMAIN SKILLS"
+  print_header "🚀 INSTALLING 19 SKILLS & 2 ALWAYS-ON RULES"
   
   run_step "Downloading Ultimate Skills" \
     "Cloning the consolidated zero-bloat Ultimate Skills directly from the source repository." \

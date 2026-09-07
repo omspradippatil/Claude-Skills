@@ -1,6 +1,6 @@
 ---
 name: ultimate-web-animation
-description: Consolidated ultimate skill containing expert knowledge for web animation. Use this for all tasks in this domain.
+description: Activate this skill for UI motion, Framer Motion, GSAP, CSS keyframes, spring physics, or scroll-scrubbed animations.
 ---
 
 # Ultimate Web Animation

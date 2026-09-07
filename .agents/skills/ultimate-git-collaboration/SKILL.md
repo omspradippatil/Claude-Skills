@@ -1,6 +1,6 @@
 ---
 name: ultimate-git-collaboration
-description: Heuristics for atomic commits, branching, and AI Git workflow safety.
+description: Activate this skill for Git branching strategies, resolving merge conflicts, conventional commits, or PR creation.
 ---
 
 # Ultimate Git Collaboration

@@ -1,6 +1,6 @@
 ---
 name: ultimate-web-gamedev
-description: Consolidated ultimate skill containing expert knowledge for web gamedev. Use this for all tasks in this domain.
+description: Activate this skill for HTML5 canvas games, game loops, physics engines (Matter.js), or sprite rendering.
 ---
 
 # Ultimate Web Gamedev

@@ -1,6 +1,6 @@
 ---
 name: ultimate-api-architecture
-description: Master heuristics for designing scalable APIs, Microservices, and Middleware.
+description: Activate this skill when designing REST/GraphQL APIs, Node.js/Python backends, microservices, auth, or caching middleware.
 ---
 
 # Ultimate API Architecture

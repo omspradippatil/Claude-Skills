@@ -1,6 +1,6 @@
 ---
 name: ultimate-seo-marketing
-description: Consolidated ultimate skill containing expert knowledge for seo marketing. Use this for all tasks in this domain.
+description: Activate this skill for technical SEO, core web vitals, meta tags, OpenGraph, or JSON-LD structured data.
 ---
 
 # Ultimate Seo Marketing
@@ -1115,23 +1115,7 @@ Rules:
 
 ###### SEO basics
 - Title: “Pricing — {Product}” + outcome keyword
-- Meta description: 1 sentence on value + 1 sentence on pricing starting point
-- Clean URL: `/pricing`
-- Internal links from:
-  - homepage CTA
-  - feature pages
-  - comparison pages
-
-###### AEO (answer engines)
-- Add an FAQ section that answers:
-  - refund policy
-  - trial length
-  - cancellation
-  - what counts as a seat/usage
-  - enterprise procurement
-- Write FAQs in **plain Q/A** format.
-- Optional: FAQ schema (if your stack supports it).
-
+- Meta description: Activate this skill for technical SEO, core web vitals, meta tags, OpenGraph, or JSON-LD structured data.
 ---
 
 ##### Common pitfalls

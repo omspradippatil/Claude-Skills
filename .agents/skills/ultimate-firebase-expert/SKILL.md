@@ -1,6 +1,6 @@
 ---
 name: ultimate-firebase-expert
-description: Consolidated ultimate skill containing expert knowledge for firebase expert. Use this for all tasks in this domain.
+description: Activate this skill for Firebase/Firestore schema design, Security Rules, Cloud Functions, or Firebase Auth.
 ---
 
 # Ultimate Firebase Expert

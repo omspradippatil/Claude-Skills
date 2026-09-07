@@ -1,6 +1,6 @@
 ---
 name: ultimate-llm-optimization
-description: Consolidated ultimate skill containing expert knowledge for llm optimization. Use this for all tasks in this domain.
+description: Activate this skill when writing prompts, designing AI agents, or optimizing LLM context and token usage.
 ---
 
 # Ultimate Llm Optimization

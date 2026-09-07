@@ -1,6 +1,6 @@
 ---
 name: ultimate-cloudflare-expert
-description: Consolidated ultimate skill containing expert knowledge for cloudflare expert. Use this for all tasks in this domain.
+description: Activate this skill for Cloudflare Workers, Edge functions, D1 databases, R2 storage, or Wrangler deployments.
 ---
 
 # Ultimate Cloudflare Expert
