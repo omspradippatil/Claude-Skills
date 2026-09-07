@@ -126,7 +126,7 @@ set_scope() {
 # ==============================================================================
 
 install_ultimate_skills() {
-  print_header "🚀 INSTALLING 14 ULTIMATE DOMAIN SKILLS"
+  print_header "🚀 INSTALLING 21 ULTIMATE DOMAIN SKILLS"
   
   run_step "Downloading Ultimate Skills" \
     "Cloning the consolidated zero-bloat Ultimate Skills directly from the source repository." \

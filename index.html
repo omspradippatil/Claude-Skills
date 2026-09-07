@@ -213,7 +213,7 @@
         <span class="flex h-2 w-2 relative">
           <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
         </span>
-        <span class="text-slate-300">14+ Ultimate Master Skills for AI Coding Agents</span>
+        <span class="text-slate-300">21+ Ultimate Master Skills for AI Coding Agents</span>
         <span class="text-brand-cyan font-semibold flex items-center gap-0.5">100% Free & Local <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </div>
 
@@ -803,14 +803,26 @@
 
     // Skills Database for Live Search
     const skillsData = [
-      { name: 'ultimate-frontend-design', cat: 'ui', title: 'Ultimate Frontend Design', desc: 'A mega-catalog of UI aesthetics, true glassmorphism, Brutalism, and typography hierarchies.', prompt: 'Redesign this dashboard using the "Dark Glass Clean Layout" aesthetic from your ultimate-frontend-design catalog.' },
+      { name: 'ultimate-frontend-design', cat: 'ui', title: 'Ultimate Frontend Design', desc: 'A mega-catalog of UI aesthetics, true glassmorphism, Brutalism, and typography hierarchies.', prompt: 'Redesign this dashboard using the "Dark Glass Clean Layout" aesthetic.' },
       { name: 'ultimate-security-auditor', cat: 'arch', title: 'Ultimate Security Auditor', desc: 'Unified OWASP reviews, LLM risk assessments, API hardening, and mobile security checks.', prompt: 'Perform a comprehensive security audit on these API endpoints using the OWASP guidelines.' },
       { name: 'ultimate-cloudflare-expert', cat: 'backend', title: 'Ultimate Cloudflare Expert', desc: 'Edge Workers, D1 SQL, R2, durable objects, and local Wrangler sandbox mastery.', prompt: 'Architect a serverless KV store and Edge Worker caching strategy.' },
       { name: 'ultimate-testing-qa', cat: 'web', title: 'Ultimate Testing QA', desc: 'Playwright, E2E stabilization, CI auto-fix workflows, and surgical patching heuristics.', prompt: 'Generate robust Playwright UI regression tests for this checkout flow with auto-retry fixtures.' },
       { name: 'ultimate-llm-optimization', cat: 'memory', title: 'Ultimate LLM Optimization', desc: 'Caveman heuristics, Karpathy rules, minimal abstractions, and token-saving strategies.', prompt: 'Refactor this module. Remove all abstraction bloat and follow the Caveman strict guidelines.' },
       { name: 'ultimate-web-animation', cat: 'ui', title: 'Ultimate Web Animation', desc: 'GSAP, cinematic scroll-scrubbing, physics-based springs, and WebGL transitions.', prompt: 'Implement a smooth scroll-triggered stagger animation for these bento grid cards.' },
       { name: 'ultimate-seo-marketing', cat: 'seo', title: 'Ultimate SEO & Marketing', desc: 'Technical SEO engine, GSC prioritization, pricing page layouts, and JSON-LD structured schemas.', prompt: 'Run a technical SEO audit on this landing page and generate JSON-LD schema.' },
-      { name: 'ultimate-firebase-expert', cat: 'backend', title: 'Ultimate Firebase Expert', desc: 'Firestore architecture, RLS security rules, Auth, and Serverless Cloud Functions.', prompt: 'Design a Firestore document schema with strict collection group security rules.' }
+      { name: 'ultimate-firebase-expert', cat: 'backend', title: 'Ultimate Firebase Expert', desc: 'Firestore architecture, RLS security rules, Auth, and Serverless Cloud Functions.', prompt: 'Design a Firestore document schema with strict collection group security rules.' },
+      { name: 'ultimate-3d-visuals', cat: 'ui', title: 'Ultimate 3D Visuals', desc: 'Three.js, WebGL shaders, glTF optimization, and performant 3D model rendering on the web.', prompt: 'Setup a basic Three.js scene with a rotating cube and optimized lighting.' },
+      { name: 'ultimate-assets-media', cat: 'ui', title: 'Ultimate Assets & Media', desc: 'Next-gen image formats (WebP/AVIF), lazy loading strategies, and variable font optimizations.', prompt: 'Implement an optimal image loading strategy using HTML picture tags and WebP.' },
+      { name: 'ultimate-postgres-ecosystem', cat: 'backend', title: 'Ultimate Postgres Ecosystem', desc: 'Supabase, Neon serverless, RLS policies, indexing, and complex SQL migrations.', prompt: 'Write a strict Row Level Security policy for the users table in Postgres.' },
+      { name: 'ultimate-ux-research', cat: 'ui', title: 'Ultimate UX Research', desc: 'User discovery protocols, usability heuristics, cognitive load reduction, and UX writing.', prompt: 'Analyze this checkout flow and identify cognitive load bottlenecks based on UX heuristics.' },
+      { name: 'ultimate-web-gamedev', cat: 'web', title: 'Ultimate Web GameDev', desc: 'HTML5 Canvas, game loops, physics engines (Matter.js), and rendering optimizations.', prompt: 'Create a robust 60fps requestAnimationFrame game loop with delta time calculations.' },
+      { name: 'ultimate-devops-cicd', cat: 'backend', title: 'Ultimate DevOps & CI/CD', desc: 'GitHub Actions, Docker containerization, deployment workflows, and robust CI/CD pipelines.', prompt: 'Create a robust GitHub Actions pipeline that builds, tests, and deploys this Dockerized Node app.' },
+      { name: 'ultimate-api-architecture', cat: 'backend', title: 'Ultimate API Architecture', desc: 'REST, GraphQL, microservices, robust error handling, caching, and rate limiting.', prompt: 'Design a scalable REST API using Node.js with Redis caching and JWT authentication.' },
+      { name: 'ultimate-mobile-engineering', cat: 'mobile', title: 'Ultimate Mobile Engineering', desc: 'React Native, Flutter, Swift, native bridges, offline-first architectures, and mobile UX.', prompt: 'Refactor this React Native FlatList to use FlashList for 60fps scrolling performance.' },
+      { name: 'ultimate-state-management', cat: 'web', title: 'Ultimate State Management', desc: 'React Query, SWR, Zustand, Redux, and minimizing complex prop-drilling.', prompt: 'Implement React Query to cache this data fetch and add a Zustand store for UI state.' },
+      { name: 'ultimate-git-collaboration', cat: 'memory', title: 'Ultimate Git Collaboration', desc: 'Safe branching, atomic commits, conventional commits, and handling merge conflicts.', prompt: 'Review my git status and create a conventional commit message for the recent refactoring.' },
+      { name: 'ultimate-persistent-memory', cat: 'memory', title: 'Ultimate Persistent Memory', desc: 'Proactive context ledgers, recording architectural decisions, and tracking past mistakes.', prompt: 'Update our MEMORY.md file to reflect the new decision to use Redis for caching.' },
+      { name: 'ultimate-engineering-discipline', cat: 'memory', title: 'Ultimate Engineering Discipline', desc: 'Zero silent deletions, Karpathy/Caveman style, surgical patching, and strict anti-bloat.', prompt: 'Refactor this file but follow strict surgical patching: DO NOT delete any existing comments.' }
     ];
 
     let currentCategory = 'all';

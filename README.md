@@ -1,4 +1,4 @@
-# ⚡ 14+ Ultimate Skills for AI Coding Agents
+# ⚡ 21+ Ultimate Skills for AI Coding Agents
 
 <div align="center">
 
