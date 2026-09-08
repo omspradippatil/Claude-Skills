@@ -1880,7 +1880,6 @@ hot-path bloat — then trimming or extracting them while preserving the
 canonical source.
 
 > **This `SKILL.md` is a thin index.** Detailed rules live in `rules/*.md`
-> and load on demand. Worked examples live in `references/*.md`. Reading
 > them all up-front would burn tokens you do not need yet.
 
 ---
@@ -1941,7 +1940,7 @@ Load on demand — do not preload.
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0     | [`rules/hard-rules.md`](./rules/hard-rules.md)                                                                                                                                              |
 | 1     | [`rules/measurement.md`](./rules/measurement.md)                                                                                                                                            |
-| 2     | [`rules/classification.md`](./rules/classification.md), [`references/bloat-patterns.md`](./references/bloat-patterns.md) (optional, for pattern matching)                                   |
+| 2     | [`rules/classification.md`](./rules/classification.md), [official guidelines](./official guidelines) (optional, for pattern matching)                                   |
 | 2.5   | [`rules/invocation-review.md`](./rules/invocation-review.md), and the canonical [`create-skill/rules/invocation-control.md`](../create-skill/rules/invocation-control.md) for the matrix.   |
 | 3     | One of [`rules/audit-mode.md`](./rules/audit-mode.md), [`rules/trim-mode.md`](./rules/trim-mode.md), [`rules/extract-mode.md`](./rules/extract-mode.md) — by mode.                          |
 | 4     | [`rules/hard-rules.md`](./rules/hard-rules.md) (preservation invariant check)                                                                                                               |

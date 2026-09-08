@@ -8,7 +8,7 @@ description: Activate this skill for tasks involving GitHub Actions, Docker, CI/
 This skill enforces strict DevOps guidelines to prevent build failures, missing secrets, and flaky deployments.
 
 ### 1. Docker Best Practices
-- Use multi-stage builds to minimize image sizes (e.g., compile in `node:builder`, run in `node:alpine`).
+- Use multi-stage builds to minimize image sizes (e.g., compile in `node:18-alpine AS builder`, run in `node:alpine`).
 - Never run containers as `root`. Always create a dedicated non-root user.
 - Cache dependencies efficiently by copying package manifests before the rest of the source code.
 

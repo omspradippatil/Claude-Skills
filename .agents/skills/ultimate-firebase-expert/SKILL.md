@@ -193,10 +193,10 @@ without deploying new client code. See
 :             : API        :                                                 :
 :             : (Developer :                                                 :
 :             : API)       :                                                 :
-| iOS (Swift) | Gemini     | [ios_setup.md](references/ios_setup.md)         |
+| iOS (Swift) | Gemini     | ios_setup.md         |
 :             : Developer  :                                                 :
 :             : API        :                                                 :
-| Flutter     | Gemini     | [flutter_setup.md](references/flutter_setup.md) |
+| Flutter     | Gemini     | flutter_setup.md |
 : (Dart)      : Developer  :                                                 :
 :             : API        :                                                 :
 
@@ -207,11 +207,11 @@ without deploying new client code. See
 
 ##### References
 
-[Web SDK code examples and usage patterns](references/usage_patterns_web.md)
-[iOS SDK code examples and usage patterns](references/ios_setup.md)
-[Flutter SDK code examples and usage patterns](references/flutter_setup.md)
+Web SDK code examples and usage patterns
+iOS SDK code examples and usage patterns
+Flutter SDK code examples and usage patterns
 
-[Android (Kotlin) SDK usage patterns](references/usage_patterns_android.md)
+Android (Kotlin) SDK usage patterns
 
 
 ---
@@ -321,17 +321,17 @@ Enable other providers in the Firebase Console.
 
 ###### 2. Client Setup & Usage
 
-**Web** See [references/client_sdk_web.md](references/client_sdk_web.md).
+**Web** Consult official documentation.
 
-**Flutter** See [references/flutter_setup.md](references/flutter_setup.md).
+**Flutter** Consult official documentation.
 **Android (Kotlin)** See
-[references/client_sdk_android.md](references/client_sdk_android.md).
+official guidelines.
 
 ###### 3. Security Rules
 
 Secure your data using `request.auth` in Firestore/Storage rules.
 
-See [references/security_rules.md](references/security_rules.md).
+Consult official documentation.
 
 
 ---
@@ -358,9 +358,8 @@ Run the following command to list current Firestore databases:
    prefer to create a new instance.
 1. Once the target instance is established:
    - If the **`edition`** is `STANDARD`, follow the guides under
-     `references/standard/`.
    - If the **`edition`** is `ENTERPRISE` or native mode, follow the guides
-     under `references/enterprise/`.
+     for Enterprise versions.
 
 ###### B. No Instance Found (or New Requested)
 
@@ -372,7 +371,7 @@ Suggest colocating with other resources if applicable.
 Once the location is determined, create the database:
 `bash npx -y firebase-tools@latest firestore:databases:create <database-id> --edition="enterprise" --location="<selected-location>"`
 
-Proceed with using the guides under `references/enterprise/`.
+Proceed with using the guides for Enterprise versions.
 
 ______________________________________________________________________
 
@@ -381,26 +380,24 @@ ______________________________________________________________________
 Based on the identified or created instance edition, open and read the
 corresponding reference guides:
 
-###### Standard Edition (`references/standard/`)
 
-- **Provisioning**: Read [provisioning.md](references/standard/provisioning.md)
+- **Provisioning**: Review the official documentation
 - **Security Rules**: Read
-  [security_rules.md](references/standard/security_rules.md)
-- **SDK Usage**: Read [web_sdk_usage.md](references/standard/web_sdk_usage.md),
-  [android_sdk_usage.md](references/standard/android_sdk_usage.md),
-  [ios_setup.md](references/standard/ios_setup.md), or
-  [flutter_setup.md](references/standard/flutter_setup.md)
-- **Indexes**: Read [indexes.md](references/standard/indexes.md)
+  security_rules.md
+- **SDK Usage**: Review the official documentation,
+  android_sdk_usage.md,
+  ios_setup.md, or
+  flutter_setup.md
+- **Indexes**: Review the official documentation
 
-###### Enterprise Edition / Native Mode (`references/enterprise/`)
 
 - **Provisioning**: Read
-  [provisioning.md](references/enterprise/provisioning.md)
+  provisioning.md
 
-- **Data Model**: Read [data_model.md](references/enterprise/data_model.md)
+- **Data Model**: Review the official documentation
 
 - **Security Rules**: Read
-  [security_rules.md](references/enterprise/security_rules.md)
+  security_rules.md
 
 - **SDK Usage**:
 
@@ -410,13 +407,13 @@ corresponding reference guides:
   > platform/language to understand specific architectural requirements and
   > pipeline initialization patterns.
 
-  Read [web_sdk_usage.md](references/enterprise/web_sdk_usage.md),
-  [python_sdk_usage.md](references/enterprise/python_sdk_usage.md),
-  [android_sdk_usage.md](references/enterprise/android_sdk_usage.md),
-  [ios_setup.md](references/enterprise/ios_setup.md), or
-  [flutter_setup.md](references/enterprise/flutter_setup.md)
+  Review the official documentation,
+  python_sdk_usage.md,
+  android_sdk_usage.md,
+  ios_setup.md, or
+  flutter_setup.md
 
-- **Indexes**: Read [indexes.md](references/enterprise/indexes.md)
+- **Indexes**: Review the official documentation
 
 
 ---
@@ -442,8 +439,8 @@ MCP server in the Firebase CLI. See the `firebase-basics` skill for references.
 To learn how to setup Crashlytics in your application code, choose your
 platform:
 
-- **Android**: [android_setup.md](references/android_setup.md)
-- **iOS**: [ios_setup.md](references/ios_setup.md)
+- **Android**: android_setup.md
+- **iOS**: ios_setup.md
 
 ##### SDK Usage
 
@@ -554,24 +551,24 @@ Complete these setup steps before proceeding:
    - Verify if the Firebase MCP server is installed using your existing tools.
    - **CRITICAL**: Before configuring any extensions or agent environments
      below, you MUST read
-     [references/local-env-setup.md](references/local-env-setup.md).
+     official guidelines.
    - **DO NOT SKIP** this step: if 'firebase-basics' is the only Firebase skill
      available to you, you must follow the reference for your agent environment
      to set up the full suite of Firebase skills:
      - **Gemini CLI**: Review
-       [references/setup/gemini_cli.md](references/setup/gemini_cli.md)
+       official guidelines
      - **Antigravity**: Review
-       [references/setup/antigravity.md](references/setup/antigravity.md)
+       official guidelines
      - **Android Studio**: Review
-       [references/setup/android_studio.md](references/setup/android_studio.md)
+       official guidelines
      - **Claude Code**: Review
-       [references/setup/claude_code.md](references/setup/claude_code.md)
+       official guidelines
      - **Cursor**: Review
-       [references/setup/cursor.md](references/setup/cursor.md)
+       official guidelines
      - **GitHub Copilot**: Review
-       [references/setup/github_copilot.md](references/setup/github_copilot.md)
+       official guidelines
      - **Other Agents**: Review
-       [references/setup/other_agents.md](references/setup/other_agents.md)
+       official guidelines
 
 1. **Authentication:** Ensure you are logged in to Firebase so that commands
    have the correct permissions. Run `npx -y firebase-tools@latest login`. For
@@ -637,17 +634,17 @@ Adhere to these principles:
    Agent Skills. Similarly, if you encounter issues with outdated tools or
    commands, follow the steps below based on your agent environment:
    - **Antigravity**: Follow
-     [references/refresh/antigravity.md](references/refresh/antigravity.md)
+     official guidelines
    - **Gemini CLI**: Follow
-     [references/refresh/gemini-cli.md](references/refresh/gemini-cli.md)
+     official guidelines
    - **Claude Code**: Follow
-     [references/refresh/claude.md](references/refresh/claude.md)
+     official guidelines
    - **Cursor**: Follow
-     [references/refresh/other-agents.md](references/refresh/other-agents.md)
+     official guidelines
    - **Android Studio**: Follow
-     [references/refresh/android_studio.md](references/refresh/android_studio.md)
+     official guidelines
    - **Others**: Follow
-     [references/refresh/other-agents.md](references/refresh/other-agents.md)
+     official guidelines
 1. **Automate Config File Retrieval:** When setting up iOS or Android apps, do
    NOT direct users to the Firebase Console to download `google-services.json`
    or `GoogleService-Info.plist`. Instead, use the Firebase CLI to fetch the
@@ -663,15 +660,15 @@ Adhere to these principles:
 #### References
 
 - **Initialize Firebase:** See
-  [references/firebase-service-init.md](references/firebase-service-init.md)
+  official guidelines
   when you need to initialize new Firebase services using the CLI.
 - **Exploring Commands:** See
-  [references/firebase-cli-guide.md](references/firebase-cli-guide.md) to
+  official guidelines to
   discover and understand CLI functionality.
 - **SDK Setup:** For detailed guides on adding Firebase to your app:
-  - **Web**: See [references/web_setup.md](references/web_setup.md)
-  - **Android**: See [references/android_setup.md](references/android_setup.md)
-  - **iOS**: See [references/ios_setup.md](references/ios_setup.md)
+  - **Web**: Consult official documentation
+  - **Android**: Consult official documentation
+  - **iOS**: Consult official documentation
 
 #### Common Issues
 

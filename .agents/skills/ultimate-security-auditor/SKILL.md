@@ -15,7 +15,7 @@ description: Activate this skill to perform OWASP security audits, penetration t
 
 #### Agent Security Audit
 
-Evaluate an AI agent's security posture by following the full procedure in `plays/agent-security-audit.md`.
+Evaluate an AI agent's security posture by following secure code review best practices.
 
 ##### Steps
 
@@ -33,7 +33,7 @@ Evaluate an AI agent's security posture by following the full procedure in `play
 
 ##### Output
 
-Use the finding format from `templates/finding.md`. Produce a Permission Summary table, Risk Findings, Injection Surface Map, and prioritized Recommendations.
+Use a structured vulnerability finding format (Severity, Description, Impact, Recommendation). Produce a Permission Summary table, Risk Findings, Injection Surface Map, and prioritized Recommendations.
 
 ##### OWASP References
 
@@ -84,7 +84,7 @@ Conduct comprehensive security verification of AI-driven applications using the 
 
 ##### Output
 
-Use the finding format from `templates/finding.md`. Produce:
+Use a structured vulnerability finding format (Severity, Description, Impact, Recommendation). Produce:
 - **AISVS Compliance Assessment** — Verification status across all 13 categories
 - **Security Control Evaluation** — Detailed analysis of implemented controls
 - **Gap Analysis** — Missing or inadequate security measures
@@ -108,7 +108,7 @@ Use the finding format from `templates/finding.md`. Produce:
 
 #### API Security Review
 
-Perform comprehensive API security assessment following `plays/api-security-review.md`.
+Perform comprehensive API security assessment following standard security guidelines.
 
 ##### Steps
 
@@ -172,7 +172,7 @@ Comprehensive API security report including:
 
 #### Security Code Review
 
-Review code for security vulnerabilities by following the full procedure in `plays/code-review-security.md`.
+Review code for security vulnerabilities by following secure code review best practices.
 
 ##### Steps
 
@@ -195,7 +195,7 @@ Review code for security vulnerabilities by following the full procedure in `pla
 
 ##### Output
 
-Scope summary, findings sorted by severity using `templates/finding.md`, positive observations (good security controls in place), and severity count table.
+Scope summary, findings sorted by severity using a structured format, positive observations (good security controls in place), and severity count table.
 
 ##### OWASP References
 
@@ -213,7 +213,7 @@ Scope summary, findings sorted by severity using `templates/finding.md`, positiv
 
 #### Web Security Review (OWASP Top 10)
 
-Review web applications against all 10 OWASP Top 10 risks by following the full procedure in `plays/owasp-top10-web-review.md`.
+Review web applications against all 10 OWASP Top 10 risks by following secure code review best practices.
 
 ##### Steps
 
@@ -237,7 +237,7 @@ Review web applications against all 10 OWASP Top 10 risks by following the full 
 
 ##### Output
 
-Application overview, risk matrix for all 10 categories with severity/status, detailed findings using `templates/finding.md`, positive controls observed, and prioritized remediation roadmap.
+Application overview, risk matrix for all 10 categories with severity/status, detailed findings using a structured format, positive controls observed, and prioritized remediation roadmap.
 
 ##### OWASP References
 
@@ -255,7 +255,7 @@ Application overview, risk matrix for all 10 categories with severity/status, de
 
 #### LLM Risk Assessment (2025)
 
-Comprehensive evaluation of LLM applications against OWASP Top 10 for LLM Applications 2025. Follow the detailed procedure in `plays/llm-risk-assess.md`.
+Comprehensive evaluation of LLM applications against OWASP Top 10 for LLM Applications 2025. Follow the detailed OWASP guidelines.
 
 ##### Steps
 
@@ -315,7 +315,7 @@ Comprehensive LLM security report:
  
 #### Mobile Security Code Review
 
-Review native Android and iOS source code for security vulnerabilities by following the full procedure in `plays/mobile-code-review.md`.
+Review native Android and iOS source code for security vulnerabilities by following secure code review best practices.
 
 ##### Steps
 
@@ -326,11 +326,11 @@ Review native Android and iOS source code for security vulnerabilities by follow
    - For each MASTG test ID, load `data/mastg/MASTG-TEST-####.md` and apply its Static Analysis content (V1) or Steps/Observation/Evaluation (V2) to the source tree.
    - Note V1-fallback tests in findings using the file's `status_note`.
 4. **Diff-Specific Analysis** (for PRs) — Focus on changed lines; verify pinning, permissions, and KeyStore/Keychain usage are not weakened.
-5. **Produce Findings** — Use `templates/finding.md`. Sort by severity (CRITICAL > HIGH > MEDIUM > LOW > INFO). Deduplicate cross-group findings (cite the most specific MASVS control in `OWASP Ref`).
+5. **Produce Findings** — Use standard templates. Sort by severity (CRITICAL > HIGH > MEDIUM > LOW > INFO). Deduplicate cross-group findings (cite the most specific MASVS control in `OWASP Ref`).
 
 ##### Output
 
-Scope summary (platform, languages), upstream-pointer note for MASTG IDs (`https://github.com/OWASP/mastg`, `https://mas.owasp.org/MASTG/`), findings sorted by severity using `templates/finding.md` (each finding carries an optional `MASTG references:` bullet listing any non-TEST `@MASTG-<KIND>-####` cross-refs cited in the informing tests, grouped by KIND alphabetically, IDs sorted numerically, omitted when empty), positive observations, severity count table, RESILIENCE static-only notice block, PRIVACY runtime-required caveat for findings against PRIVACY-2/PRIVACY-3, dynamic-test follow-up list (collected from `data/mastg/` entries with `type: [dynamic]` that informed findings).
+Scope summary (platform, languages), upstream-pointer note for MASTG IDs (`https://github.com/OWASP/mastg`, `https://mas.owasp.org/MASTG/`), findings sorted by severity using a structured format (each finding carries an optional `MASTG references:` bullet listing any non-TEST `@MASTG-<KIND>-####` cross-refs cited in the informing tests, grouped by KIND alphabetically, IDs sorted numerically, omitted when empty), positive observations, severity count table, RESILIENCE static-only notice block, PRIVACY runtime-required caveat for findings against PRIVACY-2/PRIVACY-3, dynamic-test follow-up list (collected from `data/mastg/` entries with `type: [dynamic]` that informed findings).
 
 ##### OWASP References
 
@@ -349,7 +349,7 @@ Scope summary (platform, languages), upstream-pointer note for MASTG IDs (`https
 
 #### IaC Security Review
 
-Review infrastructure-as-code for security risks by following the full procedure in `plays/iac-security-review.md`.
+Review infrastructure-as-code for security risks by following secure code review best practices.
 
 ##### Steps
 
@@ -357,7 +357,6 @@ Review infrastructure-as-code for security risks by following the full procedure
    - `.tf` / `.tofu` files → Terraform/OpenTofu (reference `data/secure-code-prompts/terraform.md`)
    - Kubernetes manifests (apiVersion, kind: Deployment/Pod/Service) → Kubernetes (reference `data/secure-code-prompts/kubernetes.md`)
    - CloudFormation templates (AWSTemplateFormatVersion, Resources with AWS::) → CloudFormation (reference `data/secure-code-prompts/cloudformation.md`)
-   - Helm charts (`Chart.yaml`, templates/) → Kubernetes review with Helm-specific checks
 
 2. **Systematic Review by Security Domain** (priority order):
    - **Identity & Access Management** — Overly permissive policies, wildcard permissions, hardcoded credentials, privilege escalation paths
@@ -379,7 +378,7 @@ Review infrastructure-as-code for security risks by following the full procedure
 
 ##### Output
 
-Findings sorted by severity using `templates/finding.md` format, summary with severity counts, and secure configuration improvements section.
+Findings sorted by severity using a structured format format, summary with severity counts, and secure configuration improvements section.
 
 ##### References
 

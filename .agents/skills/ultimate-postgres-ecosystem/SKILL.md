@@ -442,7 +442,7 @@ Functions are long-running but **still serverless** — they are a request/respo
 
 A Neon Function is a great home for an AI agent precisely because it **doesn't time out** the way lambda-style serverless does (15-minute budget, see [Timeouts and Runtime Limits](#timeouts-and-runtime-limits)). But that advantage disappears the moment you **proxy the agent stream through your web app's backend** — a Next.js route handler, Remix/SvelteKit/Nuxt action, etc. hosted on Vercel, Netlify, Cloudflare, and the like. Those platforms cap serverless/edge execution at short windows (often ~10–60s, sometimes up to ~300s), so a long agent or image/video generation stream gets cut off mid-response even though the Neon Function would happily keep going.
 
-**Building the agent itself.** The [Vercel AI SDK](https://ai-sdk.dev) and [Mastra](https://mastra.ai) are the recommended ways to build the agent — point either at the Neon AI Gateway (see the `neon-ai-gateway` skill) for one credential across every model, with no extra provider keys. For a complete AI SDK agent running as a Function (streaming `toUIMessageStreamResponse`, multi-step tool calling next to Postgres, and persisting generated images to Object Storage), see [references/ai-sdk.md](https://neon.com/docs/ai/skills/neon-functions/references/ai-sdk.md); for the Mastra equivalent with built-in tracing, see [references/mastra-studio.md](https://neon.com/docs/ai/skills/neon-functions/references/mastra-studio.md).
+**Building the agent itself.** The [Vercel AI SDK](https://ai-sdk.dev) and [Mastra](https://mastra.ai) are the recommended ways to build the agent — point either at the Neon AI Gateway (see the `neon-ai-gateway` skill) for one credential across every model, with no extra provider keys. For a complete AI SDK agent running as a Function (streaming `toUIMessageStreamResponse`, multi-step tool calling next to Postgres, and persisting generated images to Object Storage), see [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines); for the Mastra equivalent with built-in tracing, see [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines).
 
 **The fix: call the function directly from the client.** Don't route the long request through your app server.
 
@@ -735,7 +735,7 @@ export default {
 };
 ```
 
-The same rules as WebSockets apply. **Heartbeat:** a stream stays open only while bytes flow — Neon's window is 15 minutes ([Timeouts and Runtime Limits](#timeouts-and-runtime-limits)) but proxies are usually far stricter, so emit a `: ping\n\n` comment every ~25–30s (shown above) to keep idle streams from being dropped. Keep state in Postgres, and fan out across isolates using one of the [sync strategies](#keeping-clients-in-sync-across-isolates-do-not-skip-this) (hold a `Set` of stream controllers and `enqueue` to each). `EventSource` is GET-only and can't set headers, so authenticate with a `?token=` query param or cookie, exactly like the WebSocket case. [references/sse.md](https://neon.com/docs/ai/skills/neon-functions/references/sse.md) has the full pattern — Hono variant, cross-isolate fan-out, wire format, client, and caveats.
+The same rules as WebSockets apply. **Heartbeat:** a stream stays open only while bytes flow — Neon's window is 15 minutes ([Timeouts and Runtime Limits](#timeouts-and-runtime-limits)) but proxies are usually far stricter, so emit a `: ping\n\n` comment every ~25–30s (shown above) to keep idle streams from being dropped. Keep state in Postgres, and fan out across isolates using one of the [sync strategies](#keeping-clients-in-sync-across-isolates-do-not-skip-this) (hold a `Set` of stream controllers and `enqueue` to each). `EventSource` is GET-only and can't set headers, so authenticate with a `?token=` query param or cookie, exactly like the WebSocket case. [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines) has the full pattern — Hono variant, cross-isolate fan-out, wire format, client, and caveats.
 
 ##### MCP Servers
 
@@ -751,7 +751,7 @@ app.all("/mcp", async (c) => {
 });
 ```
 
-Because the function's URL is public, **authenticate before connecting the transport** — [Better Auth](https://better-auth.com) covers both OAuth (its MCP plugin makes your app the authorization server so third-party clients self-authorize per the MCP spec) and a simpler API-key / session-JWT check for your own callers. [references/mcp.md](https://neon.com/docs/ai/skills/neon-functions/references/mcp.md) has the full pattern — server with Postgres-backed tools via Drizzle, both Better Auth auth options, and testing with `mcporter` / `add-mcp`.
+Because the function's URL is public, **authenticate before connecting the transport** — [Better Auth](https://better-auth.com) covers both OAuth (its MCP plugin makes your app the authorization server so third-party clients self-authorize per the MCP spec) and a simpler API-key / session-JWT check for your own callers. [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines) has the full pattern — server with Postgres-backed tools via Drizzle, both Better Auth auth options, and testing with `mcporter` / `add-mcp`.
 
 ##### Integrations and Observability
 
@@ -767,8 +767,8 @@ Functions is one of the two sources branch logs cover today, alongside Object St
 
 A function is a long-lived Node.js process running a web-standard request/response handler, so standard Node integration SDKs work unchanged. Initialize them once at module load, gated on an env var so local dev and unconfigured branches stay a no-op, and pass secrets via `--env` or `neon.ts` `env`.
 
-- **Sentry** — error monitoring across the HTTP framework, the function runtime, and an agent's own caught/fallback failures (the long-running case Functions target): see [references/sentry.md](https://neon.com/docs/ai/skills/neon-functions/references/sentry.md).
-- **Mastra Studio (Mastra Cloud)** — run a Mastra agent on a function and ship its traces to a Studio project for observability: see [references/mastra-studio.md](https://neon.com/docs/ai/skills/neon-functions/references/mastra-studio.md).
+- **Sentry** — error monitoring across the HTTP framework, the function runtime, and an agent's own caught/fallback failures (the long-running case Functions target): see [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines).
+- **Mastra Studio (Mastra Cloud)** — run a Mastra agent on a function and ship its traces to a Studio project for observability: see [official guidelines](https://neon.com/docs/ai/skills/neon-functions/official guidelines).
 
 ##### Neon Documentation
 
@@ -1856,7 +1856,7 @@ When you get an error on a Supabase-related request, for example an error code f
 
 ##### Reference Guides
 
-- **Skill Feedback** → [references/skill-feedback.md](references/skill-feedback.md)
+- **Skill Feedback** → official guidelines
   **MUST read when** the user reports that this skill gave incorrect guidance or is missing information.
 
 
@@ -1898,9 +1898,9 @@ Reference these guidelines when:
 Read individual rule files for detailed explanations and SQL examples:
 
 ```
-references/query-missing-indexes.md
-references/query-partial-indexes.md
-references/_sections.md
+official guidelines
+official guidelines
+official guidelines
 ```
 
 Each rule file contains:

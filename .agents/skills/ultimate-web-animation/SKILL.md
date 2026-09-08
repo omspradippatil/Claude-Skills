@@ -327,8 +327,7 @@ itself needs to be three-dimensional.
 
 > **This `SKILL.md` is a thin index.** Detailed rules live in
 > [`rules/*.md`](./rules) and load on demand. Worked recipes live in
-> [`references/recipes.md`](./references/recipes.md). Drop-in HTML/CSS
-> snippets live in [`templates/`](./templates).
+> [official guidelines](./official guidelines). Drop-in HTML/CSS
 
 > **Web only.** This skill's mechanics are web (CSS, Motion, View
 > Transitions, Web Animations API). For **React Native / Expo** motion
@@ -459,7 +458,6 @@ Load on demand — do not preload.
 | 0     | [`rules/safe-properties.md`](./rules/safe-properties.md)                                                                                             |
 | 1     | [`rules/patterns.md`](./rules/patterns.md)                                                                                                           |
 | 2     | [`rules/modern-css.md`](./rules/modern-css.md)                                                                                                       |
-| 3     | [`rules/interactive-effects.md`](./rules/interactive-effects.md), [`templates/cursor-spotlight.html`](./templates/cursor-spotlight.html)              |
 | 4     | [`rules/timing-easing.md`](./rules/timing-easing.md)                                                                                                 |
 | 5     | [`rules/when-to-use-js.md`](./rules/when-to-use-js.md), [`rules/three-d.md`](./rules/three-d.md)                                                     |
 | 5.5   | [`rules/state-choreography.md`](./rules/state-choreography.md)                                                                                       |
@@ -469,7 +467,7 @@ Load on demand — do not preload.
 | 6     | [`rules/accessibility.md`](./rules/accessibility.md)                                                                                                 |
 | 7     | [`rules/debugging.md`](./rules/debugging.md)                                                                                                         |
 | 7.5/7.6 | [`rules/record-and-iterate.md`](./rules/record-and-iterate.md)                                                                                     |
-| —     | [`references/recipes.md`](./references/recipes.md) (worked examples — load when the user asks "what does X look like end-to-end?")                   |
+| —     | [official guidelines](./official guidelines) (worked examples — load when the user asks "what does X look like end-to-end?")                   |
 
 ---
 

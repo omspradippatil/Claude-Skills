@@ -147,109 +147,46 @@ Need IaC? → pulumi/ (Pulumi), terraform/ (Terraform), or api/ (REST API)
 ###### Feature Flags
 | Product | Reference |
 |---------|-----------|
-| Flagship | `references/flagship/` |
 
 ###### Compute & Runtime
 | Product | Reference |
 |---------|-----------|
-| Workers | `references/workers/` |
-| Pages | `references/pages/` |
-| Pages Functions | `references/pages-functions/` |
-| Durable Objects | `references/durable-objects/` |
-| Workflows | `references/workflows/` |
-| Containers | `references/containers/` |
-| Workers for Platforms | `references/workers-for-platforms/` |
-| Cron Triggers | `references/cron-triggers/` |
-| Tail Workers | `references/tail-workers/` |
-| Snippets | `references/snippets/` |
-| Smart Placement | `references/smart-placement/` |
 
 ###### Storage & Data
 | Product | Reference |
 |---------|-----------|
-| KV | `references/kv/` |
-| D1 | `references/d1/` |
-| R2 | `references/r2/` |
-| Artifacts | `references/artifacts/` |
-| Queues | `references/queues/` |
-| Hyperdrive | `references/hyperdrive/` |
-| DO Storage | `references/do-storage/` |
-| Secrets Store | `references/secrets-store/` |
-| Pipelines | `references/pipelines/` |
-| R2 Data Catalog | `references/r2-data-catalog/` |
-| R2 SQL | `references/r2-sql/` |
 
 ###### AI & Machine Learning
 | Product | Reference |
 |---------|-----------|
-| Workers AI | `references/workers-ai/` |
-| Vectorize | `references/vectorize/` |
-| Agents SDK | `references/agents-sdk/` |
-| AI Gateway | `references/ai-gateway/` |
-| AI Search | `references/ai-search/` |
 
 ###### Networking & Connectivity
 | Product | Reference |
 |---------|-----------|
-| Tunnel | `references/tunnel/` |
-| Spectrum | `references/spectrum/` |
-| TURN | `references/turn/` |
-| Network Interconnect | `references/network-interconnect/` |
-| Argo Smart Routing | `references/argo-smart-routing/` |
-| Workers VPC | `references/workers-vpc/` |
 
 ###### Security
 | Product | Reference |
 |---------|-----------|
-| WAF | `references/waf/` |
-| DDoS Protection | `references/ddos/` |
-| Bot Management | `references/bot-management/` |
-| API Shield | `references/api-shield/` |
-| Turnstile | `references/turnstile/` |
 
 ###### Media & Content
 | Product | Reference |
 |---------|-----------|
-| Images | `references/images/` |
-| Stream | `references/stream/` |
-| Browser Rendering | `references/browser-rendering/` |
-| Zaraz | `references/zaraz/` |
 
 ###### Real-Time Communication
 | Product | Reference |
 |---------|-----------|
-| RealtimeKit | `references/realtimekit/` |
-| Realtime SFU | `references/realtime-sfu/` |
 
 ###### Developer Tools
 | Product | Reference |
 |---------|-----------|
-| Wrangler | `references/wrangler/` |
-| Miniflare | `references/miniflare/` |
-| C3 | `references/c3/` |
-| Observability | `references/observability/` |
-| GraphQL Analytics API | `references/graphql-api/` |
-| Analytics Engine | `references/analytics-engine/` |
-| Web Analytics | `references/web-analytics/` |
-| Sandbox | `references/sandbox/` |
-| Workerd | `references/workerd/` |
-| Workers Playground | `references/workers-playground/` |
 
 ###### Infrastructure as Code
 | Product | Reference |
 |---------|-----------|
-| Pulumi | `references/pulumi/` |
-| Terraform | `references/terraform/` |
-| API | `references/api/` |
 
 ###### Other Services
 | Product | Reference |
 |---------|-----------|
-| Email Routing | `references/email-routing/` |
-| Email Workers | `references/email-workers/` |
-| Static Assets | `references/static-assets/` |
-| Bindings | `references/bindings/` |
-| Cache Reserve | `references/cache-reserve/` |
 
 
 ---
@@ -446,7 +383,7 @@ Fetch the **latest** versions before writing or reviewing Workers code. Do not r
 | Source | How to retrieve | Use for |
 |--------|----------------|---------|
 | Workers best practices | Fetch `https://developers.cloudflare.com/workers/best-practices/workers-best-practices/` | Canonical rules, patterns, anti-patterns |
-| Workers types | See `references/review.md` for retrieval steps | API signatures, handler types, binding types |
+| Workers types | See official guidelines for retrieval steps | API signatures, handler types, binding types |
 | Wrangler config schema | `node_modules/wrangler/config-schema.json` | Config fields, binding shapes, allowed values |
 | Cloudflare docs | Search tool or `https://developers.cloudflare.com/workers/` | API reference, compatibility dates/flags |
 
@@ -464,8 +401,8 @@ mkdir -p /tmp/workers-types-latest && \
 
 ##### Reference Documentation
 
-- `references/rules.md` — all best practice rules with code examples and anti-patterns
-- `references/review.md` — type validation, config validation, binding access patterns, review process
+- official guidelines — all best practice rules with code examples and anti-patterns
+- official guidelines — type validation, config validation, binding access patterns, review process
 
 ##### Rules Quick Reference
 
@@ -538,12 +475,12 @@ mkdir -p /tmp/workers-types-latest && \
 
 1. **Retrieve** — fetch latest best practices page, workers types, and wrangler schema
 2. **Read full files** — not just diffs; context matters for binding access patterns
-3. **Check types** — binding access, handler signatures, no `any`, no unsafe casts (see `references/review.md`)
+3. **Check types** — binding access, handler signatures, no `any`, no unsafe casts (see official guidelines)
 4. **Check config** — compatibility_date, nodejs_compat, observability, secrets, binding-code consistency
 5. **Check patterns** — streaming, floating promises, global state, serialization boundaries
 6. **Check security** — crypto usage, secret handling, timing-safe comparisons, error handling
 7. **Validate with tools** — `npx tsc --noEmit`, lint for `no-floating-promises`
-8. **Reference rules** — see `references/rules.md` for each rule's correct pattern
+8. **Reference rules** — see official guidelines for each rule's correct pattern
 
 ##### Scope
 
@@ -1659,8 +1596,8 @@ const result = await process.output({ encoding: "utf8" });
 // result.stdout, result.exitCode
 ```
 
-Optional **non-exhaustive** cheatsheet (process/terminal/interpreter only): [references/api-quick-ref.md](references/api-quick-ref.md)  
-Examples index (`next` branch): [references/examples.md](references/examples.md)
+Optional **non-exhaustive** cheatsheet (process/terminal/interpreter only): official guidelines  
+Examples index (`next` branch): official guidelines
 
 ##### 3. Retrieve — open the doc for the task
 
@@ -1915,9 +1852,9 @@ Fetch the relevant doc page when implementing features.
 
 ##### Reference Documentation
 
-- `./references/rules.md` - Core rules, storage, concurrency, RPC, alarms
-- `./references/testing.md` - Vitest setup, unit/integration tests, alarm testing
-- `./references/workers.md` - Workers handlers, types, wrangler config, observability
+- `./official guidelines - Core rules, storage, concurrency, RPC, alarms
+- `./official guidelines - Vitest setup, unit/integration tests, alarm testing
+- `./official guidelines - Workers handlers, types, wrangler config, observability
 
 Search: `blockConcurrencyWhile`, `idFromName`, `getByName`, `setAlarm`, `sql.exec`
 

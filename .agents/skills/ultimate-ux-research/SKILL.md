@@ -215,7 +215,7 @@ Do not use this skill as the primary tool when the task is only:
 
 12. **Recommend action, not just findings.** Findings should lead to prioritized decisions, risks, next tests, and product changes.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -321,7 +321,7 @@ question({
 })
 ```
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md) for the full decision set.
+Use the question-tool-ready prompts in official guidelines for the full decision set.
 
 ##### Workflow
 
@@ -600,7 +600,7 @@ Before finalizing, verify:
 - Frontend implications are practical and accessible.
 - Limitations and confidence are stated.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -618,7 +618,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Optimizing the current UI into a local maximum while ignoring larger opportunities.
 - Forgetting accessibility until after design or implementation.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 - Over-asking the user for context when a safe default is available.
 
 ##### How to explain recommendations to the user
@@ -671,7 +671,7 @@ Do not use as the primary skill for deep research operations, brand styling syst
 11. **Respect platform and convention.** Use familiar patterns when they fit. Break convention only when the user’s goal clearly benefits and the new behavior can be discovered and recovered from.
 12. **Accessibility is usability under pressure.** Design for perceptibility, operability, simplicity, and forgiveness across varied abilities, devices, literacy, stress, and environments.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -735,7 +735,7 @@ question({
 })
 ```
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md) for the full decision set.
+Use the question-tool-ready prompts in official guidelines for the full decision set.
 
 ##### Workflow for critiquing an existing UI
 
@@ -891,7 +891,7 @@ Ask yourself:
 - Accessibility fundamentals are included.
 - Frontend behavior is implementable.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -910,7 +910,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Treating accessibility as a final audit.
 - Confusing visual simplicity with reduced task complexity.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 - Ignoring empty, loading, offline, validation, permission, and edge states.
 
 ##### How to explain recommendations to the user
@@ -976,7 +976,7 @@ Do not use this skill as the primary skill for:
 11. **Measure when the stakes justify it.** Use usability testing, behavioral metrics, support data, and A/B tests when copy changes affect activation, conversion, retention, recovery, or trust.
 12. **Make copy implementable.** Content should work with semantic HTML, accessibility APIs, localization, design tokens, component states, and design-system patterns.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -1036,7 +1036,7 @@ question({
 })
 ```
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md) for the full decision set.
+Use the question-tool-ready prompts in official guidelines for the full decision set.
 
 ##### Workflow
 
@@ -1293,7 +1293,7 @@ Before finalizing UX copy, verify:
 - High-impact copy has a validation or measurement plan.
 - Recommendations include frontend notes when implementation matters.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -1311,7 +1311,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Sending notifications that do not help the user act.
 - Writing strings that cannot be localized or announced by assistive technology.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 - Delivering copy without states, constraints, or implementation context.
 
 ##### How to explain recommendations to the user
@@ -1383,7 +1383,7 @@ Do not use this skill for:
 9. **Keep checkout focused.** Remove distractions, avoid forced account creation, show costs and consequences clearly, and keep the primary action aligned with the buyer's goal.
 10. **Make progress honest.** Use progress indicators only when the sequence and scope are stable enough that the indicator will not mislead.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -1498,7 +1498,7 @@ Ask when any of the following are unknown and materially affect the work:
 - A tradeoff exists between one-page versus multi-page, speed versus careful review, visible options versus compact controls, or guest checkout versus account creation.
 - Existing analytics/research are needed to diagnose drop-off, error rates, or conversion problems.
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md).
+Use the question-tool-ready prompts in official guidelines.
 
 ##### Workflow for critiquing existing forms
 
@@ -1692,7 +1692,7 @@ Before finalizing a recommendation, verify:
 - Keyboard, focus, screen reader, color contrast, zoom, and mobile keyboards are covered.
 - The implementation is feasible within the design system and frontend stack.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -1710,7 +1710,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Showing all dependent fields at once and overwhelming the user.
 - Ending with a success page that offers no confirmation or next step.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 
 ##### How to explain recommendations to the user
 
@@ -1770,7 +1770,7 @@ Do not use this skill as the main skill when the user is only asking for:
 9. **Document decisions for reuse.** IA must be maintained. Capture label rules, taxonomy rules, metadata fields, navigation placement rules, and exceptions in a style guide or design-system guidance.
 10. **Accessibility is part of findability.** Semantic structure, headings, landmarks, keyboard operation, visible focus, readable labels, and screen-reader names are IA requirements, not polish.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -1887,7 +1887,7 @@ Use a `question` tool or equivalent for these cases:
 
 Do not ask routine questions such as whether labels should be clear, whether the design should be accessible, or whether users should understand navigation. Apply the default.
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md).
+Use the question-tool-ready prompts in official guidelines.
 
 ##### Workflow
 
@@ -2056,7 +2056,7 @@ Before finalizing an IA recommendation, verify:
 - Frontend state, URLs, responsive behavior, and design-system reuse are addressed.
 - Maintenance responsibilities are explicit.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -2073,7 +2073,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Forgetting redirects, aliases, and deprecated terms during migrations.
 - Ignoring bottom-up IA inside content templates.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 - Creating a taxonomy without governance.
 
 ##### How to explain recommendations to the user
@@ -2187,7 +2187,7 @@ Do not create one-off components unless the context demands it. Define component
 
 Default: start from the existing design system or common UI framework, then extend intentionally. Treat libraries as a floor, not a ceiling.
 
-See [references/principle-cards.md](references/principle-cards.md) for each principle as a reusable card.
+Consult official documentation for each principle as a reusable card.
 
 ##### Default recommendations
 
@@ -2245,7 +2245,7 @@ question({
 })
 ```
 
-Use the question-tool-ready prompts in [references/decision-prompts.md](references/decision-prompts.md) for the full decision set.
+Use the question-tool-ready prompts in official guidelines for the full decision set.
 
 ##### Workflow
 
@@ -2528,7 +2528,7 @@ Before finalizing a recommendation, verify:
 - The recommendation can be implemented with reusable components and tokens.
 - Tradeoffs and alternatives are explained.
 
-Use the full checklists in [references/checklists.md](references/checklists.md).
+Use the full checklists in official guidelines.
 
 ##### Common mistakes to avoid
 
@@ -2547,7 +2547,7 @@ Use the full checklists in [references/checklists.md](references/checklists.md).
 - Creating one-off components that bypass the design system.
 - Optimizing for novelty at the expense of familiar interaction.
 
-See [references/anti-patterns.md](references/anti-patterns.md) for the full anti-pattern list.
+Consult official documentation for the full anti-pattern list.
 
 ##### How to explain recommendations to the user
 

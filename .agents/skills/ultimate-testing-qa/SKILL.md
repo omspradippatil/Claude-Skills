@@ -20,7 +20,6 @@ Spans, traces, and the live app are the source of truth — not the CI dashboard
 This skill never proposes a fix without a measurement to point at, and never commits a fix until three consecutive local runs prove it works.
 
 > **This `SKILL.md` is a thin index.**
-> Detailed procedures live in [`rules/*.md`](./rules) and [`templates/*.md`](./templates).
 > Each phase loads only what it needs.
 
 ---
@@ -91,7 +90,7 @@ Phases 5, 6, and 7 are skipped in `optimize` mode (the `Modes` column says so ex
 | 5 | Draft fix + selector-existence check | **stabilize only** | [`rules/root-cause-and-fix.md`](./rules/root-cause-and-fix.md), [`rules/fix-validation.md`](./rules/fix-validation.md), [`rules/guard-rails.md`](./rules/guard-rails.md) | Diff drafted; every new locator proven to resolve against source (static grep) **or** the live app (`locator.count() ≥ 1`). A locator that fails both checks is hallucinated — discard the diff and re-enter Phase 4 with that evidence. |
 | 6 | Local verification — 3 consecutive passes | **stabilize only** | [`rules/local-iteration.md`](./rules/local-iteration.md) | Fixed test runs locally ≥ 3 times with `--trace=on` and passes **3 times in a row**. A single failure or flake within the streak resets the counter. Maximum 10 attempts per test before escalating. |
 | 7 | CI ratification — one push, one watch | **stabilize only** | [`rules/verification-loop.md`](./rules/verification-loop.md) | All passing fixes committed and pushed in a single push event; the resulting CI run is watched to conclusion and its telemetry compared against the Phase 1 baseline. |
-| 8 | Report | both | [`templates/stabilization-report.md`](./templates/stabilization-report.md) | Stabilize: report with before / after numbers + local-pass log + CI verdict + residual risk. Optimize: recommendations-only report ranked by measured wall-clock impact. |
+| 8 | Report | both | [standard templates](./standard templates) | Stabilize: report with before / after numbers + local-pass log + CI verdict + residual risk. Optimize: recommendations-only report ranked by measured wall-clock impact. |
 
 Inner iteration in `stabilize` mode is local and bounded — see [`rules/local-iteration.md`](./rules/local-iteration.md).
 The CI step in Phase 7 runs **once**.
@@ -107,13 +106,13 @@ Do not preload.
 | Phase | Files |
 |-------|-------|
 | 0 | [`rules/input-resolution.md`](./rules/input-resolution.md) |
-| 1 | [`rules/telemetry-driven-analysis.md`](./rules/telemetry-driven-analysis.md), [`references/dash0-mcp-filters.md`](./references/dash0-mcp-filters.md) |
+| 1 | [`rules/telemetry-driven-analysis.md`](./rules/telemetry-driven-analysis.md), [official guidelines](./official guidelines) |
 | 2 | [`rules/local-iteration.md`](./rules/local-iteration.md) |
 | 3–4 | [`rules/root-cause-and-fix.md`](./rules/root-cause-and-fix.md), [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (read lessons — stabilize only) |
 | 5 | [`rules/root-cause-and-fix.md`](./rules/root-cause-and-fix.md), [`rules/fix-validation.md`](./rules/fix-validation.md), [`rules/guard-rails.md`](./rules/guard-rails.md) |
 | 6 | [`rules/local-iteration.md`](./rules/local-iteration.md) |
 | 7 | [`rules/verification-loop.md`](./rules/verification-loop.md), [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (write lessons on ratification — stabilize only) |
-| 8 | [`templates/stabilization-report.md`](./templates/stabilization-report.md) |
+| 8 | [standard templates](./standard templates) |
 
 For trace mechanics (zip → JSONL → action timeline), defer to [`/playwright-trace-analyzer`](../../analysis/playwright-trace-analyzer/SKILL.md).
 Do **not** re-implement.
@@ -252,8 +251,6 @@ when locators drift.
 > **This `SKILL.md` is a thin index.**
 > Decision rules live in [`rules/*.md`](./rules) and load on demand.
 > Worked references (agent reference, MCP tool catalog, pyramid math) live
-> in [`references/*.md`](./references).
-> Literal boilerplate the skill emits lives in [`templates/*.md`](./templates).
 > Do not preload everything — load only what the current phase asks for.
 
 ---
@@ -302,7 +299,7 @@ Decision table:
 | Playwright present but version `< 1.56`     | **Halt.** Test Agents require 1.56+. Ask permission to upgrade.         |
 
 Print the exact commands; do not run them silently.
-The install plan template is in [`templates/install-plan.md`](./templates/install-plan.md).
+The install plan template is in [standard templates](./standard templates).
 
 ---
 
@@ -332,7 +329,7 @@ Two entry points:
    Run the Planner against the live app to draft `specs/<flow>.md`.
    User reviews the Markdown plan before generation.
 
-Use the Markdown template in [`templates/spec.md`](./templates/spec.md).
+Use the Markdown template in [standard templates](./standard templates).
 
 ###### Locator ladder (when generating or healing)
 
@@ -417,22 +414,20 @@ If the heal loop fails to converge:
 
 ##### References
 
-- [`references/playwright-agents.md`](./references/playwright-agents.md) —
+- [official guidelines](./official guidelines) —
   Planner / Generator / Healer reference, inputs, outputs, invocation.
-- [`references/mcp-tool-catalog.md`](./references/mcp-tool-catalog.md) —
+- [official guidelines](./official guidelines) —
   the `@playwright/mcp` tool surface, grouped by category.
-- [`references/pyramid-2026.md`](./references/pyramid-2026.md) — testing
+- [official guidelines](./official guidelines) — testing
   pyramid math in 2026, with the AI-generation caveat.
 
 ##### Templates
 
-- [`templates/spec.md`](./templates/spec.md) — feature-flow Markdown spec.
-- [`templates/seed.spec.ts`](./templates/seed.spec.ts) — auth and storage
+- [standard templates](./standard templates) — feature-flow Markdown spec.
   bootstrap, produces `storageState`.
-- [`templates/playwright.config.ts`](./templates/playwright.config.ts) —
   opinionated config: snapshot mode, traces on first retry, projects per
   browser, parallel CI defaults.
-- [`templates/install-plan.md`](./templates/install-plan.md) — Phase 0 halt
+- [standard templates](./standard templates) — Phase 0 halt
   message with the exact commands to install Playwright + MCP.
 
 ---
@@ -481,9 +476,7 @@ The two skills compose; they do not overlap.
 > Decision rules live in [`rules/*.md`](./rules) and load on demand.
 > Worked references (Maestro CLI surface, MCP tool catalog, EAS Workflow
 > wiring, Detox legacy notes, mobile pyramid math) live in
-> [`references/*.md`](./references).
 > Literal boilerplate the skill emits lives in
-> [`templates/*.md`](./templates).
 > Do not preload everything — load only what the current phase asks for.
 
 ---
@@ -543,15 +536,13 @@ Decision table:
 | State                                                       | Action                                                                      |
 | ----------------------------------------------------------- | --------------------------------------------------------------------------- |
 | Maestro CLI present + `.maestro/` exists + `eas.json` `e2e` profile | Proceed to Phase 1.                                                |
-| Maestro CLI missing                                         | **Halt.** Print install plan ([`templates/install-plan.md`](./templates/install-plan.md)). Ask permission. |
-| `.maestro/` missing                                         | **Halt.** Propose creating `.maestro/` with the [`templates/flow.yaml`](./templates/flow.yaml) starter. Ask first. |
-| `eas.json` `e2e` build profile missing                      | **Halt.** Propose [`templates/eas-build-profile.json`](./templates/eas-build-profile.json). Ask first.            |
+| Maestro CLI missing                                         | **Halt.** Print install plan ([standard templates](./standard templates)). Ask permission. |
 | No simulator / emulator running                             | **Halt.** Ask the user to boot one, or proceed with Maestro Cloud only.     |
-| Existing Detox suite detected                               | Note it. Read [`references/detox-legacy.md`](./references/detox-legacy.md) before proposing migration. |
+| Existing Detox suite detected                               | Note it. Read [official guidelines](./official guidelines) before proposing migration. |
 | Bare RN project (no `expo` / no `eas.json`)                 | Skip EAS-specific checks. Use Maestro CLI directly against a local build.   |
 
 Print the exact commands; do not run them silently.
-The full install plan template is in [`templates/install-plan.md`](./templates/install-plan.md).
+The full install plan template is in [standard templates](./standard templates).
 
 ---
 
@@ -583,7 +574,7 @@ Two entry points:
    The user reviews the Markdown before flow emission.
 
 Use the Markdown template in
-[`../e2e-testing/templates/spec.md`](../e2e-testing/templates/spec.md).
+[`../e2e-testing/standard templates](../e2e-testing/standard templates).
 The spec format is identical across web and mobile — share it.
 
 ###### Locator ladder for React Native (when generating or healing)
@@ -604,7 +595,6 @@ Pick locators in this order — never skip a rung:
 When the Healer cannot find a stable element at rung 1, propose a
 **source diff** that adds `testID` to the component (use the
 `setTestId` helper in
-[`templates/testid-helper.tsx`](./templates/testid-helper.tsx) to keep
 iOS and Android consistent), and offer the diff for user approval
 before patching the flow.
 Full rules: [`rules/locator-strategy.md`](./rules/locator-strategy.md).
@@ -643,7 +633,6 @@ After the agent emits a flow:
 3. Open `.github/workflows/eas-e2e.yml` (or the EAS Workflow YAML) and
    confirm the `maestro-cloud` job is wired with `retries: 2` and
    `record_screen: false` per
-   [`templates/eas-workflow.yaml`](./templates/eas-workflow.yaml).
 
 If the heal loop fails to converge:
 
@@ -667,7 +656,7 @@ If the heal loop fails to converge:
 | Repo missing Maestro CLI or `.maestro/` or `eas.json` E2E profile | Phase 0 halt + ask permission.                                                      |
 | Heal loop > 3 attempts                                            | Stop, run `confidence(analysis)`, escalate.                                     |
 | Flow passes on first run, never seen failing                      | Verify any imported helpers via `test-provenance-guard` before declaring done.      |
-| Existing Detox suite is green and stable                          | Keep it; see [`references/detox-legacy.md`](./references/detox-legacy.md).          |
+| Existing Detox suite is green and stable                          | Keep it; see [official guidelines](./official guidelines).          |
 | Detox suite is brittle through RN upgrades                        | Migrate flow-by-flow to Maestro; do not rewrite the whole suite at once.            |
 
 ---
@@ -693,33 +682,29 @@ If the heal loop fails to converge:
 
 ##### References
 
-- [`references/maestro-cli.md`](./references/maestro-cli.md) — CLI surface
+- [official guidelines](./official guidelines) — CLI surface
   (`launchApp`, `tapOn`, `assertVisible`, `runFlow`, Studio, doctor).
-- [`references/maestro-mcp.md`](./references/maestro-mcp.md) — Maestro
+- [official guidelines](./official guidelines) — Maestro
   MCP tools for agent-driven flow generation and healing.
-- [`references/eas-workflows.md`](./references/eas-workflows.md) —
+- [official guidelines](./official guidelines) —
   `eas.json` E2E profile, `.maestro/` layout, `maestro-cloud` job
   parameters (`build_id`, `flow_path`, `shards`, `retries`,
   `record_screen`, `device_identifier`).
-- [`references/detox-legacy.md`](./references/detox-legacy.md) — when
+- [official guidelines](./official guidelines) — when
   to keep an existing Detox suite vs. migrate.
-- [`references/pyramid-mobile.md`](./references/pyramid-mobile.md) —
+- [official guidelines](./official guidelines) —
   pyramid math for Expo / RN with Jest, React Native Testing Library,
   and Maestro.
 
 ##### Templates
 
-- [`templates/install-plan.md`](./templates/install-plan.md) — Phase 0
+- [standard templates](./standard templates) — Phase 0
   halt message with the exact commands to install Maestro + EAS CLI
   and scaffold `.maestro/`.
-- [`templates/flow.yaml`](./templates/flow.yaml) — sample Maestro flow
   with `launchApp`, `tapOn` (`id:` and `text:` forms), `assertVisible`,
   and `runFlow` includes.
-- [`templates/eas-workflow.yaml`](./templates/eas-workflow.yaml) — EAS
   Workflow with a build job and a `maestro-cloud` job.
-- [`templates/eas-build-profile.json`](./templates/eas-build-profile.json)
   — `eas.json` snippet for an `e2e` profile producing `.apk` and `.app`.
-- [`templates/testid-helper.tsx`](./templates/testid-helper.tsx) —
   `setTestId` helper that maps `testID` and `accessibilityLabel`
   correctly per platform without conflating the two.
 
@@ -914,7 +899,6 @@ Turn a Playwright `trace.zip` into a ranked, evidence-backed report of
 flakes, slow steps, and root causes.
 
 > **Index file.** Detailed extraction rules, analysis playbooks, and
-> report templates live under `rules/`, `references/`, and `templates/`.
 > Load only what the current phase needs — the body of `SKILL.md` is a
 > thin orchestrator.
 
@@ -956,7 +940,7 @@ Six phases. Do not skip a gate.
 | 2     | Hotspot extraction  | [`rules/action-timing.md`](./rules/action-timing.md), [`rules/network-analysis.md`](./rules/network-analysis.md), [`rules/console-and-errors.md`](./rules/console-and-errors.md) | Top-N slow actions, top-N slow requests, error/console list — all with concrete numbers |
 | 3     | Root-cause          | [`rules/flake-diagnosis.md`](./rules/flake-diagnosis.md)                 | Each hotspot mapped to a code-level cause (selector, locator, network call, app event) with file path or line where possible |
 | 4     | Confidence gate     | [`rules/confidence-loop.md`](./rules/confidence-loop.md)                 | `/confidence analysis` ≥ 90% — else iterate (max 2 deep-dives)        |
-| 5     | Fix plan            | [`templates/analysis-report.md`](./templates/analysis-report.md)         | Report written with ranked fixes, expected impact, and verification plan |
+| 5     | Fix plan            | [standard templates](./standard templates)         | Report written with ranked fixes, expected impact, and verification plan |
 
 ---
 
@@ -969,9 +953,9 @@ Load on demand — do not preload.
 | 0     | [`rules/input-detection.md`](./rules/input-detection.md) — also points to [`scripts/trace-extract.mjs`](./scripts/trace-extract.mjs)                                 |
 | 1     | [`rules/measurement-methodology.md`](./rules/measurement-methodology.md)                                                                                             |
 | 2     | [`rules/action-timing.md`](./rules/action-timing.md), [`rules/network-analysis.md`](./rules/network-analysis.md), [`rules/console-and-errors.md`](./rules/console-and-errors.md) — backed by [`scripts/trace-summary.mjs`](./scripts/trace-summary.mjs) |
-| 3     | [`rules/flake-diagnosis.md`](./rules/flake-diagnosis.md), [`references/flake-patterns.md`](./references/flake-patterns.md), [`references/performance-patterns.md`](./references/performance-patterns.md) |
+| 3     | [`rules/flake-diagnosis.md`](./rules/flake-diagnosis.md), [official guidelines](./official guidelines), [official guidelines](./official guidelines) |
 | 4     | [`rules/confidence-loop.md`](./rules/confidence-loop.md)                                                                                                             |
-| 5     | [`templates/analysis-report.md`](./templates/analysis-report.md)                                                                                                     |
+| 5     | [standard templates](./standard templates)                                                                                                     |
 
 Pass-vs-fail comparison (when given two traces of the same test):
 [`scripts/trace-diff.mjs`](./scripts/trace-diff.mjs).
@@ -1024,7 +1008,7 @@ findings as a hypothesis with the evidence required to confirm it. See
 ---
 
 ##### Anti-patterns (one-liners — full list in
-[`references/flake-patterns.md`](./references/flake-patterns.md))
+[official guidelines](./official guidelines))
 
 - Recommending `page.waitForTimeout(N)` without measuring the underlying
   race condition.
@@ -1107,7 +1091,7 @@ it — only when an input is detected.
 - [ ] `/confidence analysis` reached ≥ 90% (or two deep-dives
       recorded with the remaining uncertainty surfaced to the user).
 - [ ] Fix plan written using
-      [`templates/analysis-report.md`](./templates/analysis-report.md),
+      [standard templates](./standard templates),
       with ranked fixes, expected ms saved, and a re-run verification
       step.
 - [ ] User has the next concrete action (apply fix N, re-run with
@@ -1131,14 +1115,14 @@ Load the matching rule file when you need detail — do not preload them.
 | Phase | Goal | Required rule |
 | ----- | ---- | ------------- |
 | 0 | Resolve the surface (bootstrap or validate) | [`rules/bootstrap.md`](./rules/bootstrap.md) + [`rules/surface-validation.md`](./rules/surface-validation.md) |
-| 1 | Detect which test surface(s) are failing; build fix plan | this file + [`templates/plan-artifact.md`](./templates/plan-artifact.md) |
+| 1 | Detect which test surface(s) are failing; build fix plan | this file + [standard templates](./standard templates) |
 | 2 | Per failure: classify as test-bug / prod-bug / unsure | [`rules/verdicts.md`](./rules/verdicts.md) + [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (read lessons) |
 | 3 | Per failure: draft the smallest possible fix | this file |
 | 3.5 | Confidence gate — before any edit | [`rules/confidence-gate.md`](./rules/confidence-gate.md) |
 | 4 | Apply + verify single failing test | this file + [`rules/anti-patterns.md`](./rules/anti-patterns.md) |
 | 5 | test-provenance-guard (optional companion) | invoke `Skill("test-provenance-guard")` |
 | 6 | Outer loop: re-run full surface; regression-detect | [`rules/regression-detection.md`](./rules/regression-detection.md) + [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (write lessons) |
-| 7 | Report (structured exit summary) | [`templates/exit-summary.md`](./templates/exit-summary.md) + [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (write on outcome) |
+| 7 | Report (structured exit summary) | [standard templates](./standard templates) + [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (write on outcome) |
 
 Always read [`rules/anti-patterns.md`](./rules/anti-patterns.md) first.
 The hard refusals apply to every phase.
@@ -1215,7 +1199,7 @@ When validation passes, jump straight to Phase 1.
 3. If every surface is green: stop immediately. Tell the user. Do not invent work.
 
 4. Write the fix plan to `.agent/{branch}/test-auto-fix-plan.md` using
-   [`templates/plan-artifact.md`](./templates/plan-artifact.md).
+   [standard templates](./standard templates).
    The plan is read-only documentation of intent.
    Order: high-confidence test-bug fixes first, prod-bug suspects last.
 
@@ -1318,7 +1302,7 @@ After a batch of fixes:
 ##### Phase 7 — Report
 
 Always end with the structured exit summary from
-[`templates/exit-summary.md`](./templates/exit-summary.md).
+[standard templates](./standard templates).
 
 ```text
 test-auto-fix run
@@ -1381,7 +1365,6 @@ This skill detects that pattern and, when invoked autonomously, fixes it without
 
 > **This `SKILL.md` is a thin index.**
 > Detailed procedures live in `rules/*.md` and load on demand.
-> The case-study post-mortem and failure-mode taxonomy live in `references/*.md`.
 
 ---
 
@@ -1480,8 +1463,8 @@ Load on demand — do not preload.
 | 1     | [`rules/static-check.md`](./rules/static-check.md)                              |
 | 2     | [`rules/mutation-check.md`](./rules/mutation-check.md)                          |
 | 3     | [`rules/self-heal.md`](./rules/self-heal.md)                                    |
-| —     | [`references/failure-modes.md`](./references/failure-modes.md) — taxonomy        |
-| —     | [`references/pr-12340-postmortem.md`](./references/pr-12340-postmortem.md) — origin case |
+| —     | [official guidelines](./official guidelines) — taxonomy        |
+| —     | [official guidelines](./official guidelines) — origin case |
 
 ---
 
@@ -1803,7 +1786,7 @@ The helper finds current and historical exact-file matches, suspicious basename 
 
 ##### 3. Compare category by category
 
-Read [references/audit-rubric.md](references/audit-rubric.md) before judging findings.
+Review the official documentation before judging findings.
 
 Audit at least these categories:
 
@@ -2004,7 +1987,7 @@ Load the matching rule file when you need detail — do not preload them.
 | 1 | Identify the failure (fetch logs) | this file |
 | 2 | Read every workflow file before editing one | this file |
 | 3 | Classify the failure with an explicit verdict | [`rules/verdicts.md`](./rules/verdicts.md) + [`rules/self-improvement-loop.md`](./rules/self-improvement-loop.md) (read lessons) |
-| 3.5 | Write the plan artifact + run the confidence gate | [`rules/confidence-gate.md`](./rules/confidence-gate.md) + [`templates/plan-artifact.md`](./templates/plan-artifact.md) |
+| 3.5 | Write the plan artifact + run the confidence gate | [`rules/confidence-gate.md`](./rules/confidence-gate.md) + [standard templates](./standard templates) |
 | 4 | Apply the minimal, targeted fix | this file + [`rules/anti-patterns.md`](./rules/anti-patterns.md) |
 | 5 | Verify locally before pushing | this file |
 | 6 | Commit and push (rebase-safe) | this file |
@@ -2119,7 +2102,7 @@ Verdicts at a glance:
 
 ##### Phase 3.5 — Plan artifact + confidence gate
 
-1. Write or update the plan at `.agent/{branch}/ci-auto-fix-plan.md` using [`templates/plan-artifact.md`](./templates/plan-artifact.md).
+1. Write or update the plan at `.agent/{branch}/ci-auto-fix-plan.md` using [standard templates](./standard templates).
    The plan is read-only documentation of intent — the user can pre-empt before any code is written.
 
 2. Run the confidence gate per [`rules/confidence-gate.md`](./rules/confidence-gate.md):

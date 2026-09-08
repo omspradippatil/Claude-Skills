@@ -789,7 +789,7 @@ Convert any usable reference video into a builder-ready prompt that captures wha
 
 ##### References
 
-- Read `references/superprompt-template.md` when writing the final prompt from scratch or when the user asks for the “full detailed prompt.”
+- Read official documentation when writing the final prompt from scratch or when the user asks for the “full detailed prompt.”
 
 
 ---
@@ -810,7 +810,6 @@ review.
 > **This `SKILL.md` is a thin index.** Detailed rules live in
 > [`rules/*.md`](./rules) and load on demand. Literal Playwright and
 > `ffmpeg` boilerplate the skill emits lives in
-> [`templates/*.md`](./templates). Do not preload everything — load only
 > what the current phase asks for.
 
 ---
@@ -906,7 +905,6 @@ Echo the resolved inputs back as a one-screen summary before Phase 2.
 
 Write a single-purpose Node.js script to
 `.agent/recordings/<slug>/record.mjs` using the template at
-[`templates/record.mjs.template`](./templates/record.mjs.template).
 Substitution rules and the interaction recipe catalog are in
 [`rules/recording-script.md`](./rules/recording-script.md) and
 [`rules/interactions.md`](./rules/interactions.md).
@@ -1007,7 +1005,6 @@ Load on demand — do not preload.
 | ----- | ------------------------------------------------------------------ |
 | 0     | [`rules/preflight.md`](./rules/preflight.md)                       |
 | 1     | [`rules/interactions.md`](./rules/interactions.md)                 |
-| 2     | [`rules/recording-script.md`](./rules/recording-script.md), [`templates/record.mjs.template`](./templates/record.mjs.template) |
 | 2/3   | [`rules/interactions.md`](./rules/interactions.md)                 |
 | 4     | [`rules/cropping.md`](./rules/cropping.md)                         |
 | 6     | [`rules/integrations.md`](./rules/integrations.md)                 |
