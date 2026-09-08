@@ -1,4 +1,4 @@
-# ⚡ 19 Ultimate Skills & 2 Always-On Rules for AI Coding Agents
+# ⚡ 19 Ultimate Skills & 3 Always-On Rules for AI Coding Agents
 
 <div align="center">
 
