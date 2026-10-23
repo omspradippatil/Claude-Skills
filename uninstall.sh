@@ -1,37 +1,30 @@
 #!/usr/bin/env bash
-
-# ==============================================================================
-# 🗑️ AI Agent Skills Uninstaller (macOS & Linux)
-# Repository: https://github.com/omspradippatil/Claude-Skills
-# ==============================================================================
-
-BOLD="\033[1m"
-CYAN="\033[36m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-RED="\033[31m"
-RESET="\033[0m"
-
-echo -e "${RED}${BOLD}"
-echo "╔═════════════════════════════════════════════════════════════════════════╗"
-echo "║                  🗑️  AI CODING SKILLS UNINSTALLER                      ║"
-echo "╚═════════════════════════════════════════════════════════════════════════╝"
-echo -e "${RESET}"
-
-echo -e "${YELLOW}Uninstalling all global skills CLI entries...${RESET}"
-npx --yes skills@latest remove --all -g -y 2>/dev/null || true
-
-echo -e "${YELLOW}Uninstalling global npm packages (uipro-cli, @playwright/cli, firecrawl-cli, ctx7, antigravity-workflows)...${RESET}"
-npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>/dev/null || true
-
-if command -v dart >/dev/null 2>&1; then
-  echo -e "${YELLOW}Deactivating global Dart skills CLI...${RESET}"
-  dart pub global deactivate skills 2>/dev/null || true
-fi
-
-echo -e "${YELLOW}Removing cloned Claude skills directories...${RESET}"
-rm -rf ~/.claude/skills/flutter-skills ~/.claude/skills/seo ~/.claude/skills/claude-skills
-
-echo ""
-echo -e "${GREEN}${BOLD}✔ All AI skills and global tools have been removed successfully!${RESET}"
-echo ""
+# Remove only unchanged files listed by this install's manifest.
+set -euo pipefail
+TARGET=""
+while (($#)); do
+  case "$1" in
+    --target) TARGET="${2:?Missing target}"; shift 2 ;;
+    --help|-h) echo "Usage: bash uninstall.sh --target DIRECTORY"; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; exit 2 ;;
+  esac
+done
+[[ -n "$TARGET" ]] || { echo "Specify --target DIRECTORY; nothing was removed." >&2; exit 2; }
+TARGET="$(cd "$TARGET" && pwd)"
+MANIFEST="$TARGET/.claude-skills-install.manifest"
+[[ -f "$MANIFEST" ]] || { echo "No install manifest found at $MANIFEST; nothing was removed." >&2; exit 1; }
+removed=0 skipped=0
+while IFS=$'\t' read -r relative expected; do
+  [[ -n "$relative" && -n "$expected" ]] || continue
+  case "/$relative/" in /*/../*|*\\*) echo "Unsafe manifest path; stopping: $relative" >&2; exit 1 ;; esac
+  [[ "$relative" != /* ]] || { echo "Unsafe absolute manifest path: $relative" >&2; exit 1; }
+  file="$TARGET/$relative"
+  if [[ -f "$file" ]] && [[ "$(shasum -a 256 "$file" | awk '{print $1}')" == "$expected" ]]; then
+    rm "$file"; removed=$((removed + 1))
+  else
+    echo "Kept changed or missing file: $file"
+    skipped=$((skipped + 1))
+  fi
+done < "$MANIFEST"
+rm "$MANIFEST"
+echo "Removed $removed unchanged installed files; kept $skipped changed or missing files."

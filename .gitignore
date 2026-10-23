@@ -4,10 +4,18 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Skills directories & local clones
+# Installed skill directories (populated by install.sh — not committed to repo)
+# The SOURCE skills live in .agents/skills/ and .claude/skills/ and ARE committed.
+# These ignores are for user-installed copies in project repos, not this repo itself.
 
-# Temporary & System files
+# OS files
 .DS_Store
 Thumbs.db
 *.tmp
 *.log
+
+# Temp
+/tmp/
+
+# Test artifacts
+tests/results/

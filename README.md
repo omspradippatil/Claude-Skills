@@ -1,405 +1,95 @@
-# ⚡ 19 Ultimate Skills & 3 Always-On Rules for AI Coding Agents
+# Claude-Skills
 
-<div align="center">
+A small, cross-agent collection of engineering policies and task-specific skills. The repository keeps its own policy source in `policies/`, uses focused skills under `.agents/skills/`, and provides lightweight adapters for Claude Code, Antigravity, Codex, and Cursor.
 
-<p align="center">
-  <img src="./assets/banner.svg" alt="AI Coding Agent Skills Suite" width="800" />
-</p>
+The repo contains **19 active skills**. Third-party plugins and tools are optional; the installer does not install global npm packages or active security/research tools.
 
-<p align="center">
-  <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Skills%20Suite-14%2B%20Ultimate%20Domain%20Skills-00F5FF?style=for-the-badge&logo=codeforces&logoColor=black" alt="Skills Suite" /></a>
-  <a href="https://github.com/omspradippatil/Claude-Skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-39FF14?style=for-the-badge&logo=opensourceinitiative&logoColor=black" alt="License" /></a>
-  <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Cost-100%25%20Free%20%26%20Open--Source-FF007F?style=for-the-badge&logo=airplayvideo&logoColor=white" alt="Cost" /></a>
-  <a href="https://github.com/omspradippatil/Claude-Skills"><img src="https://img.shields.io/badge/Compatibility-Claude%20%7C%20Antigravity%20%7C%20Cursor%20%7C%20Codex-7928CA?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="Compatibility" /></a>
-  <a href="https://om-patil.com/donate"><img src="https://img.shields.io/badge/Donate-Support%20Project-FFDD00?style=for-the-badge&logo=githubsponsors&logoColor=black" alt="Donate" /></a>
-</p>
+## Start here
 
-<p align="center">
-  <b>Enrich your AI coding assistant with verified design taste, interactive architecture visualizers, mobile & web engineering heuristics, agentic SEO, cloud databases, automated workflows, and local persistent memory.</b>
-</p>
+1. Read [`CLAUDE.md`](CLAUDE.md), the canonical task router.
+2. Read [`policies/core.md`](policies/core.md) for every task.
+3. Use [`skills-lock.json`](skills-lock.json) to select only relevant skills and policies.
+4. Read each selected `SKILL.md` in full and its required references before acting.
+5. Run the task-relevant checks and report evidence and limitations.
 
-```
-  ╔═══════════════════════════════════════════════════════════════════════════╗
-  ║   🎨 UI/UX Taste   🏛️ Architecture   📱 Mobile    🌐 Web    🔍 SEO        ║
-  ║   🔥 Cloud Edge    🐳 DevOps         🔄 Workflows 🧠 Local Memory        ║
-  ╚═══════════════════════════════════════════════════════════════════════════╝
-```
+## Skill catalog
 
-</div>
+| Skill | Purpose |
+|---|---|
+| `ui-ux-pro-max` | Primary UI/UX skill, integrated from the official upstream project |
+| `ux-research` | User research, usability heuristics, UX writing |
+| `web-animation` | Purposeful, performant, accessible motion |
+| `assets-media` | Media, fonts, and web asset performance |
+| `api-architecture` | REST/GraphQL API contracts and backend patterns |
+| `postgres-ecosystem` | PostgreSQL, Supabase, Neon, SQL and RLS |
+| `firebase-expert` | Firebase, Firestore, Auth, rules and functions |
+| `cloudflare-expert` | Workers, D1, R2, KV and Wrangler |
+| `devops-cicd` | CI/CD, containers and deployment practices |
+| `testing-qa` | Unit, integration, E2E and test-quality guidance |
+| `security-auditor` | OWASP-focused security review and threat modeling |
+| `seo-marketing` | Technical SEO, metadata, indexing and migrations |
+| `mobile-engineering` | Native and cross-platform mobile engineering |
+| `llm-optimization` | Prompt, agent and context design |
+| `state-management` | Client-side state and data-fetching patterns |
+| `3d-visuals` | Three.js, WebGL and spatial visuals |
+| `web-gamedev` | Canvas game loops and browser game systems |
+| `git-collaboration` | Branching, merges and pull-request workflows |
+| `sentry-expert` | Error monitoring and telemetry |
 
----
+Shell/CLI requests route through the core and engineering policies. The previous baseline did not contain a standalone shell skill or general web-research skill. See [`integrations/audit.md`](integrations/audit.md) for what was found and why optional tools are not installed automatically.
 
-## ⚡ Quick Start — Install in One Command
+## Policies
 
-Run directly in your project terminal. Installs everything automatically without repetitive confirmation prompts!
+- [`core.md`](policies/core.md): routing, conflicts, untrusted content, evidence-based completion
+- [`engineering.md`](policies/engineering.md): simple, scoped, maintainable changes
+- [`security.md`](policies/security.md): security requirements and release checks
+- [`seo.md`](policies/seo.md): discoverability, indexing, metadata and migrations
+- [`frontend.md`](policies/frontend.md): UI quality, accessibility and responsive behavior
+- [`release.md`](policies/release.md): production-only launch gates
+- [`testing.md`](policies/testing.md): verification and test practices
 
-### 🍏 macOS & 🐧 Linux (Terminal)
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"
-```
+## Install
 
-### 🪟 Windows (PowerShell)
-```powershell
-irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex
-```
-
-### 🪟 Windows (Command Prompt / CMD)
-```cmd
-powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex"
-```
-
----
-
-## 🎮 Interactive 2-Step Setup Flow
-
-```
-   ┌───────────────────────────────────────────────────────────┐
-   │ STEP 1: Choose Installation Scope                        │
-   ├───────────────────────────────────────────────────────────┤
-   │  1) 🌍 Global          (Available system-wide in ~/.agents)│
-   │  2) 📁 Current Project (Scoped strictly to this workspace)│
-   └─────────────────────────────┬─────────────────────────────┘
-                                 │
-                                 ▼
-   ┌───────────────────────────────────────────────────────────┐
-   │ STEP 2: Choose Skill Configuration Suite                  │
-   ├───────────────────────────────────────────────────────────┤
-   │  1) 🚀 All-in-One Full Suite (All 9 Suites, 400+ Skills)  │
-   │  2) 📱 Mobile Application    (Flutter, Dart, Cloud, Memory)│
-   │  3) 🌐 Web Application       (Playwright, UI/UX, SEO)      │
-   │  4) 🎯 Custom Selection      (Pick specific categories)   │
-   │  5) 🗑️  Delete / Uninstall    (Clean removal of all tools) │
-   └─────────────────────────────┬─────────────────────────────┘
-                                 │
-                                 ▼
-   ╔═══════════════════════════════════════════════════════════╗
-   ║  🚀 Automated Execution: All sub-skills auto-confirmed!   ║
-   ║     Zero prompts. Zero manual selection. 100% Free.      ║
-   ╚═══════════════════════════════════════════════════════════╝
-```
-
----
-
-## ⚡ Direct Non-Interactive CLI Automation Flags
-
-Pass direct arguments to execute non-interactively in CI/CD pipelines or headless scripts:
+Requirements: Git and Bash for the POSIX installer. It installs project instructions, policies, and the minimal skill profile into the selected agent folders. It does not install optional third-party software or modify global package managers.
 
 ```bash
-# Install all skills into your current project folder
-./install.sh --project --all
+# Minimal project install in the current directory
+bash install.sh --target project --minimal
 
-# Install all skills globally across your machine
-./install.sh --global --all
+# Global install for the current user
+bash install.sh --target global --minimal
 
-# Install only Web Application tools into your project
-./install.sh --project --web
+# Select exact skills (comma-separated)
+bash install.sh --target project --platform agents --skills ui-ux-pro-max,security-auditor,seo-marketing
 
-# Install only Mobile Application tools into your project
-./install.sh --project --mobile
-
-# Completely clean up and remove all skills & packages
-./install.sh --uninstall
+# Remove only matching files recorded as installed by this project
+bash uninstall.sh --target /path/to/install-root
 ```
 
----
+The default install contains policies, adapters, and the router; it adds no specialist skills until selected with `--skills`. Existing files are preserved. Use `--force` only after reviewing the affected targets. Windows users can use `install.ps1`; see [`docs/installation.md`](docs/installation.md).
 
-## 🧠 What "Loading" Means in AI Agent Skills
+## Optional integrations
 
-In modern AI agent systems (Claude Code, Antigravity, Cursor, Codex, OpenCode), skills do **not** bloat your context window with megabytes of text. Instead, they use an **Event-Driven Progressive Disclosure Lifecycle**:
+Third-party integrations are not bundled or installed silently. The review records upstream purpose, license, requirements, and the chosen integration boundary. Select at most one full planning workflow per task.
 
-```mermaid
-flowchart TD
-    subgraph S1 [1. Lightweight Indexing]
-        A[Agent Starts Up] --> B[Indexes Name + Description Headers Only]
-        B --> C[Token Impact: ~20 Tokens per Skill]
-    end
+See [`integrations/README.md`](integrations/README.md) for UI/UX Pro Max updates and official setup paths for Superpowers, GSD Core, Gravitas, Ponytail, Caveman, Strix, and Agent-Reach. Active security testing requires written authorization and a defined scope.
 
-    subgraph S2 [2. Progressive Activation]
-        D[User Prompt Matches Domain] --> E[Agent Reads SKILL.md On-Demand]
-        E --> F[Full Heuristics & Rules Injected]
-    end
+## Platform support
 
-    subgraph S3 [3. Local Execution]
-        G[Agent Runs Local Scripts] --> H[Gathers Verifiable Evidence]
-    end
+This repo includes instruction adapters for Claude Code (`CLAUDE.md`), Antigravity (`AGENTS.md`/`GEMINI.md`), Codex (`AGENTS.md`), and Cursor (`.cursor/rules/always-on.mdc`). Skills are stored in `.agents/skills/` and mirrored to `.claude/skills/` for Claude Code.
 
-    subgraph S4 [4. Local Memory Synthesis]
-        I[Session Complete] --> J[Learned Patterns Saved to Local Markdown]
-    end
+The automated checks validate repository structure and route coverage. They do not prove that each product version automatically discovers skills or follows instructions. Read [`docs/platform-compatibility.md`](docs/platform-compatibility.md) before advertising or relying on native behavior.
 
-    S1 --> S2 --> S3 --> S4
-```
-
-1. **Zero-Bloat Startup**: Only concise header metadata is registered at startup.
-2. **Context-Aware Triggering**: Full decision trees and rules are injected **only** when your prompt asks for that task.
-3. **Local & Free Evidence**: Helpers (Archify, Playwright, SEO scrapers, UI Pro Max) run locally on your hardware with **zero API subscription costs**.
-4. **Isolated Domain Boundaries**: CSS and animation rules will never interfere with PostgreSQL schema policies or mobile IPC audits.
-
----
-
-## 🍱 Bento Grid Architecture — 9 Core Superpowers
-
-<table width="100%">
-<tr>
-<td width="33%" valign="top">
-
-### 🎨 1. Core UI/UX & Taste
-*Eliminates generic AI aesthetics.*
-- **UI/UX Pro Max CLI**: Design token engine & palettes.
-- **Taste Skill**: 13 design taste rules, whitespace hierarchy & visual balance.
-- **Accessible Motion**: 49 physics-based spring curves & 60fps animations.
-
-</td>
-<td width="33%" valign="top">
-
-### 🏛️ 2. Architecture Maps
-*Verifiable system architecture.*
-- **Archify**: Compiles your entire repository into interactive HTML/SVG topological maps & data flow sequence charts with zero cloud lock-in.
-
-</td>
-<td width="33%" valign="top">
-
-### 📱 3. Mobile Engineering
-*Production-grade mobile patterns.*
-- **Dart Skills CLI**: Official package heuristics.
-- **Flutter Claude Skills**: Widget rebuild optimization & Riverpod/BLoC.
-- **OWASP Mobile Security**: Hardcoded secrets & MASVS audits.
-
-</td>
-</tr>
-<tr>
-<td width="33%" valign="top">
-
-### 🌐 4. Web & Browser Testing
-*Modern frontends & E2E checks.*
-- **Frontend Agent Skills**: WCAG AA/AAA semantic layouts.
-- **Web Design Collection**: 130 Framer Motion & CSS transition skills.
-- **Playwright TestDino**: Flaky-test auto-healing & visual regression CLI.
-- **Firecrawl CLI**: Local markdown doc ingestion.
-
-</td>
-<td width="33%" valign="top">
-
-### 🔍 5. Agentic SEO & AEO
-*Search & LLM engine visibility.*
-- **Agentic SEO Suite**: 16 sub-skills, 10 specialist agents, 89 evidence scripts for Google & AI search engine optimization.
-- **Ashley SEO Agent**: JSON-LD schema generation & Core Web Vitals audits.
-
-</td>
-<td width="33%" valign="top">
-
-### 🔥 6. Backend & Cloud Edge
-*Scalable databases & serverless.*
-- **Supabase Skills**: PostgreSQL RLS & Edge functions.
-- **Firebase Skills**: Firestore security rules & FCM triggers.
-- **Neon Postgres**: PR database branching & query tuning.
-- **Cloudflare Skills**: Workers, D1 SQL, and R2 buckets.
-
-</td>
-</tr>
-<tr>
-<td width="33%" valign="top">
-
-### 🐳 7. DevOps & Integrations
-*Orchestration & 1000+ app connectors.*
-- **Composio Integration**: GitHub Actions, PR bot automation, Gmail alerts, and 1000+ app toolchains.
-
-</td>
-<td width="33%" valign="top">
-
-### 🔄 8. Workflows & Plugins
-*Adaptive project assistants.*
-- **Antigravity Workflows**: Stack-agnostic, question-driven workflow pipelines.
-- **Universal Library**: 388+ production-ready Claude Code skills & plugins.
-
-</td>
-<td width="33%" valign="top">
-
-### 🧠 9. Local Memory & Quality
-*100% Free & local persistence.*
-- **Persistent Memory**: Retains architectural decisions across sessions via local markdown logs (Zero API fees).
-- **Karpathy Philosophy**: Simplicity, zero bloat, clarity.
-- **Caveman & Ponytail**: Anti-overengineering.
-- **Sentry for AI**: Root-cause exception triage.
-- **CTX7**: Live framework doc indexing.
-
-</td>
-</tr>
-</table>
-
----
-
-## 🔮 Before & After: The Agent Transformation
-
-<details open>
-<summary><b>✨ UI/UX & Design Systems Transformation</b></summary>
-<br>
-
-| ❌ Standard AI Agent (Generic) | ✅ With Claude-Skills Suite (Taste Enforced) |
-| :--- | :--- |
-| Uses generic Tailwind purple gradients (`bg-gradient-to-r from-purple-500 to-indigo-600`) | Uses refined tokenized palettes, optical letter spacing, and subtle contrast boundaries |
-| Stacks nested border cards with noisy colored shadows | Implements structural whitespace rhythm, beautiful arbitrary shadows, and clean borders |
-| Uses jarring linear CSS transitions (`transition: all 0.3s ease`) | Applies physics-based spring curves, choreographed reveals, and 60fps micro-motion |
-| Forgets accessibility standards and ARIA landmarks | Implements semantic HTML5, WCAG AAA contrast, and keyboard navigation by default |
-
-</details>
-
-<details>
-<summary><b>🏛️ Architecture & System Visualization</b></summary>
-<br>
-
-```
->_ User: "Map out the authentication flow and repository data pipeline."
-
-[Agent executes Archify Heuristics]
-✔ Analyzed AST and directory topology
-✔ Detected state boundaries and API gateways
-✔ Generated interactive HTML system map: ./docs/architecture.html
-✔ Visualized sequence diagrams with SVG animation
-```
-
-</details>
-
-<details>
-<summary><b>🧠 100% Free Local Memory Continuity</b></summary>
-<br>
-
-```
->_ User: "Continue building the checkout flow we designed yesterday."
-
-[Agent reads local memory ledger from .claude/CLAUDE.md]
-✔ Context loaded: Selected Stripe Elements with serverless webhook validation
-✔ Context loaded: Database schema configured with PostgreSQL RLS
-✔ Continuing execution seamlessly without repeating questions!
-```
-
-</details>
-
----
-
-## 📋 Comprehensive Skills Catalog & Prompt Triggers
-
-<details open>
-<summary><b>🎨 1. Core UI/UX, Design Systems & Motion</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`uipro-cli`** | UI heuristics, token system generation, color palettes | `"uipro init --ai antigravity: Generate a design token system and color palette for a fintech dashboard."` |
-| **`Leonxlnx/taste-skill`** | Eliminates AI slop; enforces typography hierarchy & whitespace balance | `"Redesign this settings view. Apply high taste, clean typography hierarchy, and remove generic AI borders/shadows."` |
-| **`mthines/agent-skills`** | Physics spring curves, gesture response, 60fps micro-motion | `"Add spring physics transitions and micro-interactions to the modal open and accordion drawer."` |
-
-</details>
-
-<details>
-<summary><b>🏛️ 2. Architecture & System Visualization</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`tt-a1i/archify`** | Generates verifiable interactive HTML/SVG architecture maps & sequence charts | `"Use archify to map this repository's runtime architecture and data flow as an interactive HTML diagram."` |
-
-</details>
-
-<details>
-<summary><b>📱 3. Mobile Engineering (Flutter & Native)</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`dart skills`** | Package-specific heuristics from `pubspec.yaml` | `"Inspect pubspec.yaml and generate Riverpod 2.0 state management with code-generation annotations."` |
-| **`flutter-claude-skills`** | Widget rebuild optimization & BLoC/Riverpod architecture | `"Optimize this ListView widget tree to prevent unnecessary rebuilds using const constructors and selector hooks."` |
-| **`OWASP/secure-agent-playbook`** | Audits mobile source code for MASVS & insecure storage | `"Audit this Flutter application against OWASP MASVS for hardcoded keys and insecure biometric storage."` |
-
-</details>
-
-<details>
-<summary><b>🌐 4. Web Frontend, DOM & Browser Automation</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`hueyexe/frontend-agent-skills`** | WCAG AA/AAA accessibility, responsive grid/flexbox layouts | `"Refactor this navbar and hero section to be fully accessible with semantic ARIA landmarks and responsive CSS grid."` |
-| **`MengTo/Skills`** | 130 modern Framer Motion, keyframes, and scroll effects | `"Create a smooth scroll-driven card expansion effect using Framer Motion and Tailwind CSS."` |
-| **`testdino-hq/playwright-skill`** | AI Playwright generator, test healing & fixture optimization | `"Write an end-to-end Playwright test suite for user authentication with fixtures and auto-retry for flaky network calls."` |
-| **`@playwright/cli`** | Headless browser regression checks and screenshot comparisons | `"Run a visual regression test comparing the desktop and mobile checkout layouts."` |
-| **`firecrawl-cli`** | Cleans web pages into LLM-ready markdown documentation | `"Crawl the official Supabase SSR documentation and summarize the auth cookie handling pattern."` |
-
-</details>
-
-<details>
-<summary><b>🔍 5. Agentic SEO & Search Visibility</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`Bhanunamikaze/Agentic-SEO-Skill`** | 16 sub-skills & 89 scripts for technical SEO, schema audits, AEO | `"Run a full technical SEO audit on this landing page and generate JSON-LD schema for SoftwareApplication."` |
-| **`ashleytheash/seo-agent-skill`** | OpenGraph tags, JSON-LD structured data, and Core Web Vitals | `"Check our OpenGraph meta tags, canonical URLs, and sitemap configuration for Google indexing readiness."` |
-
-</details>
-
-<details>
-<summary><b>🔥 6. Backend, Databases & Cloud Edge</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`supabase/agent-skills`** | PostgreSQL Row Level Security (RLS) policies & Edge functions | `"Design a PostgreSQL schema for a multi-tenant SaaS with strict Row Level Security (RLS) policies."` |
-| **`firebase/agent-skills`** | Firestore schema design, FCM notifications, and security rules | `"Write Firestore security rules that only allow team members with role 'admin' to mutate billing records."` |
-| **`neondatabase/agent-skills`** | Serverless Postgres branching & SQL index optimization | `"Configure database branching for CI/CD pull requests and optimize our indexing strategy on the orders table."` |
-| **`cloudflare/skills`** | Workers, D1 SQL databases, R2 object storage, KV caching | `"Write a Cloudflare Worker with D1 SQL binding and edge cache headers for geo-distributed API responses."` |
-
-</details>
-
-<details>
-<summary><b>🐳 7. DevOps & Integrations</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`composiohq/skills`** | GitHub Actions automation, PR bots, Gmail alerts & 1000+ app connectors | `"Set up a GitHub Action that triggers automated code review on every pull request using Composio."` |
-
-</details>
-
-<details>
-<summary><b>🔄 8. Intelligent Workflows & Plugins</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`antigravity-workflows`** | Stack-agnostic, question-driven workflow pipelines | `"Run antigravity workflow to implement a responsive authentication flow tailored to my tech stack."` |
-| **`alirezarezvani/claude-skills`** | 388+ universal Claude Code plugins across 20 domains | `"Activate senior-architect skill: Review this codebase and propose a decoupled service layer."` |
-
-</details>
-
-<details>
-<summary><b>🧠 9. Code Quality, Security & Local Memory</b></summary>
-
-| Skill / Package | Core Capability | Example Activation Prompt |
-| :--- | :--- | :--- |
-| **`memoryplugin/agent-skills`** | 100% Free local memory continuity across chats via markdown | `"What architectural decisions did we make yesterday regarding user permissions?"` |
-| **`multica-ai/andrej-karpathy-skills`** | Engineering clarity, minimal abstractions, zero fluff | `"Refactor this utility module following Karpathy principles: simple loops, zero over-engineering, maximum clarity."` |
-| **`JuliusBrussee/caveman` & `ponytail`** | Eliminates framework bloat and unnecessary wrapper classes | `"Audit our directory structure and remove redundant wrapper abstractions."` |
-| **`getsentry/sentry-for-ai`** | Automated root-cause analysis for production exceptions | `"Analyze this production Sentry stack trace and identify the null-pointer regression."` |
-| **`ctx7`** | Injects live, verified framework documentation into context | `"ctx7 index react-router@v7: Show the exact route loader configuration for nested layouts."` |
-
-</details>
-
----
-
-## 🗑️ Clean Uninstallation
-
-To completely remove all installed skills, CLIs, and cloned repositories from your machine:
+## Verify
 
 ```bash
-# macOS & Linux
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.sh)"
-
-# Windows (PowerShell)
-irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.ps1 | iex
+npm run validate
+npm test
+npm run test:install
 ```
 
----
+The install test runs project and global destination simulations in temporary folders. These commands do not validate Windows PowerShell execution, native agent discovery, third-party plugin installation, or production behavior.
 
-<div align="center">
+## Security and license
 
-Made with ⚡ for high-performance AI coding agents.
-
-[![GitHub stars](https://img.shields.io/github/stars/omspradippatil/Claude-Skills?style=social)](https://github.com/omspradippatil/Claude-Skills)
-
-<br>
-<p>If you find this project helpful, consider <a href="https://om-patil.com/donate">supporting its development</a>.</p>
-
-</div>
+See [`SECURITY.md`](SECURITY.md) for reporting guidance and safe use. Repository-authored files are MIT-licensed; see [`LICENSE`](LICENSE) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for the integrated upstream skill attribution.

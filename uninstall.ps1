@@ -1,37 +1,25 @@
-<#
-==============================================================================
- 🗑️ AI Agent Skills Uninstaller (Windows PowerShell)
- Repository: https://github.com/omspradippatil/Claude-Skills
-==============================================================================
-#>
-
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-
-Write-Host ""
-Write-Host "╔═════════════════════════════════════════════════════════════════════════╗" -ForegroundColor Red
-Write-Host "║                  🗑️  AI CODING SKILLS UNINSTALLER                      ║" -ForegroundColor Red
-Write-Host "╚═════════════════════════════════════════════════════════════════════════╝" -ForegroundColor Red
-Write-Host ""
-
-Write-Host "Uninstalling all global skills CLI entries..." -ForegroundColor Yellow
-npx --yes skills@latest remove --all -g -y 2>$null
-
-Write-Host "Uninstalling global npm packages (uipro-cli, @playwright/cli, firecrawl-cli, ctx7, antigravity-workflows)..." -ForegroundColor Yellow
-npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>$null
-
-if (Get-Command dart -ErrorAction SilentlyContinue) {
-    Write-Host "Deactivating global Dart skills CLI..." -ForegroundColor Yellow
-    dart pub global deactivate skills 2>$null
-}
-
-$dirs = @("$HOME\.claude\skills\flutter-skills", "$HOME\.claude\skills\seo", "$HOME\.claude\skills\claude-skills")
-foreach ($d in $dirs) {
-    if (Test-Path $d) {
-        Write-Host "Removing $d..." -ForegroundColor Yellow
-        Remove-Item -Recurse -Force $d 2>$null
+param([Parameter(Mandatory=$true)][string]$Target)
+$ErrorActionPreference = "Stop"
+$Target = (Resolve-Path -LiteralPath $Target).Path
+$Manifest = Join-Path $Target ".claude-skills-install.windows.manifest"
+if (-not (Test-Path $Manifest)) { throw "No install manifest at $Manifest; nothing was removed." }
+$Removed = 0
+$Kept = 0
+foreach ($Line in Get-Content -LiteralPath $Manifest) {
+    if ([string]::IsNullOrWhiteSpace($Line)) { continue }
+    $Parts = $Line.Split("|", 2)
+    if ($Parts.Count -ne 2) { throw "Invalid install manifest entry; stopping safely." }
+    $Relative = $Parts[0]
+    $Normalized = $Relative.Replace("\", "/")
+    if ([IO.Path]::IsPathRooted($Relative) -or $Normalized.Split("/") -contains "..") { throw "Unsafe path in manifest; stopping safely." }
+    $Path = Join-Path $Target ($Normalized.Replace("/", [IO.Path]::DirectorySeparatorChar))
+    if ((Test-Path -LiteralPath $Path -PathType Leaf) -and ((Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash -eq $Parts[1])) {
+        Remove-Item -LiteralPath $Path
+        $Removed++
+    } else {
+        Write-Output "Kept changed or missing file: $Path"
+        $Kept++
     }
 }
-
-Write-Host ""
-Write-Host "✔ All AI skills and global tools have been removed successfully!" -ForegroundColor Green
-Write-Host ""
+Remove-Item -LiteralPath $Manifest
+Write-Output "Removed $Removed unchanged installed files; kept $Kept changed or missing files."
