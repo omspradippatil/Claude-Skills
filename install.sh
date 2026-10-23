@@ -282,17 +282,31 @@ fi
 MANIFEST="$DEST/.claude-skills-install.manifest"
 mkdir -p "$DEST"
 
-if [[ -e "$MANIFEST" && "$FORCE" != true ]]; then
+existing_detected=false
+if [[ -e "$MANIFEST" ]]; then
+  existing_detected=true
+else
+  for check_rel in "CLAUDE.md" "AGENTS.md" "GEMINI.md" ".cursor/rules/always-on.mdc" "policies/core.md" "$SKILL_ROOT"; do
+    if [[ -e "$DEST/$check_rel" ]]; then
+      existing_detected=true
+      break
+    fi
+  done
+fi
+
+if [[ "$existing_detected" == true && "$FORCE" != true ]]; then
   if [[ "$HAS_TTY" == true && "$MODE_EXPLICIT" == false ]]; then
-    ask_user "${YELLOW}An install manifest already exists at $DEST. Overwrite? [y/N]: ${RESET}" overwrite_ans "n"
-    if [[ "$overwrite_ans" =~ ^[Yy] ]]; then
+    echo ""
+    echo -e "${YELLOW}Existing installation files detected in $DEST.${RESET}"
+    ask_user "${YELLOW}Would you like to overwrite and update existing files? [Y/n]: ${RESET}" overwrite_ans "y"
+    if [[ "$overwrite_ans" =~ ^[Yy]$ || -z "$overwrite_ans" ]]; then
       FORCE=true
     else
       echo "Installation cancelled." >&2
       exit 1
     fi
   else
-    echo "An install manifest already exists at $MANIFEST; use uninstall first or pass --force." >&2
+    echo "Refusing to overwrite existing installation at $DEST (use --force)" >&2
     exit 1
   fi
 fi
@@ -313,8 +327,18 @@ copy_file() {
   local source="$1" relative="$2"
   local destination="$DEST/$relative"
   if [[ -e "$destination" && "$FORCE" != true ]]; then
-    echo "Refusing to overwrite existing file: $destination (use --force)" >&2
-    return 1
+    if [[ "$HAS_TTY" == true && "$MODE_EXPLICIT" == false ]]; then
+      ask_user "${YELLOW}File exists: $destination. Overwrite? [Y/n/all]: ${RESET}" file_ow "y"
+      if [[ "$file_ow" =~ ^[Aa] ]]; then
+        FORCE=true
+      elif [[ ! "$file_ow" =~ ^[Yy]$ && -n "$file_ow" ]]; then
+        echo -e "${DIM}Skipped $destination${RESET}"
+        return 0
+      fi
+    else
+      echo "Refusing to overwrite existing file: $destination (use --force)" >&2
+      return 1
+    fi
   fi
   mkdir -p "$(dirname "$destination")"
   cp "$source" "$destination"
