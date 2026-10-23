@@ -1,8 +1,6 @@
 # Platform compatibility
 
-Platform support describes documented file formats and repository adapters. The
-automated checks validate this repo's files and candidate routes; they do not
-launch each agent or prove that its model selected a skill.
+Platform support describes documented file formats and repository adapters. A static repository check verifies routes and file copies; this adapter does not prove live discovery. The automated checks validate this repo's files and candidate routes; they do not launch each agent or prove that its model selected a skill.
 
 | Agent | Instruction adapter | Native project skill path | This repository's support |
 |---|---|---|---|

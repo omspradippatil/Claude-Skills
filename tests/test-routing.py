@@ -44,6 +44,13 @@ examples = [
     ("validate user input before storing customer profiles", {"security-auditor"}, {"core", "security", "testing"}),
     ("debug a failing API handler", {"api-architecture"}, {"core", "engineering"}),
     ("deploy a Docker image", {"devops-cicd"}, {"core"}),
+    ("plan and execute a complex feature milestone with spec driven roadmap", {"gsd-core"}, {"core"}),
+    ("fix a simple typo in the readme", set(), {"core"}),
+    ("research official documentation and compare libraries for caching", {"agent-research"}, {"core"}),
+    ("refactor to eliminate abstractions and apply minimal code principles", {"ponytail"}, {"core", "engineering"}),
+    ("summarize test logs in concise mode with token compression", {"caveman"}, {"core", "testing"}),
+    ("enforce verification gates and evidence based reliability checks", {"gravitas"}, {"core", "testing"}),
+    ("migrate domain URLs, update sitemap, and secure authentication against injection", {"seo-marketing", "security-auditor"}, {"core", "seo", "security"}),
 ]
 for task, expected_skills, expected_policies in examples:
     proc = subprocess.run(
@@ -59,6 +66,10 @@ for task, expected_skills, expected_policies in examples:
         errors.append(f"route missed expected policies for {task!r}: {expected_policies - policies}")
     if task.startswith("show the contents") and names:
         errors.append(f"unrelated specialist skill loaded for simple task: {names}")
+    if task.startswith("fix a simple typo") and names:
+        errors.append(f"unrelated specialist skill loaded for simple fix: {names}")
+    if "gsd-core" in names and ("simple" in task or task.startswith("show the contents")):
+        errors.append(f"GSD Core loaded on simple non-milestone task: {task!r}")
     if {"3d-visuals", "web-gamedev"} & names and "3d" not in task and "game" not in task:
         errors.append(f"unrelated visual/game skill loaded for {task!r}")
     if task == "deploy a Docker image" and "seo-marketing" in names:

@@ -13,7 +13,7 @@
     },
     "security": {
       "path": "policies/security.md",
-      "activateFor": ["auth", "authorization", "secrets", "injection", "security", "data-access", "access-control", "user-input", "data-storage", "network"]
+      "activateFor": ["auth", "authentication", "authenticated", "authorization", "secrets", "injection", "security", "data-access", "access-control", "user-input", "data-storage", "network"]
     },
     "seo": {
       "path": "policies/seo.md",
@@ -39,7 +39,8 @@
       "skillPath": ".agents/skills/security-auditor/SKILL.md",
       "category": "security",
       "mandatory": true,
-      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authentication", "authorization", "injection", "access-control", "user-input", "data-storage", "network"]
+      "mandatoryForPolicy": "security",
+      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authentication", "authenticated", "authorization", "injection", "access-control", "user-input", "data-storage", "network"]
     },
     "seo-marketing": {
       "source": "omspradippatil/Claude-Skills",
@@ -47,6 +48,7 @@
       "skillPath": ".agents/skills/seo-marketing/SKILL.md",
       "category": "seo",
       "mandatory": true,
+      "mandatoryForPolicy": "seo",
       "activateFor": ["seo", "sitemap", "canonical", "robots", "meta", "structured-data", "core-web-vitals"]
     },
     "ui-ux-pro-max": {
@@ -56,6 +58,7 @@
       "skillPath": ".agents/skills/ui-ux-pro-max/SKILL.md",
       "category": "ui-ux",
       "mandatory": true,
+      "mandatoryForPolicy": "frontend",
       "activateFor": ["ui", "ux", "design", "css", "layout", "component", "redesign", "accessibility", "responsive", "typography"]
     },
     "api-architecture": {
@@ -155,7 +158,8 @@
       "sourceType": "github",
       "skillPath": ".agents/skills/git-collaboration/SKILL.md",
       "category": "tooling",
-      "activateFor": ["git", "merge", "rebase", "branch", "pr", "pull-request", "conflict"]
+      "activateFor": ["git", "merge", "rebase", "branch", "pr", "pull-request", "conflict"],
+      "excludeWhen": ["git status", "git diff", "git log"]
     },
     "sentry-expert": {
       "source": "omspradippatil/Claude-Skills",
@@ -170,6 +174,45 @@
       "skillPath": ".agents/skills/ux-research/SKILL.md",
       "category": "ui-ux",
       "activateFor": ["ux-research", "usability", "heuristics", "cognitive-load", "ux-copy"]
+    },
+    "ponytail": {
+      "source": "omspradippatil/Claude-Skills",
+      "sourceType": "github",
+      "upstream": "DietrichGebert/ponytail",
+      "skillPath": ".agents/skills/ponytail/SKILL.md",
+      "category": "engineering",
+      "activateFor": ["ponytail", "minimal-code", "simplify-code", "refactor-minimal", "eliminate-abstractions", "minimal-engineering"]
+    },
+    "caveman": {
+      "source": "omspradippatil/Claude-Skills",
+      "sourceType": "github",
+      "upstream": "JuliusBrussee/caveman",
+      "skillPath": ".agents/skills/caveman/SKILL.md",
+      "category": "tooling",
+      "activateFor": ["caveman", "terse", "concise-mode", "token-compression", "token-efficiency", "compact-output"]
+    },
+    "agent-research": {
+      "source": "omspradippatil/Claude-Skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/agent-research/SKILL.md",
+      "category": "research",
+      "activateFor": ["research", "investigate", "documentation", "api-docs", "explore-codebase", "library-comparison", "security-advisory", "version-check"]
+    },
+    "gsd-core": {
+      "source": "omspradippatil/Claude-Skills",
+      "sourceType": "github",
+      "upstream": "open-gsd/gsd-core",
+      "skillPath": ".agents/skills/gsd-core/SKILL.md",
+      "category": "workflow",
+      "activateFor": ["gsd", "gsd-core", "complex-feature", "multi-step", "milestone", "refactor-major", "spec-driven", "roadmap"]
+    },
+    "gravitas": {
+      "source": "omspradippatil/Claude-Skills",
+      "sourceType": "github",
+      "upstream": "udaysharmadev/Gravitas",
+      "skillPath": ".agents/skills/gravitas/SKILL.md",
+      "category": "quality",
+      "activateFor": ["gravitas", "reliability", "evidence-based", "verification-gate", "scope-guard"]
     }
   }
 }

@@ -24,6 +24,11 @@ Follow this procedure for every task:
 | Category | Description | Mandatory Skill(s) |
 |---|---|---|
 | **General Coding** | Refactoring, debugging, algorithms, data structures | None beyond core |
+| **Complex Feature / Milestone** | Multi-phase builds, spec-driven development, major refactors | `gsd-core` — use structured 5-phase loop |
+| **Research / Investigation** | Codebase surveys, official docs, API versions, comparative analysis | `agent-research` — read primary sources; synthesize with citations |
+| **Minimal Engineering / Simplification** | Eliminating unnecessary code, abstractions, wrappers, dead dependencies | `ponytail` — follow The Decision Ladder |
+| **Concise Communication / Token Optimization** | Terse reporting, log/output compression, compact context | `caveman` — preserve exact identifiers and code |
+| **Reliability & Verification Gates** | Strict read-before-write, scope enforcement, fresh evidence gates | `gravitas` — enforce 6 reliability invariants |
 | **Frontend / UI** | React, Vue, HTML/CSS, component design, animations | `ui-ux-pro-max`; add `web-animation`, `assets-media`, or `ux-research` only for their distinct scope |
 | **Backend / API** | REST APIs, GraphQL, Node.js, Python, server logic | `api-architecture` |
 | **Database** | SQL, NoSQL schema, migrations, query optimization | `postgres-ecosystem` or `firebase-expert` |
@@ -32,7 +37,6 @@ Follow this procedure for every task:
 | **Deployment / DevOps** | CI/CD, Docker, cloud platforms, infrastructure | `devops-cicd`, `cloudflare-expert` — **load `policies/seo.md`** if domain changes are involved |
 | **Shell / CLI / System administration** | Scripts, command-line automation, environment setup | None beyond core |
 | **Testing / QA** | Unit tests, integration tests, E2E, coverage | `testing-qa` — **load `policies/testing.md`** |
-| **Research** | Codebase exploration, documentation, audits | Read relevant files; do not modify without explicit instruction |
 | **Mobile** | React Native, Flutter, Swift, mobile UX | `mobile-engineering` |
 | **3D / Graphics** | Three.js, WebGL, shaders, canvas | `3d-visuals`; add `web-gamedev` only for game-specific work |
 | **State Management** | Zustand, Redux, React Query, XState | `state-management` |
@@ -64,6 +68,48 @@ When a task naturally spans multiple boundaries (e.g., Fullstack feature requiri
 - Every website or UI task must follow `policies/frontend.md`.
 - Apply `policies/release.md` only when the user asks to prepare or ship a production launch. Local prototypes are not blocked by production-only checks.
 - Prefer a small, task-specific workflow. Do not automatically run a broad planning framework for a simple fix.
+
+---
+
+## Token-Efficiency Contract
+
+To minimize unnecessary context consumption and cost across all platforms:
+
+1. **Inspect before editing**: Verify current file state before issuing edits. Never mutate blindly.
+2. **Search before reading entire files**: Use targeted grep or symbol lookups rather than dumping entire files.
+3. **Read smallest relevant ranges first**: Focus on specific line ranges and surrounding context.
+4. **Avoid repeated reads**: Do not re-read files that have not changed during the session.
+5. **Batch independent tool calls**: Combine parallel tool requests where the host platform supports it.
+6. **Summarize large outputs**: Condense long test runs, build logs, and search dumps; preserve critical errors, paths, line numbers, and symbols without loss.
+7. **Eliminate unnecessary chatter and planning**: Avoid unsolicited essays, boilerplate apologies, or speculative full-system plans for routine fixes.
+8. **Delegate large tasks selectively**: Use subagents for broad codebase surveys or deep isolated research only when context savings exceed delegation overhead.
+9. **Persist state for long-running work**: Write key decisions and milestones to durable project notes (`PROJECT.md` or task state) to survive context resets.
+10. **Preserve correctness and user detail**: Brevity must never compromise code correctness, security validations, tests, or detail explicitly requested by the user.
+
+---
+
+## Six Reliability Invariants (Gravitas Core)
+
+Every code change must adhere to these six universal invariants:
+
+1. **Ground before mutating**: Inspect target files, relevant callers, and existing tests before modifying code. Never guess existing structure.
+2. **Stay within scope**: Identify and respect the intended write scope for nontrivial tasks. Obtain confirmation before modifying files outside that scope.
+3. **Require fresh evidence**: Run relevant validation checks *after* the final code edit. Passing tests run prior to the last change do not count as proof of completion.
+4. **Recover intelligently**: When a command, test, or approach fails, diagnose the root cause and alter the strategy before retrying. Blind retries of unchanged commands are prohibited.
+5. **Meet acceptance criteria**: Verify the concrete requirements of the active task directly rather than relying on tangential or unrelated passing tests.
+6. **Report honestly**: Clearly distinguish between executed tests and suggested tests, verified facts and assumptions, and fully completed items versus partially completed work.
+
+---
+
+## Adaptive Planning & Workflow Architecture
+
+Plan in proportion to task complexity, blast radius, and risk:
+
+- **Simple questions & small edits**: Execute lightweight, minimal changes directly under `policies/engineering.md`. Do not invoke formal planning frameworks.
+- **Complex features & multi-stage milestones**: Activate `gsd-core` for disciplined spec-driven execution (Discuss ➔ Research ➔ Plan ➔ Execute ➔ Verify).
+- **Unfamiliar APIs & version-sensitive problems**: Activate `agent-research` to investigate primary documentation and verify constraints before writing code.
+- **Security-sensitive changes**: Always load `policies/security.md` and activate `security-auditor`.
+- **Reliability gates**: Gravitas invariants provide the verification and completion requirements across all workflows.
 
 ---
 

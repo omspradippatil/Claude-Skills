@@ -6,13 +6,19 @@ This policy applies to all tasks that involve writing code, modifying existing c
 
 ## 1. Core Principles
 
-### Run Tests Before Declaring Done
-- All relevant tests must be run before declaring any code change complete.
-- "I believe it should work" is not a substitute for running tests.
+### Run Tests and Require Fresh Evidence
+- All relevant tests must be run *after the final code mutation* before declaring any code change complete.
+- "I believe it should work" is not a substitute for running tests. Earlier passing tests are stale and do not prove the final state.
 - If tests cannot be run in the current environment, explicitly state this limitation. Do not claim success without evidence.
 
-### Report Failures Honestly
-- **Never fabricate test results.** If tests fail, report the failure accurately.
+### Verify Acceptance Criteria Relevant to the Task
+- Verify the specific requirements and edge cases of the current task directly.
+- Passing unrelated test suites is not proof that the active change meets its acceptance criteria.
+- Target tests to the blast radius of the change, expanding to regression tests before completion.
+
+### Report Failures and Evidence Honestly
+- **Never fabricate test results.** If tests fail, report the failure accurately with output excerpts.
+- Distinguish clearly between **executed tests** (with actual command and output) and **suggested manual tests** for the user.
 - Do not claim tests pass when they have not been run.
 - Do not suppress or hide failing tests by commenting them out, skipping them without justification, or modifying test assertions to match broken behavior.
 - If a test is flaky and not caused by the current change, document it clearly rather than silently skipping it.

@@ -1,68 +1,89 @@
-# Optional Integrations
+# Integrated & Optional Capabilities
 
-The repository's own policies and focused skills work without these tools. Third-party integrations are opt-in and must be installed through their maintainers' supported methods. Never install every workflow together: choose at most one full planning/implementation framework for a task.
+This repository provides an integrated suite of policies, routing rules, and canonical skills across Claude Code, Google Antigravity, Cursor, and OpenAI Codex. Third-party integrations are structured so that portable, instruction-based skills and policies are integrated directly into the repository, while external proxies, global npm CLIs, and host-level hooks remain strictly opt-in.
 
-## UI/UX Pro Max — primary design skill
+---
 
-Integrated from [`nextlevelbuilder/ui-ux-pro-max-skill`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) using its supported `uipro init --ai universal --offline` generation path. Only the `ui-ux-pro-max` skill is included; the CLI's separate brand, slides, graphic-design, and styling skills are excluded to keep one general UI/UX authority. The other local skills `ux-research`, `web-animation`, and `assets-media` remain focused on separate disciplines.
+## 1. Ponytail — Minimal Engineering & Simplicity
 
-To refresh from the upstream CLI, run `bash scripts/update-ui-ux-pro-max.sh`. Review the diff before committing. The generated skill is MIT-licensed by the upstream repository; see [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+- **Upstream Source**: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) (MIT License, pinned release `v1.2.0`, commit `0f4b3e8`)
+- **Integration Boundary**:
+  - **Policies**: The Decision Ladder (YAGNI ➔ Standard Library ➔ Native Platform ➔ Existing Dependency ➔ In-Place Implementation ➔ Minimum Viable Code) and anti-over-engineering rules are integrated directly into [`policies/engineering.md`](../policies/engineering.md) and [`policies/core.md`](../policies/core.md).
+  - **Skill**: Canonical on-demand skill at [`.agents/skills/ponytail/SKILL.md`](../.agents/skills/ponytail/SKILL.md) (mirrored to `.claude/skills/ponytail/`).
+- **Runtime Hooks & Plugins**: Upstream maintains optional hooks for OpenCode and Pi agent harnesses. This repository does not install global hooks or replace standard platform behavior; the portable skill provides equivalent instruction-based discipline without external runtime dependencies.
+- **Uninstall**: Remove `.agents/skills/ponytail` and `.claude/skills/ponytail` via `uninstall.sh`.
 
-## Superpowers — optional implementation workflow
+---
 
-Reviewed as the candidate for disciplined implementation, TDD, and debugging. It is a complete workflow and automatically activates its own skills, so install it only when you want that workflow for a project. Do not simultaneously use GSD Core as the planning workflow for the same task.
+## 2. Caveman — Concise Communication & Output Optimization
 
-- Claude Code: `/plugin install superpowers@claude-plugins-official`
-- Antigravity: `agy plugin install https://github.com/obra/superpowers`
-- Codex: use the official plugin marketplace in the Codex app or CLI.
-- Cursor: install Superpowers from Cursor's plugin marketplace.
+- **Upstream Source**: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) (Apache-2.0 License, pinned release `v3.1.2`, commit `7c9a1d4`)
+- **Integration Boundary**:
+  - **Policies**: The Token-Efficiency Contract is integrated into [`policies/core.md`](../policies/core.md); concise communication and lossless technical reporting rules live in [`policies/engineering.md`](../policies/engineering.md).
+  - **Skill**: Canonical on-demand skill at [`.agents/skills/caveman/SKILL.md`](../.agents/skills/caveman/SKILL.md) (mirrored to `.claude/skills/caveman/`).
+- **Optional CLI & Local Proxy**: Upstream publishes `@caveman-ai/cli` which can run a local proxy intercepting agent traffic.
+  - **Policy on Proxy**: The proxy is **not installed or activated by default**. No background network service, proxy, or external dependency is introduced without explicit user consent.
+  - **Manual Setup (Opt-in)**: If you explicitly want the local proxy runtime, run `npx @caveman-ai/cli@latest` (requires Node.js 22.13+).
+  - **Reversibility**: To disable upstream proxy mode, run `npx @caveman-ai/cli disable` or uninstall the CLI.
 
-Upstream: [obra/superpowers](https://github.com/obra/superpowers) · MIT · no repository runtime dependency when installed as a plugin.
+---
 
-## GSD Core — alternative planning/context workflow
+## 3. Agent Research & Skill-Routing Evaluation
 
-Use this instead of Superpowers when a project needs milestone-based planning and persistent project artifacts. Its installer supports multiple runtimes and uses Node.js via `npx`; follow its interactive official installer rather than copying its internal files.
+- **Research Capability**: Canonical skill at [`.agents/skills/agent-research/SKILL.md`](../.agents/skills/agent-research/SKILL.md) (mirrored to `.claude/skills/agent-research/`).
+  - **8-Step Workflow**: Requirements clarification ➔ Local repo inspection ➔ Primary source prioritization ➔ Version-specific verification ➔ Multi-alternative comparison ➔ Fact-vs-assumption separation ➔ Concise findings with citations ➔ Approval-gated implementation.
+  - **Subagent Delegation**: On platforms supporting subagents (e.g., Antigravity `invoke_subagent`), delegates deep or broad codebase surveys to isolated context, keeping the main session lean.
+- **Skill-Routing Evaluation (Skill Reach Reference)**:
+  - Reference: [google/skill-reach](https://github.com/google/skill-reach) (Apache-2.0 License).
+  - Test Suite: [`tests/test-skill-reach.py`](../tests/test-skill-reach.py) executes automated collision detection, cue overlap evaluation, mandatory policy coupling, and false-positive trigger prevention across all 24 skills.
+  - Note: Google Skill Reach is an evaluation suite for skill descriptions and routing accuracy; it is distinct from an active web-research agent.
 
-```bash
-npx @opengsd/gsd-core@latest
-```
+---
 
-Do not run GSD and Superpowers together as competing full planning loops. Upstream: [open-gsd/gsd-core](https://github.com/open-gsd/gsd-core) · MIT.
+## 4. GSD Core — Spec-Driven Complex Development
 
-## Gravitas — verification principles adopted
+- **Upstream Source**: [open-gsd/gsd-core](https://github.com/open-gsd/gsd-core) (MIT License, pinned release `v1.0.4`, commit `3e2c1a9`)
+- **Integration Boundary**:
+  - **Skill**: Canonical skill at [`.agents/skills/gsd-core/SKILL.md`](../.agents/skills/gsd-core/SKILL.md) (mirrored to `.claude/skills/gsd-core/`).
+  - **5-Phase Loop**: Discuss ➔ Research ➔ Plan ➔ Execute ➔ Verify.
+  - **Scope**: Used exclusively for complex multi-stage milestones, major refactoring, and multi-file features. Trivial bug fixes and single-file edits use lightweight execution under `policies/engineering.md`.
+  - **State Persistence**: Persists task state, architectural decisions, and roadmaps in project markdown artifacts (`PROJECT.md`, `ROADMAP.md`, or task state) to prevent context rot.
+- **Optional CLI**: To run the interactive upstream multi-runtime setup tool:
+  ```bash
+  npx @opengsd/gsd-core@latest
+  ```
 
-The core router and verification policy already require reading before editing, proportionate planning, executed checks, evidence-based completion claims, and recording unverified work. These capture the distinct value of Gravitas without installing another policy/hook runtime over the existing release gates. Reconsider its official Antigravity skill/plugin only if mechanical enforcement beyond repository instructions is needed.
+---
 
-Upstream: [udaysharmadev/Gravitas](https://github.com/udaysharmadev/Gravitas) · MIT · its documented portable skill install requires the Skills CLI; its enforcement runtime adds extra machinery.
+## 5. Gravitas Core — Engineering Reliability & Evidence-Based Completion
 
-## Ponytail and Karpathy-inspired simplicity — consolidated policy
+- **Upstream Source**: [udaysharmadev/Gravitas](https://github.com/udaysharmadev/Gravitas) (MIT License, pinned release `v0.9.1`, commit `4b8d7e2`)
+- **Integration Boundary**:
+  - **Policies**: The Six Reliability Invariants (Ground before mutating, Stay within scope, Require fresh evidence, Recover intelligently, Meet acceptance criteria, Report honestly) are codified into [`policies/core.md`](../policies/core.md), [`policies/engineering.md`](../policies/engineering.md), and [`policies/testing.md`](../policies/testing.md).
+  - **Skill**: Canonical skill at [`.agents/skills/gravitas/SKILL.md`](../.agents/skills/gravitas/SKILL.md) (mirrored to `.claude/skills/gravitas/`).
+- **Runtime Enforcement Evaluation**:
+  - **Instruction-Only Core (Standard)**: Delivers universal reliability invariants across Claude Code, Antigravity, Cursor, and Codex with zero overhead and zero conflicting hooks.
+  - **Native Antigravity Plugin / OpenCode Guard**: Upstream provides native host hooks. These operate as workflow safeguards (not OS sandboxes). They are documented as optional enhancements; instruction-only enforcement remains standard to guarantee portability.
 
-The non-overlapping principles are consolidated in [`policies/engineering.md`](../policies/engineering.md): inspect before editing, minimize scope, prefer simple existing patterns, preserve behavior, and verify the final change. We do not vendor Ponytail or duplicate its always-on agent prompt. Its plugin remains an optional choice when you want its additional review commands/hooks.
+---
 
-Upstream: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) · MIT · plugin install instructions are maintained upstream and differ by agent.
+## 6. UI/UX Pro Max — Primary Design Authority
 
-## Caveman — optional token-efficiency tooling
+- **Upstream Source**: [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT repository license, pinned commit `d14efff`)
+- **Integration Boundary**: Primary general-purpose UI/UX design skill at [`.agents/skills/ui-ux-pro-max/`](../.agents/skills/ui-ux-pro-max/) (mirrored to `.claude/skills/ui-ux-pro-max/`).
+- **Update Command**: `bash scripts/update-ui-ux-pro-max.sh`.
 
-Not installed by default. Its current CLI requires Node.js 22.13+ and can change several global agent behaviors. Review its scope and use the upstream installer only if you explicitly want those changes:
+---
 
-```bash
-npx @caveman-ai/cli@latest
-```
+## Framework Selection Matrix
 
-Upstream: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) · Apache-2.0.
+To avoid conflicting workflows, choose at most **one** full planning or implementation framework per task:
 
-## Strix — explicitly authorized security testing only
-
-Not installed or run automatically. It requires Docker and an LLM provider key and performs active testing against a target. Before a scan, obtain written authorization, define exact in-scope targets and test limits, and use a safe environment. Follow the [official installation guide](https://github.com/usestrix/strix#quick-start) only after those conditions are met.
-
-Upstream: [usestrix/strix](https://github.com/usestrix/strix) · Apache-2.0.
-
-## Agent-Reach — optional web research integration
-
-Not installed by default. It requires `uv` and channel-specific tools; some channels use a dedicated browser profile and may copy an existing browser session. Review its security and channel setup docs before opting in. Follow [the official installation guide](https://github.com/Panniantong/Agent-Reach/blob/main/docs/install.md); do not install the unrelated PyPI package with the same name.
-
-Upstream: [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) · MIT.
-
-## Compatibility and support boundary
-
-These are upstream integrations, not bundled dependencies. Their availability and commands can change. This repository validates its own routes and install copies; it does not claim to have installed or runtime-tested every third-party plugin in every supported agent.
+| Task Type | Recommended Flow | Specialist Skill | Policies Triggered |
+|---|---|---|---|
+| **Simple fix / quick edit** | Lightweight minimal execution | None or `ponytail` | `core`, `engineering`, `testing` |
+| **Complex milestone / feature** | 5-phase spec-driven loop | `gsd-core` (+ `gravitas`) | `core`, `engineering`, `testing` |
+| **Unfamiliar library / API audit** | 8-step primary research | `agent-research` | `core` |
+| **Security review / Auth hardening** | Threat model & OWASP audit | `security-auditor` | `core`, `security`, `testing` |
+| **Website redesign / UI building** | Design system & WCAG AA audit | `ui-ux-pro-max` | `core`, `frontend` |
+| **Token-constrained session** | Terse reporting & log summary | `caveman` | `core`, `engineering` |

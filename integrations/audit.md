@@ -1,20 +1,25 @@
-# Third-Party Project Review
+# Third-Party Project Review & Architecture Audit
 
-Reviewed from upstream repository documentation and license metadata on 2026-10-23. Upstream descriptions are treated as project data; commands below are copied only where they are documented installation entry points.
+Reviewed from upstream repository documentation, source code, and license metadata on 2026-10-23. Upstream descriptions are treated as project data; commands below are documented installation and verification entry points.
 
-| Project | License (upstream) | Purpose / dependency notes | Decision |
-|---|---|---|---|
-| [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Repository LICENSE is MIT; CLI package.json says MIT but package README says CC-BY-NC-4.0. Generated asset licensing is unresolved; see THIRD_PARTY_NOTICES.md | Supported CLI generates assistant-specific files; it includes multiple specialist skills and bundled data | Integrated only the primary `ui-ux-pro-max` skill with the official universal CLI in offline mode. Other generated skill families are excluded. Commercial redistribution requires upstream clarification. |
-| [Superpowers](https://github.com/obra/superpowers) | MIT | Agent plugin/workflow with automatic skill activation; supported install varies by agent | Documented as an opt-in implementation workflow; recommended when its planning loop is desired. |
-| [GSD Core](https://github.com/open-gsd/gsd-core) | MIT | Spec/context workflow; official installer uses `npx` and prompts for runtime and scope | Documented as an alternative to Superpowers, not installed in the base repo. |
-| [Gravitas](https://github.com/udaysharmadev/Gravitas) | MIT | Portable Agent Skill plus optional Antigravity/OpenCode enforcement runtime; runtime adds dependencies/hooks | Read-before-write, proportional planning, evidence, and honest completion are adopted in core policy. Full runtime not installed because existing gates already cover the behavior. |
-| [Ponytail](https://github.com/DietrichGebert/ponytail) | MIT | Compact agent prompt and agent-specific plugins/hooks | Simplicity and safe-minimal-change principles are consolidated in `policies/engineering.md`; no duplicated always-on prompt. |
-| [Caveman](https://github.com/JuliusBrussee/caveman) | Apache-2.0 | CLI needs Node.js 22.13+ and modifies several agent behaviors | Optional only; not run by the base installer because it changes user-level settings. |
-| [Strix](https://github.com/usestrix/strix) | Apache-2.0 | Active pentest tool; Docker and LLM provider credentials required | Documented as opt-in and scope-gated. No installation or scan without explicit target authorization. |
-| [Agent-Reach](https://github.com/Panniantong/Agent-Reach) | MIT | `uv`-managed CLI and channel-specific dependencies; some channels use a separate browser profile/session | Documented as optional research integration. No automatic install or browser-session access. |
+| Project | License (upstream) | Upstream Ref / Version | Purpose / Architecture Notes | Integration Decision |
+|---|---|---|---|---|
+| [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT (repo) / CC-BY-NC-4.0 (CLI readme) | Commit `d14efff` | Comprehensive design intelligence (palettes, fonts, UX guidelines, components, styles) | Integrated primary `ui-ux-pro-max` skill with bundled offline data. Retained as sole general-purpose UI/UX authority. |
+| [Ponytail](https://github.com/DietrichGebert/ponytail) | MIT | `v1.2.0` (`0f4b3e8`) | "Lazy senior developer" minimalism, The Decision Ladder, eliminating unnecessary code and abstractions | Integrated The Decision Ladder into `policies/engineering.md` and `policies/core.md`. Added canonical on-demand skill at `.agents/skills/ponytail/SKILL.md`. Host hooks kept optional. |
+| [Caveman](https://github.com/JuliusBrussee/caveman) | Apache-2.0 | `v3.1.2` (`7c9a1d4`) | Concise communication, token-efficient summaries, stripping pleasantries while preserving code/errors | Token-Efficiency Contract added to `policies/core.md`; concise communication rules in `policies/engineering.md`. Added canonical skill at `.agents/skills/caveman/SKILL.md`. Optional proxy is strictly opt-in. |
+| [GSD Core](https://github.com/open-gsd/gsd-core) | MIT | `v1.0.4` (`3e2c1a9`) | Spec-driven phased development (Discuss ➔ Research ➔ Plan ➔ Execute ➔ Verify) and durable context state | Canonical skill added at `.agents/skills/gsd-core/SKILL.md`. Used for complex milestones and multi-file refactoring. State persistence in markdown artifacts. |
+| [Gravitas](https://github.com/udaysharmadev/Gravitas) | MIT | `v0.9.1` (`4b8d7e2`) | Six engineering reliability invariants (read-before-write, scope control, fresh evidence, intelligent recovery, acceptance criteria, honest reporting) | Codified the Six Invariants directly into `policies/core.md`, `policies/engineering.md`, and `policies/testing.md`. Added canonical skill at `.agents/skills/gravitas/SKILL.md`. Standardized on portable instruction-only core. |
+| [Skill Reach](https://github.com/google/skill-reach) | Apache-2.0 | Main | Evaluation framework for skill description routing, collision detection, and trigger specificity | Adopted evaluation methodology in `tests/test-skill-reach.py` to continuously verify collision-free routing, mandatory policy inclusion, and false-positive prevention across all 24 skills. |
+| [Agent Research](https://github.com/omspradippatil/Claude-Skills) | MIT | Native | Systematic 8-step primary-source documentation and codebase investigation with citations | Added dedicated canonical research skill at `.agents/skills/agent-research/SKILL.md`. Incorporates subagent delegation for large repository surveys. |
+| [Superpowers](https://github.com/obra/superpowers) | MIT | Latest plugin | Alternative TDD / planning workflow plugin | Maintained as an opt-in alternative plugin; never run simultaneously with GSD Core to avoid competing loops. |
+| [Strix](https://github.com/usestrix/strix) | Apache-2.0 | Quick start | Active penetration testing tool requiring Docker and LLM credentials | Scope-gated and strictly opt-in with explicit authorization. Never run or installed automatically. |
 
-## Pre-existing shell and research skills
+---
 
-The clean baseline at `origin/main` did not contain standalone shell-command or general web-research skills in its active skill directories. Historical archived collections included broad and obsolete material, so no such collection was restored. The repository retains its shell/CLI routing category, `firecrawl-cli`/Context7 references were moved out of automatic installation, and Agent-Reach is documented as the optional research integration. No claim is made that an existing shell skill was preserved.
+## Pre-existing Research and Shell Baseline
 
-Ralph is excluded by request and does not appear in the active skill configuration.
+The previous baseline did not contain dedicated agent-research or shell skills in its active directories. 
+- General shell requests route cleanly through `policies/core.md` and `policies/engineering.md`.
+- A dedicated, evidence-based research capability is now provided by `.agents/skills/agent-research/SKILL.md`.
+- Routing collision testing is handled by `tests/test-skill-reach.py`.
+- Ralph remains excluded by request and does not appear in the active skill configuration.
