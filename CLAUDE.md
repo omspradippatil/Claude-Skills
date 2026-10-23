@@ -20,7 +20,7 @@ This is the shared task router for this repository. Read it before starting each
 |---|---|
 | Every task | `policies/core.md` |
 | General code changes | `policies/engineering.md` |
-| Authentication, authorization, secrets, injection, data access, or network security | `policies/security.md` |
+| Authentication, authorization, secrets, user input, data storage, access control, injection, or network communication | `policies/security.md` |
 | SEO, indexing, metadata, sitemap, canonical URL, domain, or redirect work | `policies/seo.md` |
 | Any website, visual UI, interaction, accessibility, or responsive layout | `policies/frontend.md` |
 | Production release or launch preparation | `policies/release.md` |

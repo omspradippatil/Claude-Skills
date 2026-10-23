@@ -41,6 +41,9 @@ examples = [
     ("add a REST API endpoint in the backend", {"api-architecture"}, {"core"}),
     ("secure the authentication endpoint against injection", {"security-auditor", "api-architecture"}, {"core", "security"}),
     ("build a responsive frontend for a REST API and add a Postgres migration", {"ui-ux-pro-max", "api-architecture", "postgres-ecosystem"}, {"core", "frontend"}),
+    ("validate user input before storing customer profiles", {"security-auditor"}, {"core", "security", "testing"}),
+    ("debug a failing API handler", {"api-architecture"}, {"core", "engineering"}),
+    ("deploy a Docker image", {"devops-cicd"}, {"core"}),
 ]
 for task, expected_skills, expected_policies in examples:
     proc = subprocess.run(
@@ -58,6 +61,10 @@ for task, expected_skills, expected_policies in examples:
         errors.append(f"unrelated specialist skill loaded for simple task: {names}")
     if {"3d-visuals", "web-gamedev"} & names and "3d" not in task and "game" not in task:
         errors.append(f"unrelated visual/game skill loaded for {task!r}")
+    if task == "deploy a Docker image" and "seo-marketing" in names:
+        errors.append("SEO skill loaded for deployment with no domain or URL work")
+    if task == "deploy a Docker image" and "assets-media" in names:
+        errors.append("media skill loaded for a Docker container image")
     if not errors:
         print(f"PASS: {task}")
 

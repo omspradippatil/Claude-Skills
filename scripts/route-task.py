@@ -41,7 +41,8 @@ def main() -> int:
         if entry.get("mandatory") or any(contains_phrase(task_words, cue) for cue in cues):
             policies.append({"name": name, "path": entry["path"]})
     for name, entry in registry.get("skills", {}).items():
-        if any(contains_phrase(task_words, cue) for cue in entry.get("activateFor", [])):
+        is_excluded = any(contains_phrase(task_words, cue) for cue in entry.get("excludeWhen", []))
+        if not is_excluded and any(contains_phrase(task_words, cue) for cue in entry.get("activateFor", [])):
             path = ROOT / entry["skillPath"]
             if path.is_file():
                 skills.append({"name": name, "path": entry["skillPath"]})

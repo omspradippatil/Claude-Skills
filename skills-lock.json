@@ -9,11 +9,11 @@
     },
     "engineering": {
       "path": "policies/engineering.md",
-      "activateFor": ["general-code-change", "debugging", "refactoring"]
+      "activateFor": ["general-code-change", "code-change", "implement", "implementation", "debug", "debugging", "refactor", "refactoring"]
     },
     "security": {
       "path": "policies/security.md",
-      "activateFor": ["auth", "authorization", "secrets", "injection", "security", "data-access"]
+      "activateFor": ["auth", "authorization", "secrets", "injection", "security", "data-access", "access-control", "user-input", "data-storage", "network"]
     },
     "seo": {
       "path": "policies/seo.md",
@@ -29,7 +29,7 @@
     },
     "testing": {
       "path": "policies/testing.md",
-      "activateFor": ["tests", "verification", "qa"]
+      "activateFor": ["test", "tests", "validate", "validation", "verify", "verification", "qa"]
     }
   },
   "skills": {
@@ -39,7 +39,7 @@
       "skillPath": ".agents/skills/security-auditor/SKILL.md",
       "category": "security",
       "mandatory": true,
-      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authentication", "authorization", "injection"]
+      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authentication", "authorization", "injection", "access-control", "user-input", "data-storage", "network"]
     },
     "seo-marketing": {
       "source": "omspradippatil/Claude-Skills",
@@ -47,7 +47,7 @@
       "skillPath": ".agents/skills/seo-marketing/SKILL.md",
       "category": "seo",
       "mandatory": true,
-      "activateFor": ["seo", "sitemap", "canonical", "robots", "meta", "structured-data", "core-web-vitals", "deployment"]
+      "activateFor": ["seo", "sitemap", "canonical", "robots", "meta", "structured-data", "core-web-vitals"]
     },
     "ui-ux-pro-max": {
       "source": "omspradippatil/Claude-Skills",
@@ -133,7 +133,8 @@
       "sourceType": "github",
       "skillPath": ".agents/skills/assets-media/SKILL.md",
       "category": "performance",
-      "activateFor": ["image", "font", "lazy-load", "webp", "avif", "performance", "lcp"]
+      "activateFor": ["image", "font", "lazy-load", "webp", "avif", "performance", "lcp"],
+      "excludeWhen": ["docker image", "container image"]
     },
     "3d-visuals": {
       "source": "omspradippatil/Claude-Skills",
