@@ -50,20 +50,52 @@ Shell/CLI requests route through the core and engineering policies. The previous
 
 ## Install
 
-Requirements: Git and Bash for the POSIX installer. It installs project instructions, policies, and the minimal skill profile into the selected agent folders. It does not install optional third-party software or modify global package managers.
+Requirements: Git and Bash for the POSIX installer. It installs project instructions, policies, and the selected skill profile into your agent folders.
+
+### One-line remote install (interactive)
+
+Run directly in terminal to download from GitHub and choose what to install:
 
 ```bash
-# Minimal project install in the current directory
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"
+```
+
+### Direct terminal execution from clone
+
+```bash
+# Interactive setup menu (asks scope, platform, and what all to install)
+./install.sh
+
+# Non-interactive: minimal project install (router and policies only)
 bash install.sh --target project --minimal
 
-# Global install for the current user
-bash install.sh --target global --minimal
+# Non-interactive: install all 19 domain skills
+bash install.sh --target project --platform claude --all
 
-# Select exact skills (comma-separated)
+# Non-interactive: select exact skills
 bash install.sh --target project --platform agents --skills ui-ux-pro-max,security-auditor,seo-marketing
 
-# Remove only matching files recorded as installed by this project
-bash uninstall.sh --target /path/to/install-root
+# Uninstall matching files recorded by manifest
+bash uninstall.sh
+```
+
+### Windows (PowerShell & CMD)
+
+```powershell
+# PowerShell One-liner:
+irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex
+
+# Local PowerShell execution:
+.\install.ps1 -Scope project -Platform claude -All
+
+# PowerShell Uninstall:
+.\uninstall.ps1
+```
+
+```cmd
+:: Command Prompt (CMD)
+install.bat
+uninstall.bat
 ```
 
 The default install contains policies, adapters, and the router; it adds no specialist skills until selected with `--skills`. Existing files are preserved. Use `--force` only after reviewing the affected targets. Windows users can use `install.ps1`; see [`docs/installation.md`](docs/installation.md).

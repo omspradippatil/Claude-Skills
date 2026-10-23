@@ -1,6 +1,29 @@
-param([Parameter(Mandatory=$true)][string]$Target)
+param(
+    [string]$Target = "",
+    [switch]$Help
+)
 $ErrorActionPreference = "Stop"
-$Target = (Resolve-Path -LiteralPath $Target).Path
+
+if ($Help) {
+    Write-Output "Usage: .\uninstall.ps1 [-Target DIRECTORY]"
+    Write-Output "Removes only unchanged files listed by this installation's manifest."
+    exit 0
+}
+
+if ([string]::IsNullOrWhiteSpace($Target)) {
+    $LocalManifest = Join-Path (Get-Location).Path ".claude-skills-install.windows.manifest"
+    $GlobalManifest = Join-Path $env:USERPROFILE ".claude-skills-install.windows.manifest"
+    if (Test-Path $LocalManifest) {
+        $Target = (Get-Location).Path
+    } elseif (Test-Path $GlobalManifest) {
+        $Target = $env:USERPROFILE
+    } else {
+        throw "No install manifest found in current directory or user profile. Specify -Target DIRECTORY."
+    }
+} else {
+    $Target = (Resolve-Path -LiteralPath $Target).Path
+}
+
 $Manifest = Join-Path $Target ".claude-skills-install.windows.manifest"
 if (-not (Test-Path $Manifest)) { throw "No install manifest at $Manifest; nothing was removed." }
 $Removed = 0

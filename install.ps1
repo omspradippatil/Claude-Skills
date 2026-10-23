@@ -2,12 +2,14 @@ param(
     [ValidateSet("project","global")][string]$Scope = "project",
     [ValidateSet("agents","claude","cursor","antigravity")][string]$Platform = "agents",
     [string[]]$Skills = @(),
+    [switch]$All,
+    [switch]$Minimal,
     [switch]$Force,
     [switch]$Help
 )
 $ErrorActionPreference = "Stop"
 if ($Help) {
-    Write-Output "Usage: .\install.ps1 [-Scope project|global] [-Platform agents|claude|cursor|antigravity] [-Skills skill1,skill2] [-Force]"
+    Write-Output "Usage: .\install.ps1 [-Scope project|global] [-Platform agents|claude|cursor|antigravity] [-Skills skill1,skill2] [-All] [-Minimal] [-Force]"
     exit 0
 }
 
@@ -32,6 +34,11 @@ try {
         "antigravity" { if ($Scope -eq "global") { ".gemini/config/skills" } else { ".agents/skills" } }
         default { ".agents/skills" }
     }
+
+    if ($All) {
+        $Skills = @(Get-ChildItem (Join-Path $Repo ".agents/skills") -Directory | Where-Object { Test-Path (Join-Path $_.FullName "SKILL.md") } | Select-Object -ExpandProperty Name)
+    }
+
     foreach ($Name in $Skills) {
         if ($Name -notmatch "^[a-z0-9]+(-[a-z0-9]+)*$") { throw "Invalid skill name: $Name" }
         $Candidate = Join-Path (Join-Path $Repo ".agents/skills") $Name

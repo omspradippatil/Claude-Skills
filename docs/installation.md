@@ -14,60 +14,97 @@ opt-in instructions in [integrations/README.md](../integrations/README.md).
 
 ## POSIX: macOS and Linux
 
-From a clone, install the minimal project adapter and policies:
+### One-line remote install (interactive)
+
+Download from Git and run the interactive setup menu in your terminal:
 
 ```bash
-bash install.sh --target project --minimal
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"
 ```
 
-Select only the skills needed:
+### Direct terminal execution from a local clone
+
+Run directly in terminal to interactively choose your scope, platform, and what to install:
 
 ```bash
+./install.sh
+```
+
+Or pass non-interactive flags:
+
+```bash
+# Minimal project adapter and policies:
+bash install.sh --target project --minimal
+
+# All 19 domain skills:
+bash install.sh --target project --platform claude --all
+
+# Select specific skills:
 bash install.sh --target project --platform agents --skills api-architecture,postgres-ecosystem
 bash install.sh --target project --platform claude --skills ui-ux-pro-max
 bash install.sh --target project --platform cursor --skills ui-ux-pro-max
 bash install.sh --target global --platform antigravity --skills ui-ux-pro-max
 ```
 
-For user-wide setup, use `--target global`. The `agents` platform uses
-`~/.agents/skills/`; `claude` uses `~/.claude/skills/`; `cursor` uses
-`~/.cursor/skills/`; and `antigravity` uses
-`~/.gemini/config/skills/` for the Antigravity app/IDE. Antigravity CLI has a
-different global path, so its CLI users should use a project install or copy
-the skill to the CLI-specific location in its current docs. Project installs
-use the corresponding project-native folder; Antigravity uses `.agents/skills/`.
-Skill folders are copied in full, including references, scripts, and data.
+### Uninstall (macOS and Linux)
 
-Existing files cause the install to stop. Review the destinations before
-re-running with `--force`. Each install writes a SHA-256 manifest at the
-installation root. Uninstall removes only files that still match its manifest:
+Remove only unchanged files recorded by the installation manifest:
 
 ```bash
+# Remote one-liner:
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.sh)"
+
+# From local clone or installed directory:
+./uninstall.sh
+
+# Or specify an explicit target directory:
 bash uninstall.sh --target /path/to/project
 bash uninstall.sh --target "$HOME"  # global install
 ```
 
-Files edited after installation are kept. Do not delete the manifest manually
-until uninstall is complete.
-
-The one-line remote setup is available after cloning from the official
-repository. Review the script before piping remote code into a shell.
-
 ## Windows PowerShell
 
-Run from a local clone:
+### One-line remote install
 
 ```powershell
+irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex
+```
+
+### Direct execution from a local clone
+
+```powershell
+# Interactive / default:
+.\install.ps1
+
+# All 19 domain skills:
+.\install.ps1 -Scope project -Platform claude -All
+
+# Specific skills:
 .\install.ps1 -Scope project -Platform agents -Skills ui-ux-pro-max,security-auditor
 .\install.ps1 -Scope global -Platform claude -Skills ui-ux-pro-max
 ```
 
-Omitting `-Skills` creates the minimal router-and-policy setup. Use
-`-Force` only after reviewing existing files. Remove unchanged installed
-files with:
+### Uninstall (Windows PowerShell)
 
 ```powershell
+# Remote one-liner:
+irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/uninstall.ps1 | iex
+
+# From local clone:
+.\uninstall.ps1
+
+# Or specify target:
 .\uninstall.ps1 -Target (Get-Location).Path
+```
+
+## Windows Command Prompt (CMD)
+
+```cmd
+:: Install
+install.bat
+
+:: Uninstall
+uninstall.bat
 ```
 
 Global installs target the current user's profile. The Windows manifest uses a

@@ -164,12 +164,16 @@
 
     <section>
       <p class="eyebrow">Install</p>
-      <h2>Start with the minimal profile</h2>
-      <p class="section-intro">Install in a target project. Existing files are preserved unless you pass `--force`. Optional third-party tools are never installed by the base command.</p>
-      <pre class="code"><code>bash install.sh --target project --minimal
+      <h2>Interactive terminal or script setup</h2>
+      <p class="section-intro">Run directly in terminal to interactively select your platform and skills, or pass non-interactive flags.</p>
+      <pre class="code"><code># Interactive one-liner via terminal:
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh)"
 
-# Select exact skills
-bash install.sh --target project --platform agents --skills ui-ux-pro-max,security-auditor,seo-marketing</code></pre>
+# Or run directly in local clone:
+./install.sh
+
+# Non-interactive minimal install:
+bash install.sh --target project --minimal</code></pre>
       <a href="https://github.com/omspradippatil/Claude-Skills/blob/main/docs/installation.md">Installation details</a>
     </section>
 
