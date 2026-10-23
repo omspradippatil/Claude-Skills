@@ -109,6 +109,7 @@ if [[ -d "$REPO/.agents/skills" ]]; then
 fi
 ALL_SKILLS_CSV=$(IFS=,; echo "${AVAILABLE_SKILLS[*]}")
 
+RECOMMENDED_SKILLS="ui-ux-pro-max,api-architecture,testing-qa,security-auditor,devops-cicd,state-management"
 
 # ── Interactive TTY Detection & Helper ─────────────────────────────────────────
 if [[ -z "$SCRIPT_SOURCE" ]]; then
