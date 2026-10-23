@@ -1,6 +1,37 @@
 {
   "version": 2,
-  "description": "Canonical skill registry for Claude-Skills cross-platform engineering system",
+  "description": "Task-routing registry. Read a selected skill only after matching the task and its domain cues.",
+  "policies": {
+    "core": {
+      "path": "policies/core.md",
+      "mandatory": true,
+      "activateFor": ["every-task"]
+    },
+    "engineering": {
+      "path": "policies/engineering.md",
+      "activateFor": ["general-code-change", "debugging", "refactoring"]
+    },
+    "security": {
+      "path": "policies/security.md",
+      "activateFor": ["auth", "authorization", "secrets", "injection", "security", "data-access"]
+    },
+    "seo": {
+      "path": "policies/seo.md",
+      "activateFor": ["seo", "sitemap", "indexing", "canonical", "robots", "metadata", "domain", "redirect"]
+    },
+    "frontend": {
+      "path": "policies/frontend.md",
+      "activateFor": ["website", "frontend", "ui", "ux", "accessibility", "responsive"]
+    },
+    "release": {
+      "path": "policies/release.md",
+      "activateFor": ["production-release", "launch"]
+    },
+    "testing": {
+      "path": "policies/testing.md",
+      "activateFor": ["tests", "verification", "qa"]
+    }
+  },
   "skills": {
     "security-auditor": {
       "source": "omspradippatil/Claude-Skills",
@@ -8,7 +39,7 @@
       "skillPath": ".agents/skills/security-auditor/SKILL.md",
       "category": "security",
       "mandatory": true,
-      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authorization"]
+      "activateFor": ["security", "owasp", "pen-test", "vulnerability", "auth", "authentication", "authorization", "injection"]
     },
     "seo-marketing": {
       "source": "omspradippatil/Claude-Skills",
@@ -18,13 +49,14 @@
       "mandatory": true,
       "activateFor": ["seo", "sitemap", "canonical", "robots", "meta", "structured-data", "core-web-vitals", "deployment"]
     },
-    "frontend-design": {
+    "ui-ux-pro-max": {
       "source": "omspradippatil/Claude-Skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/frontend-design/SKILL.md",
+      "upstream": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "skillPath": ".agents/skills/ui-ux-pro-max/SKILL.md",
       "category": "ui-ux",
       "mandatory": true,
-      "activateFor": ["ui", "ux", "design", "css", "layout", "component", "redesign", "accessibility"]
+      "activateFor": ["ui", "ux", "design", "css", "layout", "component", "redesign", "accessibility", "responsive", "typography"]
     },
     "api-architecture": {
       "source": "omspradippatil/Claude-Skills",
@@ -137,12 +169,6 @@
       "skillPath": ".agents/skills/ux-research/SKILL.md",
       "category": "ui-ux",
       "activateFor": ["ux-research", "usability", "heuristics", "cognitive-load", "ux-copy"]
-    }
-  },
-  "removedSkills": {
-    "ralph": {
-      "reason": "Removed per project requirements — not reinstalling",
-      "removedAt": "2026-10-23"
     }
   }
 }

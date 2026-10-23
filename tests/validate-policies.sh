@@ -47,6 +47,8 @@ POLICY_FILES=(
   "policies/seo.md"
   "policies/frontend.md"
   "policies/testing.md"
+  "policies/engineering.md"
+  "policies/release.md"
 )
 
 for pf in "${POLICY_FILES[@]}"; do

@@ -104,6 +104,9 @@ Do not fabricate or generate fake content in the UI:
 - **No fake testimonials** — Do not generate invented user reviews, quotes attributed to fictional people, or fabricated success stories.
 - **No fake counters** — Do not add "10,000+ happy customers" or "5M downloads" counters without real data to back them up.
 - **No invented logos** — Do not add logo sections ("As seen in" / "Our clients") with placeholder or fabricated brand logos.
+- **No fabricated credentials or product claims** — Verify counts, integrations, customer claims, and capability statements against the actual implementation.
+- Use clear, specific headlines that describe the product or user outcome. Avoid vague hero headlines and generic marketing filler.
+- Prefer authentic, relevant imagery. Do not present generated or stock imagery as a real customer, employee, location, or product without clear labeling.
 - Use placeholder content (`Lorem ipsum`, placeholder image services) only during development, and remove it before shipping.
 
 ---
@@ -116,6 +119,7 @@ Reject these low-quality, overused AI-generated UI patterns:
 - **No excessive pill buttons** — Pill-shaped (fully rounded) buttons are not universally appropriate. Match button style to the design system.
 - **No emoji as interface icons** — Emoji are not icons. Use a proper icon library (Lucide, Heroicons, Phosphor, etc.) for interface elements.
 - **No excessive animations** — Do not add page transitions, hover animations, scroll-triggered animations, or particle effects unless they serve a clear UX purpose. Motion can harm users with vestibular disorders (respect `prefers-reduced-motion`).
+- Avoid unnecessary em dashes in interface copy; use plain punctuation and concise sentences.
 - **No hero sections with vague "AI-powered" marketing copy** unless the product actually uses AI and the copy is accurate.
 - **No over-engineered glass-morphism** applied universally — use frosted glass effects sparingly and intentionally.
 
@@ -144,6 +148,7 @@ Before declaring any frontend change complete:
 - [ ] **Component states**: All states (loading, error, empty, disabled, success) are implemented
 - [ ] **Real interactions**: No decorative or non-functional controls
 - [ ] **No fabricated content**: No fake testimonials, counters, or logos
+- [ ] **Claims verified**: Counts, capabilities, credentials, and integrations match the actual product
 - [ ] **Reduced motion**: Animations respect `prefers-reduced-motion`
 - [ ] **No AI slop patterns**: No unjustified purple gradients, emoji icons, or excessive animations
 - [ ] **Cross-browser**: Verified in Chrome and Firefox minimum; Safari if targeting Apple users

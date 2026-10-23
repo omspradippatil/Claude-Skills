@@ -11,13 +11,10 @@
     "test": "bash tests/validate-policies.sh && bash tests/test-scenarios.sh",
     "test:install": "bash tests/validate-install.sh",
     "sync": "bash scripts/sync-skills.sh",
-    "install:global": "bash install.sh --global --all",
-    "install:project": "bash install.sh --project --all"
-  },
-  "devDependencies": {
-    "firecrawl-cli": "^1.23.3",
-    "ctx7": "^0.5.9",
-    "antigravity-workflows": "^1.1.2"
+    "route": "python3 scripts/route-task.py",
+    "install:global": "bash install.sh --target global --minimal",
+    "install:project": "bash install.sh --target project --minimal",
+    "update:uiux": "bash scripts/update-ui-ux-pro-max.sh"
   },
   "keywords": [
     "claude-code",

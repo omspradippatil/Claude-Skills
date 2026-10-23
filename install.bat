@@ -1,4 +1,4 @@
 @echo off
-REM AI Agent Skills Installer — Windows CMD wrapper
-REM Usage: install.bat [global|project|uninstall]
-powershell.exe -ExecutionPolicy Bypass -File "%~dp0install.ps1" %*
+REM PowerShell installer wrapper. Usage: install.bat -Scope project -Platform agents
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" %*
+exit /b %ERRORLEVEL%

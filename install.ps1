@@ -1,225 +1,75 @@
-# ==============================================================================
-# AI Agent Skills Installer — Cross-Platform Engineering System (Windows)
-# Repository: https://github.com/omspradippatil/Claude-Skills
-#
-# Usage:
-#   irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.ps1 | iex
-#   .\install.ps1 [-Global] [-Project] [-Force] [-Uninstall]
-# ==============================================================================
-
 param(
-    [switch]$Global,
-    [switch]$Project,
+    [ValidateSet("project","global")][string]$Scope = "project",
+    [ValidateSet("agents","claude","cursor","antigravity")][string]$Platform = "agents",
+    [string[]]$Skills = @(),
     [switch]$Force,
-    [switch]$Uninstall,
     [switch]$Help
 )
-
 $ErrorActionPreference = "Stop"
-$RepoUrl = "https://github.com/omspradippatil/Claude-Skills.git"
-$TmpDir  = Join-Path $env:TEMP "claude-skills-install-$PID"
-
-$KnownSkills = @(
-    "security-auditor","seo-marketing","frontend-design","api-architecture",
-    "postgres-ecosystem","firebase-expert","cloudflare-expert","devops-cicd",
-    "testing-qa","mobile-engineering","llm-optimization","state-management",
-    "web-animation","assets-media","3d-visuals","web-gamedev",
-    "git-collaboration","sentry-expert","ux-research"
-)
-
-function Write-Header { param($msg) Write-Host "`n== $msg ==" -ForegroundColor Cyan }
-function Write-OK     { param($msg) Write-Host "  ✔ $msg" -ForegroundColor Green }
-function Write-Warn   { param($msg) Write-Host "  ⚠ $msg" -ForegroundColor Yellow }
-function Write-Err    { param($msg) Write-Host "  ✖ $msg" -ForegroundColor Red }
-
-function Check-Prerequisites {
-    Write-Header "Checking Prerequisites"
-
-    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        Write-Err "git not found. Install git for Windows (https://git-scm.com) and retry."
-        exit 1
-    }
-    Write-OK "git $(git --version)"
-
-    if (Get-Command node -ErrorAction SilentlyContinue) {
-        Write-OK "node $(node -v)"
-    } else {
-        Write-Warn "Node.js not found — npm-based tools will be unavailable."
-    }
+if ($Help) {
+    Write-Output "Usage: .\install.ps1 [-Scope project|global] [-Platform agents|claude|cursor|antigravity] [-Skills skill1,skill2] [-Force]"
+    exit 0
 }
 
-function Fetch-Repo {
-    if (Test-Path $TmpDir) { return }
-    Write-Host "  Fetching repository…" -ForegroundColor DarkCyan
-    git clone --depth 1 --quiet $RepoUrl $TmpDir
-    if (-not $?) { Write-Err "Clone failed."; exit 1 }
-    Write-OK "Repository fetched"
+$Repo = $PSScriptRoot
+$TempRepo = $null
+if (-not (Test-Path (Join-Path $Repo "skills-lock.json"))) {
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw "Git is required when installing from outside a local clone." }
+    $TempRepo = Join-Path $env:TEMP ("claude-skills-" + [guid]::NewGuid().ToString("N"))
+    & git clone --depth 1 https://github.com/omspradippatil/Claude-Skills.git $TempRepo
+    if ($LASTEXITCODE -ne 0) { throw "Repository clone failed with exit code $LASTEXITCODE." }
+    $Repo = $TempRepo
 }
 
-function Install-SkillsTo {
-    param($Src, $Dst, $Label)
-
-    if (-not (Test-Path $Src)) {
-        Write-Warn "Skills source not found at $Src — skipping $Label"
-        return
-    }
-
-    New-Item -ItemType Directory -Path $Dst -Force | Out-Null
-    $count = 0; $skipped = 0
-
-    Get-ChildItem -Path $Src -Directory | ForEach-Object {
-        $target = Join-Path $Dst $_.Name
-        if ((Test-Path $target) -and (-not $Force)) {
-            $skipped++
-            return
-        }
-        Copy-Item -Path $_.FullName -Destination $target -Recurse -Force
-        $count++
-    }
-
-    if ($count -gt 0)   { Write-OK "Installed $count skill(s) to $Label" }
-    if ($skipped -gt 0) { Write-Host "  ℹ $skipped skill(s) already existed (use -Force to overwrite)" -ForegroundColor DarkGray }
-}
-
-function Install-EntryPoint {
-    param($SrcFile, $DstFile, $Label)
-    $src = Join-Path $TmpDir $SrcFile
-    if (-not (Test-Path $src)) { return }
-
-    if ((Test-Path $DstFile) -and (-not $Force)) {
-        $answer = Read-Host "$DstFile already exists. Overwrite? [y/N]"
-        if ($answer -notmatch '^[Yy]') { Write-Host "  Skipped $Label" -ForegroundColor DarkGray; return }
-    }
-
-    Copy-Item -Path $src -Destination $DstFile -Force
-    Write-OK "Installed $Label → $DstFile"
-}
-
-function Install-Global {
-    Write-Header "Global Installation"
-    Fetch-Repo
-
-    $claudeSkills = Join-Path $env:USERPROFILE ".claude\skills"
-    $geminiSkills = Join-Path $env:USERPROFILE ".gemini\config\skills"
-    $geminiRules  = Join-Path $env:USERPROFILE ".gemini\config\rules"
-
-    $agentSkillsSrc = Join-Path $TmpDir ".agents\skills"
-    Install-SkillsTo $agentSkillsSrc $claudeSkills "~\.claude\skills"
-    Install-SkillsTo $agentSkillsSrc $geminiSkills "~\.gemini\config\skills"
-
-    $rulesSrc = Join-Path $TmpDir ".agents\rules"
-    if (Test-Path $rulesSrc) {
-        New-Item -ItemType Directory -Path $geminiRules -Force | Out-Null
-        Copy-Item "$rulesSrc\*" $geminiRules -Recurse -Force
-        Write-OK "Installed rules to ~\.gemini\config\rules"
-    }
-
-    if (Get-Command npm -ErrorAction SilentlyContinue) {
-        Write-Header "Optional npm Packages"
-        foreach ($pkg in @("firecrawl-cli","ctx7","antigravity-workflows")) {
-            Write-Host "  Installing $pkg…" -ForegroundColor DarkCyan
-            npm install -g $pkg --quiet 2>$null
-            if ($?) { Write-OK "$pkg installed" } else { Write-Warn "$pkg install failed (skipping)" }
-        }
-    }
-}
-
-function Install-Project {
-    $projectDir = (Get-Location).Path
-    Write-Header "Project Installation into $projectDir"
-    Fetch-Repo
-
-    $agentSkillsSrc = Join-Path $TmpDir ".agents\skills"
-    Install-SkillsTo $agentSkillsSrc (Join-Path $projectDir ".agents\skills") ".agents\skills"
-    Install-SkillsTo $agentSkillsSrc (Join-Path $projectDir ".claude\skills") ".claude\skills"
-
-    foreach ($f in @("CLAUDE.md","AGENTS.md","GEMINI.md")) {
-        Install-EntryPoint $f (Join-Path $projectDir $f) $f
-    }
-
-    $cursorSrc = Join-Path $TmpDir ".cursor\rules"
-    if (Test-Path $cursorSrc) {
-        $cursorDst = Join-Path $projectDir ".cursor\rules"
-        New-Item -ItemType Directory -Path $cursorDst -Force | Out-Null
-        Copy-Item "$cursorSrc\*" $cursorDst -Recurse -Force
-        Write-OK "Installed .cursor\rules"
-    }
-
-    $answer = Read-Host "`nAdd skills directories to .gitignore? [Y/n]"
-    if ($answer -notmatch '^[Nn]') {
-        $gitignore = Join-Path $projectDir ".gitignore"
-        if (-not (Test-Path $gitignore)) { "" | Set-Content $gitignore }
-        $content = Get-Content $gitignore -Raw
-        if ($content -notmatch [regex]::Escape(".claude/skills")) { ".claude/skills" | Add-Content $gitignore }
-        if ($content -notmatch [regex]::Escape(".agents/skills")) { ".agents/skills" | Add-Content $gitignore }
-        Write-OK "Updated .gitignore"
-    }
-}
-
-function Uninstall-Global {
-    Write-Header "Uninstalling Global Skills"
-    Write-Warn "This will remove all skills installed by this repository."
-    $answer = Read-Host "Are you sure? [y/N]"
-    if ($answer -notmatch '^[Yy]') { Write-Host "  Aborted."; return }
-
-    $removed = 0
-    foreach ($skill in $KnownSkills) {
-        foreach ($base in @("$env:USERPROFILE\.claude\skills","$env:USERPROFILE\.gemini\config\skills")) {
-            $dir = Join-Path $base $skill
-            if (Test-Path $dir) {
-                Remove-Item $dir -Recurse -Force
-                Write-OK "Removed $dir"
-                $removed++
-            }
-        }
-    }
-
-    if (Get-Command npm -ErrorAction SilentlyContinue) {
-        npm uninstall -g firecrawl-cli ctx7 antigravity-workflows 2>$null
-    }
-
-    Write-Host "`n  Removed $removed skill directories."
-}
-
-# ── Main ──────────────────────────────────────────────────────────────────────
 try {
-    Write-Host ""
-    Write-Host "╔══════════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║        ⚡ Claude Skills — Cross-Platform Engineering System      ║" -ForegroundColor Cyan
-    Write-Host "║           Claude Code · Antigravity · Cursor · Codex            ║" -ForegroundColor Cyan
-    Write-Host "╚══════════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
-    Write-Host ""
+    if ($Scope -eq "global") { $Target = $env:USERPROFILE }
+    else { $Target = (Get-Location).Path }
+    $Manifest = Join-Path $Target ".claude-skills-install.windows.manifest"
+    if ((Test-Path $Manifest) -and (-not $Force)) { throw "Install manifest already exists at $Manifest. Uninstall first or use -Force." }
+    $SkillRoot = switch ($Platform) {
+        "claude" { ".claude/skills" }
+        "cursor" { ".cursor/skills" }
+        "antigravity" { if ($Scope -eq "global") { ".gemini/config/skills" } else { ".agents/skills" } }
+        default { ".agents/skills" }
+    }
+    foreach ($Name in $Skills) {
+        if ($Name -notmatch "^[a-z0-9]+(-[a-z0-9]+)*$") { throw "Invalid skill name: $Name" }
+        $Candidate = Join-Path (Join-Path $Repo ".agents/skills") $Name
+        if (-not (Test-Path (Join-Path $Candidate "SKILL.md"))) { throw "Unknown or incomplete skill: $Name" }
+    }
+    $Entries = [System.Collections.Generic.List[string]]::new()
 
-    if ($Help) {
-        Get-Help $MyInvocation.InvocationName
-        exit 0
+    function Copy-ManagedFile([string]$Source, [string]$Relative) {
+        $Destination = Join-Path $Target ($Relative.Replace("/", [IO.Path]::DirectorySeparatorChar))
+        if ((Test-Path $Destination) -and (-not $Force)) { throw "Refusing to overwrite existing file: $Destination (use -Force after review)." }
+        New-Item -ItemType Directory -Force -Path (Split-Path $Destination) | Out-Null
+        Copy-Item -LiteralPath $Source -Destination $Destination -Force
+        $Hash = (Get-FileHash -LiteralPath $Destination -Algorithm SHA256).Hash.ToLowerInvariant()
+        $Entries.Add($Relative + "|" + $Hash)
     }
 
-    Check-Prerequisites
+    foreach ($Name in @("CLAUDE.md","AGENTS.md","GEMINI.md","skills-lock.json","scripts/route-task.py")) {
+        Copy-ManagedFile (Join-Path $Repo $Name) $Name
+    }
+    Copy-ManagedFile (Join-Path $Repo ".cursor/rules/always-on.mdc") ".cursor/rules/always-on.mdc"
+    Get-ChildItem (Join-Path $Repo "policies") -Filter "*.md" -File | ForEach-Object {
+        Copy-ManagedFile $_.FullName ("policies/" + $_.Name)
+    }
 
-    if ($Uninstall) { Uninstall-Global }
-    elseif ($Project) { Install-Project }
-    elseif ($Global) { Install-Global }
-    else {
-        Write-Host "Installation scope:" -ForegroundColor White
-        Write-Host "  1) Global  — User profile skills directories" -ForegroundColor Cyan
-        Write-Host "  2) Project — Current directory" -ForegroundColor Cyan
-        Write-Host "  3) Uninstall" -ForegroundColor Red
-        Write-Host ""
-        $choice = Read-Host "Select [1-3] (default: 1)"
-        switch ($choice) {
-            "2" { Install-Project }
-            "3" { Uninstall-Global }
-            default { Install-Global }
+    foreach ($Name in $Skills) {
+        $SourceSkill = Join-Path (Join-Path $Repo ".agents/skills") $Name
+        if (-not (Test-Path (Join-Path $SourceSkill "SKILL.md"))) { throw "Unknown or incomplete skill: $Name" }
+        Get-ChildItem $SourceSkill -File -Recurse | ForEach-Object {
+            $RelativePath = $_.FullName.Substring($SourceSkill.Length).TrimStart([char[]]@([char]92,[char]47))
+            Copy-ManagedFile $_.FullName ($SkillRoot + "/" + $Name + "/" + $RelativePath.Replace([IO.Path]::DirectorySeparatorChar, "/"))
         }
     }
-
-    Write-Host ""
-    Write-Host "══════════════════════════════════════════════════════════════════════" -ForegroundColor Green
-    Write-Host "  ✅  Done! Run scripts/validate.sh to verify the installation.      " -ForegroundColor Green
-    Write-Host "══════════════════════════════════════════════════════════════════════" -ForegroundColor Green
-    Write-Host ""
+    $Entries | Set-Content -LiteralPath $Manifest -Encoding utf8
+    Write-Output "Installed minimal router and policies to $Target."
+    if ($Skills.Count -gt 0) { Write-Output "Installed selected skills: $($Skills -join ', ')" }
+    else { Write-Output "No specialist skills selected. Add them with -Skills skill1,skill2." }
+    Write-Output "No third-party tools were installed. Uninstall with .\uninstall.ps1 -Target '$Target'."
 }
 finally {
-    if (Test-Path $TmpDir) { Remove-Item $TmpDir -Recurse -Force -ErrorAction SilentlyContinue }
+    if ($TempRepo -and (Test-Path $TempRepo)) { Remove-Item $TempRepo -Recurse -Force }
 }
