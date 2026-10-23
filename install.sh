@@ -286,7 +286,7 @@ existing_detected=false
 if [[ -e "$MANIFEST" ]]; then
   existing_detected=true
 else
-  for check_rel in "CLAUDE.md" "AGENTS.md" "GEMINI.md" ".cursor/rules/always-on.mdc" "policies/core.md" "$SKILL_ROOT"; do
+  for check_rel in "CLAUDE.md" "AGENTS.md" "GEMINI.md" ".cursor/rules/always-on.mdc" ".cursor" "policies/core.md" "policies" "$SKILL_ROOT"; do
     if [[ -e "$DEST/$check_rel" ]]; then
       existing_detected=true
       break
@@ -297,12 +297,13 @@ fi
 if [[ "$existing_detected" == true && "$FORCE" != true ]]; then
   if [[ "$HAS_TTY" == true && "$MODE_EXPLICIT" == false ]]; then
     echo ""
-    echo -e "${YELLOW}Existing installation files detected in $DEST.${RESET}"
-    ask_user "${YELLOW}Would you like to overwrite and update existing files? [Y/n]: ${RESET}" overwrite_ans "y"
+    echo -e "${YELLOW}Existing configuration detected in $DEST.${RESET}"
+    ask_user "${YELLOW}Override existing configuration and use force for all files? [Y/n]: ${RESET}" overwrite_ans "y"
     if [[ "$overwrite_ans" =~ ^[Yy]$ || -z "$overwrite_ans" ]]; then
       FORCE=true
+      echo -e "${GREEN}✔ Force override enabled.${RESET}"
     else
-      echo "Installation cancelled." >&2
+      echo -e "${RED}Installation cancelled.${RESET}" >&2
       exit 1
     fi
   else
@@ -328,7 +329,7 @@ copy_file() {
   local destination="$DEST/$relative"
   if [[ -e "$destination" && "$FORCE" != true ]]; then
     if [[ "$HAS_TTY" == true && "$MODE_EXPLICIT" == false ]]; then
-      ask_user "${YELLOW}File exists: $destination. Overwrite? [Y/n/all]: ${RESET}" file_ow "y"
+      ask_user "${YELLOW}File already exists: $relative. Override? [Y/n/all]: ${RESET}" file_ow "y"
       if [[ "$file_ow" =~ ^[Aa] ]]; then
         FORCE=true
       elif [[ ! "$file_ow" =~ ^[Yy]$ && -n "$file_ow" ]]; then
@@ -341,7 +342,7 @@ copy_file() {
     fi
   fi
   mkdir -p "$(dirname "$destination")"
-  cp "$source" "$destination"
+  cp -f "$source" "$destination"
   digest="$(shasum -a 256 "$destination" 2>/dev/null | awk '{print $1}')"
   [[ -n "$digest" ]] || { echo "Unable to calculate SHA-256 for $destination" >&2; return 1; }
   printf '%s\t%s\n' "$relative" "$digest" >> "$TMP_MANIFEST"
