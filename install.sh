@@ -1,284 +1,319 @@
 #!/usr/bin/env bash
-
 # ==============================================================================
-# 🚀 AI Agent Skills Installer & Manager (macOS & Linux)
+# AI Agent Skills Installer — Cross-Platform Engineering System
 # Repository: https://github.com/omspradippatil/Claude-Skills
+#
+# Usage:
+#   bash install.sh [OPTIONS]
+#   curl -fsSL https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.sh | bash
+#
+# Options:
+#   --global,  -g     Install globally (~/.claude/skills & ~/.gemini/config/skills)
+#   --project, -p     Install into current project directory
+#   --all,     -a     Install without prompts
+#   --force,   -f     Overwrite existing skill files
+#   --uninstall,-u    Remove installed skills
+#   --help,    -h     Show this help
 # ==============================================================================
 
-# Color Palette & Formatting
-BOLD="\033[1m"
-DIM="\033[2m"
-CYAN="\033[36m"
-BLUE="\033[34m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-MAGENTA="\033[35m"
-RED="\033[31m"
-RESET="\033[0m"
+set -euo pipefail
 
-# Print helper functions
-print_banner() {
-  echo -e "${CYAN}${BOLD}"
-  echo "╔═════════════════════════════════════════════════════════════════════════╗"
-  echo "║                ⚡ AI CODING SKILLS & AGENT SUITE ⚡                    ║"
-  echo "║         High-Performance Skills & Tooling for AI Coding Agents          ║"
-  echo "╚═════════════════════════════════════════════════════════════════════════╝"
-  echo -e "${RESET}"
-}
+# ── Colors ────────────────────────────────────────────────────────────────────
+BOLD="\033[1m"; DIM="\033[2m"
+CYAN="\033[36m"; BLUE="\033[34m"; GREEN="\033[32m"
+YELLOW="\033[33m"; RED="\033[31m"; RESET="\033[0m"
 
-print_header() {
-  echo ""
-  echo -e "${MAGENTA}${BOLD}==============================================================================${RESET}"
-  echo -e "${MAGENTA}${BOLD} $1 ${RESET}"
-  echo -e "${MAGENTA}${BOLD}==============================================================================${RESET}"
-}
+REPO_URL="https://github.com/omspradippatil/Claude-Skills.git"
+REPO_RAW="https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main"
+TMP_DIR="/tmp/claude-skills-install-$$"
+FORCE=false
 
-run_step() {
-  local title="$1"
-  local description="$2"
-  local cmd="$3"
+# ── Helpers ───────────────────────────────────────────────────────────────────
+info()    { echo -e "${CYAN}${BOLD}ℹ${RESET}  $*"; }
+success() { echo -e "${GREEN}${BOLD}✔${RESET}  $*"; }
+warn()    { echo -e "${YELLOW}${BOLD}⚠${RESET}  $*"; }
+error()   { echo -e "${RED}${BOLD}✖${RESET}  $*" >&2; }
+header()  { echo -e "\n${BLUE}${BOLD}══ $* ══${RESET}"; }
 
-  echo ""
-  echo -e "${CYAN}▶ ${BOLD}${title}${RESET}"
-  echo -e "  ${DIM}Purpose:${RESET} ${description}"
-  echo -e "  ${DIM}Command:${RESET} ${YELLOW}${cmd}${RESET}"
+cleanup() { rm -rf "$TMP_DIR" 2>/dev/null || true; }
+trap cleanup EXIT
 
-  eval "$cmd"
-  local exit_code=$?
-
-  if [ $exit_code -eq 0 ]; then
-    echo -e "  ${GREEN}✔ Completed successfully!${RESET}"
-  else
-    echo -e "  ${RED}✖ Warning: Command exited with status ${exit_code}. Continuing...${RESET}"
-  fi
-}
-
+# ── Prerequisite checks ───────────────────────────────────────────────────────
 check_prerequisites() {
-  echo -e "${BLUE}${BOLD}🔍 Checking system prerequisites...${RESET}"
-  
-  if command -v node >/dev/null 2>&1; then
-    echo -e "  ${GREEN}✔ Node.js:${RESET} $(node -v)"
+  header "Checking Prerequisites"
+  local ok=true
+
+  if command -v git >/dev/null 2>&1; then
+    success "git $(git --version | awk '{print $3}')"
   else
-    echo -e "  ${RED}✖ Node.js is not installed!${RESET} Please install Node.js (https://nodejs.org) to use npx & npm skills."
+    error "git is required but not found. Install git and retry."
+    ok=false
+  fi
+
+  if command -v node >/dev/null 2>&1; then
+    success "node $(node -v)"
+  else
+    warn "Node.js not found — npm-based tools (firecrawl-cli, ctx7, etc.) will be unavailable."
   fi
 
   if command -v npm >/dev/null 2>&1; then
-    echo -e "  ${GREEN}✔ npm:${RESET} $(npm -v)"
-  else
-    echo -e "  ${RED}✖ npm is not installed!${RESET}"
+    success "npm $(npm -v)"
   fi
 
-  if command -v git >/dev/null 2>&1; then
-    echo -e "  ${GREEN}✔ Git:${RESET} $(git --version)"
-  else
-    echo -e "  ${YELLOW}⚠ Git is not installed! Some repository skills may fail.${RESET}"
-  fi
+  $ok || { error "Prerequisites not met. Aborting."; exit 1; }
   echo ""
 }
 
-# Scope Flags (Global vs Project Directory)
-SCOPE_FLAG="-g"
-SCOPE_NPM="-g"
-SCOPE_DESC="Global (~/.agents & system-wide)"
-SKILLS_DIR="$HOME/.claude/skills"
-AGENTS_DIR="$HOME/.gemini/config/skills"
-AGENTS_RULES_DIR="$HOME/.gemini/config/rules"
+# ── Clone repo to temp dir ────────────────────────────────────────────────────
+fetch_repo() {
+  if [[ -d "$TMP_DIR" ]]; then return; fi
+  info "Fetching latest skills from $REPO_URL …"
+  if git clone --depth 1 --quiet "$REPO_URL" "$TMP_DIR" 2>/dev/null; then
+    success "Repository fetched"
+  else
+    error "Failed to clone repository. Check your internet connection."
+    exit 1
+  fi
+}
 
-set_scope() {
-  local scope_choice="$1"
-  if [ "$scope_choice" == "2" ] || [ "$scope_choice" == "project" ]; then
-    SCOPE_FLAG=""
-    SCOPE_NPM=""
-    SCOPE_DESC="Project Directory ($(pwd))"
-    SKILLS_DIR="$(pwd)/.claude/skills"
-    AGENTS_DIR="$(pwd)/.agents/skills"
-    AGENTS_RULES_DIR="$(pwd)/.agents/rules"
-    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR" "$AGENTS_RULES_DIR"
-    
-    echo -n -e "\n${YELLOW}Would you like to add the skills directory to your .gitignore? [Y/n]: ${RESET}"
-    if [ -t 0 ] || [ -e /dev/tty ]; then
-      read -r IGNORE_INPUT < /dev/tty 2>/dev/null || read -r IGNORE_INPUT || IGNORE_INPUT="y"
-    else
-      read -r IGNORE_INPUT || IGNORE_INPUT="y"
+# ── Copy skills to a target dir ───────────────────────────────────────────────
+install_skills_to() {
+  local src="$TMP_DIR/.agents/skills"
+  local dst="$1"
+  local label="$2"
+
+  if [[ ! -d "$src" ]]; then
+    warn "No skills found in cloned repo ($src) — skipping $label"
+    return
+  fi
+
+  mkdir -p "$dst"
+  local count=0 skipped=0
+
+  for skill_dir in "$src"/*/; do
+    local skill_name
+    skill_name="$(basename "$skill_dir")"
+    local target="$dst/$skill_name"
+
+    if [[ -d "$target" ]] && ! $FORCE; then
+      skipped=$((skipped + 1))
+      continue
     fi
-    if [[ ! "$IGNORE_INPUT" =~ ^[Nn] ]]; then
-      if [ ! -f .gitignore ]; then
-        echo -e "${GREEN}Creating .gitignore and adding skills directories...${RESET}"
-        echo -e ".claude/skills\n.agent/skills\n.agents/skills" > .gitignore
-      else
-        echo -e "${GREEN}Updating existing .gitignore...${RESET}"
-        grep -q -F ".claude/skills" .gitignore || echo ".claude/skills" >> .gitignore
-        grep -q -F ".agent/skills" .gitignore || echo ".agent/skills" >> .gitignore
-        grep -q -F ".agents/skills" .gitignore || echo ".agents/skills" >> .gitignore
+
+    cp -r "$skill_dir" "$target"
+    count=$((count + 1))
+  done
+
+  if [[ $count -gt 0 ]]; then
+    success "Installed $count skill(s) to $label"
+  fi
+  if [[ $skipped -gt 0 ]]; then
+    info "$skipped skill(s) already existed (use --force to overwrite)"
+  fi
+}
+
+# ── Copy policy files ─────────────────────────────────────────────────────────
+install_policies_to() {
+  local dst_root="$1"
+  local label="$2"
+  local src_policies="$TMP_DIR/policies"
+
+  if [[ -d "$src_policies" ]]; then
+    mkdir -p "$dst_root/policies"
+    cp -r "$src_policies/"* "$dst_root/policies/" 2>/dev/null || true
+    success "Copied policies/ to $label"
+  fi
+}
+
+# ── Copy entry-point files ────────────────────────────────────────────────────
+install_entry_point() {
+  local src="$TMP_DIR/$1"
+  local dst="$2"
+  local label="$3"
+
+  if [[ ! -f "$src" ]]; then return; fi
+
+  if [[ -f "$dst" ]] && ! $FORCE; then
+    local answer="y"
+    if [[ -t 0 ]]; then
+      echo -n -e "${YELLOW}$dst already exists. Overwrite? [y/N]: ${RESET}"
+      read -r answer </dev/tty 2>/dev/null || answer="n"
+    fi
+    [[ "$answer" =~ ^[Yy] ]] || { info "Skipped $label"; return; }
+  fi
+
+  cp "$src" "$dst"
+  success "Installed $label → $dst"
+}
+
+# ── Global install ────────────────────────────────────────────────────────────
+install_global() {
+  header "Global Installation"
+  fetch_repo
+
+  local claude_skills="$HOME/.claude/skills"
+  local gemini_skills="$HOME/.gemini/config/skills"
+  local gemini_rules="$HOME/.gemini/config/rules"
+
+  install_skills_to "$claude_skills"  "~/.claude/skills"
+  install_skills_to "$gemini_skills"  "~/.gemini/config/skills"
+
+  # Copy rules if source has them
+  if [[ -d "$TMP_DIR/.agents/rules" ]]; then
+    mkdir -p "$gemini_rules"
+    cp -r "$TMP_DIR/.agents/rules/"* "$gemini_rules/" 2>/dev/null || true
+    success "Installed rules to ~/.gemini/config/rules"
+  fi
+
+  # Install npm packages if node available
+  if command -v npm >/dev/null 2>&1; then
+    header "Optional npm Packages"
+    local pkgs=(firecrawl-cli ctx7 antigravity-workflows)
+    for pkg in "${pkgs[@]}"; do
+      info "Installing $pkg …"
+      npm install -g "$pkg" --quiet 2>/dev/null && success "$pkg installed" || warn "$pkg install failed (skipping)"
+    done
+  fi
+}
+
+# ── Project install ───────────────────────────────────────────────────────────
+install_project() {
+  local project_dir="${1:-$(pwd)}"
+  header "Project Installation into $project_dir"
+  fetch_repo
+
+  install_skills_to "$project_dir/.agents/skills" ".agents/skills"
+  install_skills_to "$project_dir/.claude/skills"  ".claude/skills"
+  install_policies_to "$project_dir" "project policies"
+
+  # Entry points
+  for f in CLAUDE.md AGENTS.md GEMINI.md; do
+    install_entry_point "$f" "$project_dir/$f" "$f"
+  done
+
+  # .cursor/rules
+  if [[ -d "$TMP_DIR/.cursor/rules" ]]; then
+    mkdir -p "$project_dir/.cursor/rules"
+    cp -r "$TMP_DIR/.cursor/rules/"* "$project_dir/.cursor/rules/" 2>/dev/null || true
+    success "Installed .cursor/rules"
+  fi
+
+  # Offer to update .gitignore
+  local answer="n"
+  if [[ -t 0 ]]; then
+    echo -n -e "\n${YELLOW}Add skills directories to .gitignore? [Y/n]: ${RESET}"
+    read -r answer </dev/tty 2>/dev/null || answer="y"
+  fi
+  if [[ ! "$answer" =~ ^[Nn] ]]; then
+    local gitignore="$project_dir/.gitignore"
+    touch "$gitignore"
+    grep -q ".claude/skills" "$gitignore" || echo ".claude/skills" >> "$gitignore"
+    grep -q ".agents/skills" "$gitignore" || echo ".agents/skills" >> "$gitignore"
+    success "Updated .gitignore"
+  fi
+}
+
+# ── Uninstall ─────────────────────────────────────────────────────────────────
+uninstall_global() {
+  header "Uninstalling Global Skills"
+  warn "This will remove all skills installed by this repository."
+
+  local answer="n"
+  if [[ -t 0 ]]; then
+    echo -n -e "${RED}Are you sure? [y/N]: ${RESET}"
+    read -r answer </dev/tty 2>/dev/null || answer="n"
+  fi
+  [[ "$answer" =~ ^[Yy] ]] || { info "Aborted."; return; }
+
+  # We only remove the skill names we know about — not all of ~/.claude/skills
+  local known_skills=(
+    security-auditor seo-marketing frontend-design api-architecture
+    postgres-ecosystem firebase-expert cloudflare-expert devops-cicd
+    testing-qa mobile-engineering llm-optimization state-management
+    web-animation assets-media 3d-visuals web-gamedev
+    git-collaboration sentry-expert ux-research
+  )
+
+  local removed=0
+  for skill in "${known_skills[@]}"; do
+    for dir in "$HOME/.claude/skills/$skill" "$HOME/.gemini/config/skills/$skill"; do
+      if [[ -d "$dir" ]]; then
+        rm -rf "$dir"
+        success "Removed $dir"
+        removed=$((removed + 1))
       fi
-    fi
-  else
-    SCOPE_FLAG="-g"
-    SCOPE_NPM="-g"
-    SCOPE_DESC="Global (~/.agents & system-wide)"
-    SKILLS_DIR="$HOME/.claude/skills"
-    AGENTS_DIR="$HOME/.gemini/config/skills"
-    AGENTS_RULES_DIR="$HOME/.gemini/config/rules"
-    mkdir -p "$SKILLS_DIR" "$AGENTS_DIR" "$AGENTS_RULES_DIR"
-  fi
-}
+    done
+  done
 
-
-# ==============================================================================
-# INSTALLATION FUNCTIONS (ZERO BLOAT)
-# ==============================================================================
-
-install_ultimate_skills() {
-  print_header "🚀 INSTALLING 19 SKILLS & 3 ALWAYS-ON RULES"
-  
-  run_step "Downloading Ultimate Skills" \
-    "Cloning the consolidated zero-bloat Ultimate Skills directly from the source repository." \
-    "rm -rf /tmp/claude-skills-tmp && git clone --depth 1 https://github.com/omspradippatil/Claude-Skills.git /tmp/claude-skills-tmp && mkdir -p \"$SKILLS_DIR\" \"$AGENTS_DIR\" && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* \"$SKILLS_DIR/\" && cp -r /tmp/claude-skills-tmp/.agents/skills/ultimate-* \"$AGENTS_DIR/\" && rm -rf /tmp/claude-skills-tmp"
-}
-
-# ==============================================================================
-# UNINSTALLATION / REMOVAL FUNCTIONS
-# ==============================================================================
-
-uninstall_all_skills() {
-  print_header "🗑️  REMOVING ALL INSTALLED SKILLS & GLOBAL PACKAGES"
-  
-  echo -e "${YELLOW}Uninstalling all skills CLI registry entries...${RESET}"
-  npx --yes skills@latest remove --all -g -y 2>/dev/null || true
-  npx --yes skills@latest remove --all -y 2>/dev/null || true
-
-  echo -e "${YELLOW}Uninstalling global npm packages...${RESET}"
-  npm uninstall -g uipro-cli @playwright/cli firecrawl-cli ctx7 antigravity-workflows 2>/dev/null || true
-
-  if command -v dart >/dev/null 2>&1; then
-    echo -e "${YELLOW}Deactivating global Dart skills...${RESET}"
-    dart pub global deactivate skills 2>/dev/null || true
+  # npm packages
+  if command -v npm >/dev/null 2>&1; then
+    npm uninstall -g firecrawl-cli ctx7 antigravity-workflows 2>/dev/null || true
   fi
 
-  echo -e "${YELLOW}Removing cloned Claude skills directories...${RESET}"
-  rm -rf ~/.claude/skills/flutter-skills ~/.claude/skills/seo ~/.claude/skills/claude-skills
-  rm -rf .claude/skills .agent/skills
-
-  echo ""
-  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
-  echo -e "${GREEN}${BOLD} 🗑️  ALL SKILLS & TOOLS HAVE BEEN UNINSTALLED SUCCESSFULLY!              ${RESET}"
-  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
+  info "Removed $removed skill directories."
 }
 
-# Main Execution Flow
+# ── Main ──────────────────────────────────────────────────────────────────────
 main() {
-  SCOPE_INPUT=""
-  SUITE_INPUT=""
+  local mode=""
 
-  # Parse CLI arguments if supplied
+  # Parse args
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      --global|-g)
-        SCOPE_INPUT="1"
-        shift
-        ;;
-      --project|-p)
-        SCOPE_INPUT="2"
-        shift
-        ;;
-      --all|-a|--full)
-        SUITE_INPUT="1"
-        shift
-        ;;
-      --mobile|-m)
-        SUITE_INPUT="2"
-        shift
-        ;;
-      --web|-w)
-        SUITE_INPUT="3"
-        shift
-        ;;
-      --uninstall|-u)
-        uninstall_all_skills
+      --global|-g)    mode="global";  shift ;;
+      --project|-p)   mode="project"; shift ;;
+      --all|-a)       mode="${mode:-global}"; shift ;;
+      --force|-f)     FORCE=true; shift ;;
+      --uninstall|-u) mode="uninstall"; shift ;;
+      --help|-h)
+        grep '^#' "$0" | sed 's/^# \{0,2\}//' | head -20
         exit 0
         ;;
-      *)
-        shift
-        ;;
+      *) shift ;;
     esac
   done
 
-  print_banner
+  echo -e "${CYAN}${BOLD}"
+  echo "╔══════════════════════════════════════════════════════════════════╗"
+  echo "║        ⚡ Claude Skills — Cross-Platform Engineering System      ║"
+  echo "║           Claude Code · Antigravity · Cursor · Codex            ║"
+  echo "╚══════════════════════════════════════════════════════════════════╝"
+  echo -e "${RESET}"
+
   check_prerequisites
 
-  # STEP 1: Choose Installation Scope (Global vs Project Directory)
-  if [ -z "$SCOPE_INPUT" ]; then
-    echo -e "${BOLD}Where would you like to install the skills?${RESET}"
+  # Interactive mode selection
+  if [[ -z "$mode" && -t 0 ]]; then
+    echo -e "${BOLD}Installation scope:${RESET}"
+    echo -e "  ${CYAN}1)${RESET} 🌍 Global   — ~/.claude/skills & ~/.gemini/config/skills"
+    echo -e "  ${CYAN}2)${RESET} 📁 Project  — $(pwd)/.claude/skills & .agents/skills"
+    echo -e "  ${RED}3)${RESET} 🗑️  Uninstall — Remove globally installed skills"
     echo ""
-    echo -e "  ${CYAN}1)${RESET} 🌍 ${BOLD}Global${RESET}            (Recommended: Available across all projects in ~/.agents & system-wide)"
-    echo -e "  ${CYAN}2)${RESET} 📁 ${BOLD}Current Project${RESET}   (Install only in this project folder: $(pwd))"
-    echo ""
-    echo -n -e "${YELLOW}Select install scope [1-2] (default: 1): ${RESET}"
-    
-    if [ -t 0 ] || [ -e /dev/tty ]; then
-      read -r SCOPE_INPUT < /dev/tty 2>/dev/null || read -r SCOPE_INPUT || SCOPE_INPUT="1"
-    else
-      read -r SCOPE_INPUT || SCOPE_INPUT="1"
-    fi
-    [ -z "$SCOPE_INPUT" ] && SCOPE_INPUT="1"
-  fi
-  set_scope "$SCOPE_INPUT"
-
-  # STEP 2: Choose Skill Configuration Suite
-  if [ -z "$SUITE_INPUT" ]; then
-    echo ""
-    echo -e "${BOLD}Which skills configuration would you like to install into [${SCOPE_DESC}]?${RESET}"
-    echo ""
-    echo -e "  ${CYAN}1)${RESET} 🚀 ${BOLD}All-in-One Full Suite${RESET} (Install ALL 9 Categories & 400+ Skills without conflicts)"
-    echo -e "  ${CYAN}2)${RESET} 📱 ${BOLD}Mobile Application${RESET}   (UI/UX + Archify + Flutter/Dart + SEO + Cloud + DevOps + Memory)"
-    echo -e "  ${CYAN}3)${RESET} 🌐 ${BOLD}Web Application${RESET}      (UI/UX + Archify + Frontend/Playwright + SEO + Cloud + DevOps + Memory)"
-    echo -e "  ${CYAN}4)${RESET} 🎯 ${BOLD}Custom Selection${RESET}     (Choose specific skill categories to install)"
-    echo -e "  ${RED}5)${RESET} 🗑️  ${BOLD}Delete / Uninstall${RESET}   (Remove installed skills and configurations)"
-    echo ""
-    echo -n -e "${YELLOW}Select skill suite [1-5] (default: 1): ${RESET}"
-
-    if [ -t 0 ] || [ -e /dev/tty ]; then
-      read -r SUITE_INPUT < /dev/tty 2>/dev/null || read -r SUITE_INPUT || SUITE_INPUT="1"
-    else
-      read -r SUITE_INPUT || SUITE_INPUT="1"
-    fi
-    [ -z "$SUITE_INPUT" ] && SUITE_INPUT="1"
+    echo -n -e "${YELLOW}Select [1-3] (default: 1): ${RESET}"
+    read -r choice </dev/tty 2>/dev/null || choice="1"
+    case "${choice:-1}" in
+      2) mode="project" ;;
+      3) mode="uninstall" ;;
+      *) mode="global" ;;
+    esac
   fi
 
-  case "$SUITE_INPUT" in
-    1|"")
-      echo -e "\n${GREEN}🚀 Starting All-in-One Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_ultimate_skills
-      ;;
-    2)
-      echo -e "\n${GREEN}🚀 Starting Mobile Application Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_ultimate_skills
-      ;;
-    3)
-      echo -e "\n${GREEN}🚀 Starting Web Application Skills Installation into ${SCOPE_DESC}...${RESET}"
-      install_ultimate_skills
-      ;;
-    4)
-      echo -e "\n${BOLD}Select categories to install into ${SCOPE_DESC}:${RESET}"
-      
-      echo -n -e "Install 🎨 Core UI/UX & Taste skills? [Y/n]: "
-      read -r c1 < /dev/tty 2>/dev/null || c1="y"
-      [[ "$c1" =~ ^[Nn] ]] || install_ultimate_skills
-      ;;
-    5)
-      uninstall_all_skills
-      return 0
-      ;;
+  mode="${mode:-global}"
+
+  case "$mode" in
+    global)    install_global ;;
+    project)   install_project ;;
+    uninstall) uninstall_global ;;
     *)
-      echo -e "\n${RED}Invalid option. Defaulting to Complete All-in-One installation.${RESET}"
-      install_ultimate_skills
+      error "Unknown mode: $mode"
+      exit 1
       ;;
   esac
 
   echo ""
-  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
-  echo -e "${GREEN}${BOLD} 🎉 ALL SKILLS HAVE BEEN INSTALLED & CONFIGURED IN [${SCOPE_DESC}]! 🎉   ${RESET}"
-  echo -e "${GREEN}${BOLD}═════════════════════════════════════════════════════════════════════════${RESET}"
+  echo -e "${GREEN}${BOLD}══════════════════════════════════════════════════════════════════════${RESET}"
+  echo -e "${GREEN}${BOLD}  ✅  Done! Run scripts/validate.sh to verify the installation.      ${RESET}"
+  echo -e "${GREEN}${BOLD}══════════════════════════════════════════════════════════════════════${RESET}"
   echo ""
 }
 
