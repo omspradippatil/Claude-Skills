@@ -36,7 +36,7 @@ Or pass non-interactive flags:
 # Minimal project adapter and policies:
 bash install.sh --target project --minimal
 
-# All 19 domain skills:
+# All 24 domain skills:
 bash install.sh --target project --platform claude --all
 
 # Select specific skills:
@@ -76,7 +76,7 @@ irm https://raw.githubusercontent.com/omspradippatil/Claude-Skills/main/install.
 # Interactive / default:
 .\install.ps1
 
-# All 19 domain skills:
+# All 24 domain skills:
 .\install.ps1 -Scope project -Platform claude -All
 
 # Specific skills:
